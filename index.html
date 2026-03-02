@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🇰🇷 Южная Корея — Путешествие</title>
+  <style>
+    :root {
+      --primary: #4a6fa5;
+      --visited-bg: #f5f9ff;
+      --border: #ddd;
+      --text: #333;
+      --light-text: #666;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafafa;
+      color: var(--text);
+      padding: 12px;
+      line-height: 1.5;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 1.4em;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+    .instructions {
+      font-size: 0.9em;
+      color: var(--light-text);
+    }
+
+    .city-section {
+      margin-bottom: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .city-header {
+      background: white;
+      padding: 14px 16px;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .city-header::after {
+      content: "▼";
+      font-size: 0.7em;
+      transition: transform 0.3s;
+    }
+    .city-section.active .city-header::after {
+      transform: rotate(180deg);
+    }
+    .city-content {
+      display: none;
+      background: white;
+    }
+    .city-section.active .city-content {
+      display: block;
+    }
+
+    .place {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .place:last-child {
+      border-bottom: none;
+    }
+    .place.visited {
+      background-color: var(--visited-bg);
+      opacity: 0.85;
+    }
+    .place-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 1.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .place-meta {
+      font-size: 0.85em;
+      color: var(--light-text);
+      margin-bottom: 6px;
+      display: flex;
+      gap: 12px;
+    }
+    .stars {
+      color: #FFD700;
+    }
+    .place-desc {
+      font-size: 0.95em;
+      margin: 8px 0;
+      color: var(--text);
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    button {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:active {
+      opacity: 0.8;
+    }
+    .btn-done {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .btn-done.done {
+      background: #c8e6c9;
+      color: #1b5e20;
+    }
+    .btn-map {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    @media (min-width: 768px) {
+      body { max-width: 800px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✈️ Южная Корея — Свадебное путешествие</h1>
+    <p class="instructions">Нажмите на город → отметьте посещённые места ✅</p>
+  </header>
+
+  <div id="app"></div>
+
+  <script>
+    const places = [
+      // --- ЧЕДЖУДО ---
+      { city: "Чеджудо", icon: "🌋", dates: "29–31.07", name: "Seongsan Ilchulbong Peak", stars: 5, desc: "Вулканический кратер у моря, знаменит восходами солнца. UNESCO.", url: "https://www.google.com/maps/place/Seongsan+Ilchulbong/@33.458397,126.942603,15z" },
+      { city: "Чеджудо", icon: "⛰️", dates: "29–31.07", name: "Hallasan National Park (Eorimok Trail)", stars: 5, desc: "Высочайшая гора Южной Кореи. Тропа Eorimok — подъём ~2 ч.", url: "https://www.google.com/maps/place/Hallasan+National+Park/@33.3605,126.5389,13z" },
+      { city: "Чеджудо", icon: "🕳️", dates: "29–31.07", name: "Manjanggul Lava Tube", stars: 5, desc: "Одна из самых длинных лавовых пещер в мире. Температура +11°C.", url: "https://www.google.com/maps/place/Manjanggul+Lava+Tube/@33.4986,126.8461,15z" },
+      { city: "Чеджудо", icon: "🏝️", dates: "29–31.07", name: "Udo Island", stars: 4, desc: "Маленький остров у Чеджудо. Паром 15 мин, аренда скутера.", url: "https://www.google.com/maps/place/Udo+Island/@33.4753,126.9489,13z" },
+      { city: "Чеджудо", icon: "🥾", dates: "29–31.07", name: "Jeju Olle Trail Course 07", stars: 4, desc: "Прогулочная тропа от Seogwipo к водопаду Cheonjiyeon (~5 км).", url: "https://www.google.com/maps/place/Jeju+Olle+Trail+Course+07/@33.2581,126.5672,13z" },
+      { city: "Чеджудо", icon: "❤️", dates: "29–31.07", name: "Loveland Jeju", stars: 3, desc: "Музей эротического искусства под открытым небом. Возраст 18+.", url: "https://www.google.com/maps/place/Loveland+Jeju/@33.4397,126.3175,15z" },
+      { city: "Чеджудо", icon: "🏖️", dates: "29–31.07", name: "Hamdeok Beach", stars: 3, desc: "Уединённый галечный пляж с чёрным песком и соснами.", url: "https://www.google.com/maps/place/Hamdeok+Beach/@33.4831,126.7892,15z" },
+      { city: "Чеджудо", icon: "💧", dates: "29–31.07", name: "Cheonjiyeon Waterfall", stars: 3, desc: "«Озеро богов» — красивый водопад в тропическом лесу.", url: "https://www.google.com/maps/place/Cheonjiyeon+Waterfall/@33.2531,126.5589,15z" },
+      { city: "Чеджудо", icon: "🧸", dates: "29–31.07", name: "Teddy Bear Museum Jeju", stars: 2, desc: "Коллекция медведей в исторических костюмах.", url: "https://www.google.com/maps/place/Teddy+Bear+Museum+Jeju/@33.2489,126.5567,17z" },
+      { city: "Чеджудо", icon: "🏡", dates: "29–31.07", name: "Jeju Folk Village Museum", stars: 2, desc: "Реконструкция деревни XVIII века.", url: "https://www.google.com/maps/place/Jeju+Folk+Village+Museum/@33.4981,126.6122,15z" },
+
+      // --- СЕУЛ ---
+      { city: "Сеул", icon: "🏯", dates: "01–03.08 / 12–16.08", name: "Gyeongbokgung Palace", stars: 5, desc: "Главный королевский дворец династии Чосон.", url: "https://www.google.com/maps/place/Gyeongbokgung+Palace/@37.5788,126.9773,17z" },
+      { city: "Сеул", icon: "🏘️", dates: "01–03.08 / 12–16.08", name: "Bukchon Hanok Village", stars: 5, desc: "Исторический район с традиционными домами «ханок».", url: "https://www.google.com/maps/place/Bukchon+Hanok+Village/@37.5812,126.9903,16z" },
+      { city: "Сеул", icon: "🗼", dates: "01–03.08 / 12–16.08", name: "N Seoul Tower", stars: 5, desc: "Панорамный вид на весь Сеул. Замки любви.", url: "https://www.google.com/maps/place/N+Seoul+Tower/@37.5512,126.9882,17z" },
+      { city: "Сеул", icon: "🍵", dates: "01–03.08 / 12–16.08", name: "Insadong", stars: 4, desc: "Улица антиквариата, чайных домов и корейской культуры.", url: "https://www.google.com/maps/place/Insadong/@37.5778,126.9889,17z" },
+      { city: "Сеул", icon: "📚", dates: "01–03.08 / 12–16.08", name: "COEX Starfield Library", stars: 4, desc: "Самая фотогеничная библиотека мира — в торговом центре COEX.", url: "https://www.google.com/maps/place/Starfield+Library/@37.5119,127.0589,17z" },
+      { city: "Сеул", icon: "💄", dates: "01–03.08 / 12–16.08", name: "Myeongdong Shopping Street", stars: 4, desc: "Центр косметики, уличной еды и шопинга.", url: "https://www.google.com/maps/place/Myeongdong/@37.5589,126.9889,17z" },
+      { city: "Сеул", icon: "🎨", dates: "01–03.08 / 12–16.08", name: "Hongdae Free Market / Street Art", stars: 3, desc: "Молодёжный район с граффити и уличными артистами.", url: "https://www.google.com/maps/place/Hongdae/@37.5489,126.9289,17z" },
+      { city: "Сеул", icon: "🏛️", dates: "01–03.08 / 12–16.08", name: "Dongdaemun Design Plaza (DDP)", stars: 3, desc: "Архитектурный шедевр Захи Хадид.", url: "https://www.google.com/maps/place/Dongdaemun+Design+Plaza/@37.5667,127.0089,17z" },
+      { city: "Сеул", icon: "🏙️", dates: "01–03.08 / 12–16.08", name: "Lotte World Tower & Mall", stars: 3, desc: "2-й по высоте небоскрёб в мире. Смотровая Seoul Sky.", url: "https://www.google.com/maps/place/Lotte+World+Tower/@37.5125,127.1019,17z" },
+      { city: "Сеул", icon: "🛍️", dates: "01–03.08 / 12–16.08", name: "Namdaemun Market", stars: 2, desc: "Старейший рынок Сеула. Открыт круглосуточно.", url: "https://www.google.com/maps/place/Namdaemun+Market/@37.5583,126.9736,17z" },
+      { city: "Сеул", icon: "🎢", dates: "—", name: "Everland Resort", stars: 5, desc: "Крупнейший тематический парк Южной Кореи с аттракционами, зоопарком и шоу. Расположен в 1 часе от Сеула.", url: "https://www.google.com/maps/place/Everland/@37.2338,127.3485,15z" },
+
+      // --- ЧОНДЖУ ---
+      { city: "Чонджу", icon: "🏘️", dates: "04.08", name: "Jeonju Hanok Village", stars: 5, desc: "Крупнейшая ханок-деревня Кореи. Обязательно попробовать бибимбап.", url: "https://www.google.com/maps/place/Jeonju+Hanok+Village/@35.8189,127.1519,15z" },
+      { city: "Чонджу", icon: "⛩️", dates: "04.08", name: "Gyeonggijeon Shrine", stars: 3, desc: "Храм, посвящённый основателю династии Чосон.", url: "https://www.google.com/maps/place/Gyeonggijeon/@35.8192,127.1522,17z" },
+
+      // --- ЧИНДО ---
+      { city: "Чиндо", icon: "🌊", dates: "05–06.08", name: "Jindo Miracle Sea Road", stars: 5, desc: "«Мост Моисея» — море расступается 1–2 раза в год (апрель–май). В августе НЕ работает.", url: "https://www.google.com/maps/place/Jindo+Miracle+Sea+Road/@34.4289,126.2889,15z" },
+      { city: "Чиндо", icon: "🏝️", dates: "05–06.08", name: "Mongdu Island", stars: 4, desc: "Остров с причудливыми скалами. Хорош для фото.", url: "https://www.google.com/maps/place/Mongdu+Island/@34.4389,126.2989,15z" },
+
+      // --- ПУСАН ---
+      { city: "Пусан", icon: "⛩️", dates: "06–08.08", name: "Haedong Yonggungsa Temple", stars: 5, desc: "Буддийский храм прямо у моря.", url: "https://www.google.com/maps/place/Haedong+Yonggungsa+Temple/@35.2389,129.2089,15z" },
+      { city: "Пусан", icon: "🐟", dates: "06–08.08", name: "Jagalchi Fish Market", stars: 5, desc: "Крупнейший рыбный рынок Кореи.", url: "https://www.google.com/maps/place/Jagalchi+Fish+Market/@35.1022,129.0403,17z" },
+      { city: "Пусан", icon: "🎨", dates: "06–08.08", name: "Gamcheon Culture Village", stars: 4, desc: "«Мачу-Пикчу Кореи» — красочные домики на склоне.", url: "https://www.google.com/maps/place/Gamcheon+Culture+Village/@35.0917,129.0389,16z" },
+      { city: "Пусан", icon: "🏖️", dates: "06–08.08", name: "Haeundae Beach", stars: 4, desc: "Самый известный пляж Пусана.", url: "https://www.google.com/maps/place/Haeundae+Beach/@35.1589,129.1689,15z" },
+      { city: "Пусан", icon: "🌉", dates: "06–08.08", name: "Gwangalli Beach + Bridge", stars: 4, desc: "Пляж с видом на ночной мост Gwangan.", url: "https://www.google.com/maps/place/Gwangalli+Beach/@35.1489,129.1189,15z" },
+      { city: "Пусан", icon: "⛩️", dates: "06–08.08", name: "Beomeosa Temple", stars: 4, desc: "Древний буддийский храм в горах.", url: "https://www.google.com/maps/place/Beomeosa+Temple/@35.2389,129.1289,15z" },
+      { city: "Пусан", icon: "🏞️", dates: "06–08.08", name: "Taejongdae Park", stars: 3, desc: "Мыс с обрывами и смотровыми площадками.", url: "https://www.google.com/maps/place/Taejongdae+Park/@35.0589,129.0889,15z" },
+
+      // --- КЁНДЖУ ---
+      { city: "Кёнджу", icon: "🏯", dates: "09.08", name: "Bulguksa Temple", stars: 5, desc: "Шедевр буддийской архитектуры, объект UNESCO.", url: "https://www.google.com/maps/place/Bulguksa+Temple/@35.7989,129.3289,15z" },
+      { city: "Кёнджу", icon: "🗿", dates: "09.08", name: "Seokguram Grotto", stars: 4, desc: "Каменная пещера с буддийской статуей.", url: "https://www.google.com/maps/place/Seokguram+Grotto/@35.8189,129.3389,15z" },
+      { city: "Кёнджу", icon: "🔭", dates: "09.08", name: "Cheomseongdae Observatory", stars: 4, desc: "Самая старая астрономическая обсерватория в Азии.", url: "https://www.google.com/maps/place/Cheomseongdae/@35.8389,129.2189,17z" },
+      { city: "Кёнджу", icon: "💧", dates: "09.08", name: "Anapji Pond", stars: 3, desc: "Искусственное озеро эпохи Силла.", url: "https://www.google.com/maps/place/Anapji+Pond/@35.8386,129.2192,17z" },
+
+      // --- АНДОН ---
+      { city: "Андон", icon: "🎭", dates: "09.08", name: "Hahoe Folk Village", stars: 5, desc: "Традиционная деревня у реки Накдонган. Объект UNESCO.", url: "https://www.google.com/maps/place/Hahoe+Folk+Village/@36.4989,128.5889,15z" },
+      { city: "Андон", icon: "🎭", dates: "09.08", name: "Andong Mask Dance Festival Museum", stars: 3, desc: "Музей, посвящённый фестивалю масок.", url: "https://www.google.com/maps/place/Andong+Mask+Dance+Festival+Museum/@36.5589,128.7389,15z" },
+
+      // --- СОКЧХО ---
+      { city: "Сокчхо", icon: "⛰️", dates: "10–12.08", name: "Soraksan National Park (Ulsanbawi, Biseondae)", stars: 5, desc: "Грандиозные скалы, леса, водопады. Лучший вход — Sogongwon.", url: "https://www.google.com/maps/place/Seoraksan+National+Park/@38.1389,128.4589,13z" },
+      { city: "Сокчхо", icon: "⛩️", dates: "10–12.08", name: "Naksansa Temple", stars: 4, desc: "Храм у Восточного моря. Разрушен цунами в 2011, но восстановлен.", url: "https://www.google.com/maps/place/Naksansa+Temple/@38.1189,128.5889,15z" },
+      { city: "Сокчхо", icon: "🌊", dates: "10–12.08", name: "Daepo Jusangjeolli Cliff", stars: 3, desc: "Базальтовые колонны у моря — аналог Giant’s Causeway.", url: "https://www.google.com/maps/place/Daepo+Jusangjeolli+Cliff/@38.0989,128.5989,15z" },
+      { city: "Сокчхо", icon: "🐟", dates: "10–12.08", name: "Sokcho Beach / Jungang Market", stars: 3, desc: "Рыбный рынок и набережная.", url: "https://www.google.com/maps/place/Sokcho+Jungang+Market/@38.1989,128.5989,15z" },
+      { city: "Сокчхо", icon: "🏘️", dates: "10–12.08", name: "Abai Village", stars: 2, desc: "Поселение беженцев с Северной Кореи.", url: "https://www.google.com/maps/place/Abai+Village/@38.1986,128.5992,17z" }
+    ];
+
+    // Загрузка состояния
+    let visited = JSON.parse(localStorage.getItem('visited_korea2026')) || {};
+    let expandedCities = JSON.parse(localStorage.getItem('expanded_korea2026')) || {};
+
+    function groupByCity(list) {
+      return list.reduce((acc, item) => {
+        if (!acc[item.city]) acc[item.city] = [];
+        acc[item.city].push(item);
+        return acc;
+      }, {});
+    }
+
+    function render() {
+      const app = document.getElementById('app');
+      const groups = groupByCity(places);
+      app.innerHTML = '';
+
+      for (const city in groups) {
+        const section = document.createElement('div');
+        section.className = `city-section ${expandedCities[city] ? 'active' : ''}`;
+        section.innerHTML = `
+          <div class="city-header">${city}</div>
+          <div class="city-content"></div>
+        `;
+        app.appendChild(section);
+
+        const content = section.querySelector('.city-content');
+        groups[city].forEach(place => {
+          const id = `${city}-${place.name}`;
+          const isVisited = visited[id];
+          const placeEl = document.createElement('div');
+          placeEl.className = `place ${isVisited ? 'visited' : ''}`;
+          placeEl.innerHTML = `
+            <div class="place-name">${place.icon} ${place.name}</div>
+            <div class="place-meta">
+              <span>${place.dates}</span>
+              <span class="stars">${'⭐'.repeat(place.stars)}</span>
+            </div>
+            <div class="place-desc">${place.desc}</div>
+            <div class="actions">
+              <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">
+                ${isVisited ? '✅ Посещено' : '☑️ Отметить'}
+              </button>
+              <button class="btn-map" onclick="window.open('${place.url}', '_blank')">🗺️ Карта</button>
+            </div>
+          `;
+          content.appendChild(placeEl);
+        });
+
+        // Toggle city
+        section.querySelector('.city-header').addEventListener('click', () => {
+          const wasActive = section.classList.contains('active');
+          section.classList.toggle('active');
+          expandedCities[city] = !wasActive;
+          localStorage.setItem('expanded_korea2026', JSON.stringify(expandedCities));
+        });
+      }
+
+      // Add event listeners for "Done" buttons
+      document.querySelectorAll('.btn-done').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.dataset.id;
+          visited[id] = !visited[id];
+          localStorage.setItem('visited_korea2026', JSON.stringify(visited));
+          render();
+        });
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>
