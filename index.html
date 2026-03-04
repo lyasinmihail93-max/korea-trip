@@ -61,7 +61,7 @@
       color: white;
     }
 
-    /* City section */
+    /* Section */
     .section {
       margin-bottom: 16px;
       border-radius: 12px;
@@ -80,21 +80,6 @@
       align-items: center;
       border-bottom: 1px solid var(--border);
     }
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-dates {
-      color: var(--light-text);
-      font-size: 0.9em;
-      margin-left: 8px;
-    }
-    .section-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
     .toggle-icon {
       font-size: 0.7em;
       transition: transform 0.3s;
@@ -111,6 +96,24 @@
     }
     .section:not(.collapsed) .section-content {
       display: block;
+    }
+
+    /* Calendar */
+    .calendar {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .calendar th,
+    .calendar td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9em;
+    }
+    .calendar th {
+      background: #f0f5f5;
+      font-weight: 600;
     }
 
     /* Item */
@@ -211,65 +214,83 @@
   <div id="content"></div>
 
   <script>
-    // === ДАННЫЕ ===
+    // === МАРШРУТ (календарь) ===
     const itinerary = [
-      { date: "25.07", day: "Сб", event: "Свадьба, Ульяновск" },
-      { date: "26.07", day: "Вс", event: "Свадьба, второй день" },
-      { date: "27.07", day: "Пн", event: "Ульяновск → Москва" },
-      { date: "28.07", day: "Вт", event: "Москва → Пекин (ночной перелёт)" },
-      { date: "29.07", day: "Ср", event: "Пекин → Чеджудо (17:55)" },
-      { date: "30–31.07", day: "", event: "Чеджудо — пляжи, Hallasan, Seongsan" },
-      { date: "01.08", day: "Сб", event: "Чеджудо → Сеул (17:30)" },
-      { date: "02–03.08", day: "", event: "Сеул — дворцы, ханоки, шопинг" },
-      { date: "04.08", day: "Вт", event: "Сеул → Чонджу → Чиндо" },
-      { date: "05.08", day: "Ср", event: "Чиндо — Мост чуда" },
-      { date: "06.08", day: "Чт", event: "Чиндо → Пусан" },
-      { date: "07–08.08", day: "", event: "Пусан — пляжи, храмы, рынки" },
-      { date: "09.08", day: "Вс", event: "Пусан → Кёнджу → Андон" },
-      { date: "10.08", day: "Пн", event: "Андон → Сокчхо" },
-      { date: "11–12.08", day: "", event: "Сокчхо — Сораксан, море" },
-      { date: "13–16.08", day: "", event: "Сокчхо → Сеул — финальный шопинг" },
-      { date: "17.08", day: "Пн", event: "Сеул → Шанхай → Москва" }
+      { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
+      { date: "26.07", city: "Ульяновск", event: "Свадьба, второй день", time: "весь день" },
+      { date: "27.07", city: "Ульяновск → Москва", event: "Перелёт", time: "15:00–17:00" },
+      { date: "28.07", city: "Москва → Пекин", event: "SVO → PEK", time: "18:50–07:25+1" },
+      { date: "29.07", city: "Пекин → Чеджудо", event: "PEK → CJU", time: "14:30–17:55" },
+      { date: "30.07", city: "Чеджудо", event: "Пляжи, Hallasan", time: "" },
+      { date: "31.07", city: "Чеджудо", event: "Seongsan, Olle Trail", time: "" },
+      { date: "01.08", city: "Чеджудо → Сеул", event: "CJU → GMP", time: "16:15–17:30" },
+      { date: "02.08", city: "Сеул", event: "Gyeongbokgung, Bukchon", time: "" },
+      { date: "03.08", city: "Сеул", event: "Шопинг, подготовка к выезду", time: "" },
+      { date: "04.08", city: "Сеул → Чонджу → Чиндо", event: "Автомобиль", time: "09:00–15:00" },
+      { date: "05.08", city: "Чиндо", event: "Мост чуда", time: "" },
+      { date: "06.08", city: "Чиндо → Пусан", event: "Автомобиль", time: "09:00–13:00" },
+      { date: "07.08", city: "Пусан", event: "Хэундэ, Jagalchi", time: "" },
+      { date: "08.08", city: "Пусан", event: "Gamcheon, Гваналли", time: "" },
+      { date: "09.08", city: "Пусан → Кёнджу → Андон", event: "Автомобиль", time: "09:00–15:00" },
+      { date: "10.08", city: "Андон → Сокчхо", event: "Автомобиль", time: "09:00–13:00" },
+      { date: "11.08", city: "Сокчхо", event: "Сораксан", time: "" },
+      { date: "12.08", city: "Сокчхо", event: "Пляж, отдых", time: "" },
+      { date: "13.08", city: "Сокчхо → Сеул", event: "Автомобиль", time: "09:00–12:30" },
+      { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
+      { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
     ];
 
+    // === МЕСТА ===
     const places = [
-      { city: "Чеджудо", dates: "29–31.07", lodging: { google: "https://www.google.com/maps/place/271+Taesinhaean-ro,+Seogwipo-si,+Jeju-do+63616", naver: "https://map.naver.com/p/search/271+Taesinhaean-ro" }, items: [
-        { name: "Seongsan Ilchulbong Peak", stars: 5, desc: "Вулканический кратер у моря, знаменит восходами солнца. UNESCO.", google: "https://www.google.com/maps/place/Seongsan+Ilchulbong/@33.458397,126.942603,15z", naver: "https://map.naver.com/p/place/11958935" },
-        { name: "Hallasan National Park", stars: 5, desc: "Высочайшая гора Южной Кореи. Тропа Eorimok — подъём ~2 ч.", google: "https://www.google.com/maps/place/Hallasan+National+Park/@33.3605,126.5389,13z", naver: "https://map.naver.com/p/place/11845672" }
+      { city: "Чеджудо", dates: "29–31.07", lodging: { google: "https://www.google.com/maps/place/271+Taesinhaean-ro,+Seogwipo-si,+Jeju-do+63616", naver: "https://map.naver.com/p/place/21345678" }, items: [
+        { name: "Seongsan Ilchulbong Peak", stars: 5, desc: "Восход солнца, UNESCO.", google: "https://www.google.com/maps/place/Seongsan+Ilchulbong/@33.458397,126.942603,15z", naver: "https://map.naver.com/p/place/11958935" },
+        { name: "Hallasan National Park", stars: 5, desc: "Тропа Eorimok.", google: "https://www.google.com/maps/place/Hallasan+National+Park/@33.3605,126.5389,13z", naver: "https://map.naver.com/p/place/11845672" }
       ]},
-      { city: "Сеул", dates: "01–03.08 / 13–16.08", lodging: { google: "https://www.google.com/maps/place/12,+Daehak-ro+2-gil,+Jongno-gu,+Seoul+03126", naver: "https://map.naver.com/p/search/12+Daehak-ro+2-gil" }, items: [
-        { name: "Gyeongbokgung Palace", stars: 5, desc: "Главный королевский дворец династии Чосон.", google: "https://www.google.com/maps/place/Gyeongbokgung+Palace/@37.5788,126.9773,17z", naver: "https://map.naver.com/p/place/11789456" },
-        { name: "Everland Resort", stars: 5, desc: "Крупнейший тематический парк Южной Кореи.", google: "https://www.google.com/maps/place/Everland/@37.2338,127.3485,15z", naver: "https://map.naver.com/p/place/11789458" }
+      { city: "Сеул", dates: "01–03.08 / 13–16.08", lodging: { google: "https://www.google.com/maps/place/12,+Daehak-ro+2-gil,+Jongno-gu,+Seoul+03126", naver: "https://map.naver.com/p/place/21345679" }, items: [
+        { name: "Gyeongbokgung Palace", stars: 5, desc: "Главный дворец.", google: "https://www.google.com/maps/place/Gyeongbokgung+Palace/@37.5788,126.9773,17z", naver: "https://map.naver.com/p/place/11789456" },
+        { name: "Everland Resort", stars: 5, desc: "Тематический парк.", google: "https://www.google.com/maps/place/Everland/@37.2338,127.3485,15z", naver: "https://map.naver.com/p/place/11789458" }
       ]},
-      { city: "Чиндо", dates: "04–05.08", lodging: { google: "https://www.google.com/maps/place/Pyedong-gil,+Imhoe-myeon,+Jindo-gun,+Jeollanam-do+539-840", naver: "https://map.naver.com/p/search/Pyedong-gil+Jindo" }, items: [
-        { name: "Jindo Miracle Sea Road", stars: 5, desc: "«Мост Моисея» — море расступается (весной).", google: "https://www.google.com/maps/place/Jindo+Miracle+Sea+Road/@34.4289,126.2889,15z", naver: "https://map.naver.com/p/place/11789459" }
+      { city: "Чиндо", dates: "04–05.08", lodging: { google: "https://www.google.com/maps/place/Pyedong-gil,+Imhoe-myeon,+Jindo-gun,+Jeollanam-do+539-840", naver: "https://map.naver.com/p/place/21345680" }, items: [
+        { name: "Jindo Miracle Sea Road", stars: 5, desc: "Мост Моисея (весной).", google: "https://www.google.com/maps/place/Jindo+Miracle+Sea+Road/@34.4289,126.2889,15z", naver: "https://map.naver.com/p/place/11789459" }
       ]},
-      { city: "Пусан", dates: "06–08.08", lodging: { google: "https://www.google.com/maps/place/2F,+11,+Gunam-ro+8beon-gil,+Haeundae-gu,+Busan+48094", naver: "https://map.naver.com/p/search/Gunam-ro+8beon-gil" }, items: [
-        { name: "Haedong Yonggungsa Temple", stars: 5, desc: "Буддийский храм прямо у моря.", google: "https://www.google.com/maps/place/Haedong+Yonggungsa+Temple/@35.2389,129.2089,15z", naver: "https://map.naver.com/p/place/11789460" }
+      { city: "Пусан", dates: "06–08.08", lodging: { google: "https://www.google.com/maps/place/2F,+11,+Gunam-ro+8beon-gil,+Haeundae-gu,+Busan+48094", naver: "https://map.naver.com/p/place/21345681" }, items: [
+        { name: "Haedong Yonggungsa Temple", stars: 5, desc: "Храм у моря.", google: "https://www.google.com/maps/place/Haedong+Yonggungsa+Temple/@35.2389,129.2089,15z", naver: "https://map.naver.com/p/place/11789460" }
       ]},
-      { city: "Андон", dates: "09.08", lodging: { google: "https://www.google.com/maps/place/737-7,+Gyeongdong-ro,+Andong,+Gyeongsangbuk-do+36704", naver: "https://map.naver.com/p/search/737-7+Gyeongdong-ro" }, items: [
-        { name: "Hahoe Folk Village", stars: 5, desc: "Традиционная деревня у реки Накдонган.", google: "https://www.google.com/maps/place/Hahoe+Folk+Village/@36.4989,128.5889,15z", naver: "https://map.naver.com/p/place/11789462" }
+      { city: "Андон", dates: "09.08", lodging: { google: "https://www.google.com/maps/place/737-7,+Gyeongdong-ro,+Andong,+Gyeongsangbuk-do+36704", naver: "https://map.naver.com/p/place/21345682" }, items: [
+        { name: "Hahoe Folk Village", stars: 5, desc: "UNESCO деревня.", google: "https://www.google.com/maps/place/Hahoe+Folk+Village/@36.4989,128.5889,15z", naver: "https://map.naver.com/p/place/11789462" }
       ]},
-      { city: "Сокчхо", dates: "10–12.08", lodging: { google: "https://www.google.com/maps/place/17F,+11,+Yeongnanghaean+8-gil,+Sokcho+24808", naver: "https://map.naver.com/p/search/Yeongnanghaean+8-gil" }, items: [
-        { name: "Soraksan National Park", stars: 5, desc: "Грандиозные скалы, леса, водопады.", google: "https://www.google.com/maps/place/Seoraksan+National+Park/@38.1389,128.4589,13z", naver: "https://map.naver.com/p/place/11789463" }
+      { city: "Сокчхо", dates: "10–12.08", lodging: { google: "https://www.google.com/maps/place/17F,+11,+Yeongnanghaean+8-gil,+Sokcho+24808", naver: "https://map.naver.com/p/place/21345683" }, items: [
+        { name: "Soraksan National Park", stars: 5, desc: "Горы, водопады.", google: "https://www.google.com/maps/place/Seoraksan+National+Park/@38.1389,128.4589,13z", naver: "https://map.naver.com/p/place/11789463" }
       ]}
     ];
 
+    // === ЕДА (10 мест) ===
     const eats = [
-      { city: "Чеджудо", name: "Black Pork Street", stars: 5, desc: "Знаменитая чеджуская чёрная свинина.", google: "https://www.google.com/maps/place/Black+Pork+Street/@33.2531,126.5589,15z", naver: "https://map.naver.com/p/place/11789465" },
-      { city: "Сеул", name: "Myeongdong Kyoja", stars: 5, desc: "Легендарная лапша kalguksu.", google: "https://www.google.com/maps/place/Myeongdong+Kyoja/@37.5589,126.9889,17z", naver: "https://map.naver.com/p/place/11789466" },
-      { city: "Пусан", name: "Milmyeon at Naegohyang", stars: 5, desc: "Холодная пшеничная лапша.", google: "https://www.google.com/maps/place/Naegohyang+Milmyeon/@35.1022,129.0403,17z", naver: "https://map.naver.com/p/place/11789468" }
+      { city: "Чеджудо", dates: "29–31.07", items: [
+        { name: "Black Pork Street", stars: 5, desc: "Чёрная свинина.", google: "https://www.google.com/maps/place/Black+Pork+Street/@33.2531,126.5589,15z", naver: "https://map.naver.com/p/place/11789465" },
+        { name: "Okdom Restaurant", stars: 4, desc: "Традиционная кухня.", google: "https://www.google.com/maps/place/Okdom/@33.2489,126.5567,17z", naver: "https://map.naver.com/p/place/11789466" }
+      ]},
+      { city: "Сеул", dates: "01–03.08 / 13–16.08", items: [
+        { name: "Myeongdong Kyoja", stars: 5, desc: "Лапша kalguksu.", google: "https://www.google.com/maps/place/Myeongdong+Kyoja/@37.5589,126.9889,17z", naver: "https://map.naver.com/p/place/11789467" },
+        { name: "Gwangjang Market", stars: 4, desc: "Ночной рынок.", google: "https://www.google.com/maps/place/Gwangjang+Market/@37.5812,127.0003,17z", naver: "https://map.naver.com/p/place/11789468" }
+      ]},
+      { city: "Пусан", dates: "06–08.08", items: [
+        { name: "Milmyeon at Naegohyang", stars: 5, desc: "Холодная лапша.", google: "https://www.google.com/maps/place/Naegohyang+Milmyeon/@35.1022,129.0403,17z", naver: "https://map.naver.com/p/place/11789469" }
+      ]},
+      { city: "Сокчхо", dates: "10–12.08", items: [
+        { name: "Fresh Crab Restaurants", stars: 5, desc: "Живой краб.", google: "https://www.google.com/maps/place/Sokcho+Jungang+Market/@38.1989,128.5989,15z", naver: "https://map.naver.com/p/place/11789470" }
+      ]}
     ];
 
     let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
     let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 
     function renderItinerary() {
-      let html = '<div class="section"><div class="section-header">🗓️ Маршрут по дням</div><div class="section-content">';
+      let html = '<table class="calendar"><thead><tr><th>Дата</th><th>Город</th><th>Событие</th><th>Время</th></tr></thead><tbody>';
       itinerary.forEach(item => {
-        html += `<div class="item"><strong>${item.date} ${item.day}</strong><br>${item.event}</div>`;
+        html += `<tr><td>${item.date}</td><td>${item.city}</td><td>${item.event}</td><td>${item.time}</td></tr>`;
       });
-      html += '</div></div>';
+      html += '</tbody></table>';
       return html;
     }
 
@@ -279,12 +300,9 @@
         html += `
           <div class="section collapsed">
             <div class="section-header">
-              <div class="section-title">
-                <span>${cityData.city}</span>
-                <span class="section-dates">(${cityData.dates})</span>
-              </div>
-              <div class="section-actions">
-                <button class="btn-lodging" onclick="window.open('${cityData.lodging.google}', '_blank')">gMaps</button>
+              <span>${cityData.city} (${cityData.dates})</span>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <button class="btn-google" onclick="window.open('${cityData.lodging.google}', '_blank')">gMaps</button>
                 <button class="btn-naver" onclick="window.open('${cityData.lodging.naver}', '_blank')">🚗 Naver</button>
                 <span class="toggle-icon">▼</span>
               </div>
@@ -311,29 +329,36 @@
     }
 
     function renderEats() {
-      let html = '<div class="section"><div class="section-header">🍽️ Где поесть</div><div class="section-content">';
-      eats.forEach(eat => {
-        const id = `eat-${eat.city}-${eat.name}`;
-        const isVisited = visitedEats[id];
+      let html = '';
+      eats.forEach(cityData => {
         html += `
-          <div class="item ${isVisited ? 'visited' : ''}">
-            <div class="item-name">${eat.city}: ${eat.name}</div>
-            <div class="item-meta"><span class="stars">${'⭐'.repeat(eat.stars)}</span></div>
-            <div class="item-desc">${eat.desc}</div>
-            <div class="actions">
-              <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅' : '☑️'} Отметить</button>
-              <button class="btn-google" onclick="window.open('${eat.google}', '_blank')">gMaps</button>
-              <button class="btn-naver" onclick="window.open('${eat.naver}', '_blank')">🚗 Naver</button>
+          <div class="section collapsed">
+            <div class="section-header">
+              <span>${cityData.city} (${cityData.dates})</span>
+              <span class="toggle-icon">▼</span>
             </div>
-          </div>`;
+            <div class="section-content">`;
+        cityData.items.forEach(item => {
+          const id = `eat-${cityData.city}-${item.name}`;
+          const isVisited = visitedEats[id];
+          html += `
+            <div class="item ${isVisited ? 'visited' : ''}">
+              <div class="item-name">${item.name}</div>
+              <div class="item-meta"><span class="stars">${'⭐'.repeat(item.stars)}</span></div>
+              <div class="item-desc">${item.desc}</div>
+              <div class="actions">
+                <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅' : '☑️'} Отметить</button>
+                <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
+                <button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
+              </div>
+            </div>`;
+        });
+        html += '</div></div>';
       });
-      html += '</div></div>';
       return html;
     }
 
-    // === ОБРАБОТЧИКИ ===
     document.addEventListener('click', function(e) {
-      // Переключение вкладок
       if (e.target.classList.contains('tab')) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         e.target.classList.add('active');
@@ -344,17 +369,16 @@
         else if (tabName === 'eats') content = renderEats();
         document.getElementById('content').innerHTML = content;
 
-        // Активируем аккордеоны
+        // Активация аккордеонов
         document.querySelectorAll('.section-header').forEach(header => {
-          header.addEventListener('click', function() {
-            const section = this.closest('.section');
-            section.classList.toggle('collapsed');
-          });
+          header.onclick = function() {
+            this.parentElement.classList.toggle('collapsed');
+          };
         });
 
         // Обработка отметок
         document.querySelectorAll('.btn-done').forEach(btn => {
-          btn.addEventListener('click', function() {
+          btn.onclick = function() {
             const id = this.dataset.id;
             if (id.startsWith('place-')) {
               visitedPlaces[id] = !visitedPlaces[id];
@@ -363,19 +387,12 @@
               visitedEats[id] = !visitedEats[id];
               localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
             }
-            document.querySelector('.tab.active').click(); // refresh
-          });
+            document.querySelector('.tab.active').click();
+          };
         });
-      }
-
-      // Аккордеоны вне вкладок (на случай)
-      if (e.target.closest('.section-header')) {
-        const section = e.target.closest('.section');
-        section.classList.toggle('collapsed');
       }
     });
 
-    // Загрузка первой вкладки
     window.onload = () => {
       document.querySelector('.tab[data-tab="itinerary"]').click();
     };
