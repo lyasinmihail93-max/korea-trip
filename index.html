@@ -55,7 +55,6 @@
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
-      transition: all 0.2s;
     }
     .tab.active {
       background: var(--primary);
@@ -63,14 +62,14 @@
     }
 
     /* City section */
-    .city-section {
+    .section {
       margin-bottom: 16px;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
       border-left: 4px solid var(--primary);
     }
-    .city-header {
+    .section-header {
       background: white;
       padding: 14px 16px;
       font-weight: bold;
@@ -81,17 +80,17 @@
       align-items: center;
       border-bottom: 1px solid var(--border);
     }
-    .city-title {
+    .section-title {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .city-dates {
+    .section-dates {
       color: var(--light-text);
       font-size: 0.9em;
       margin-left: 8px;
     }
-    .city-actions {
+    .section-actions {
       display: flex;
       gap: 8px;
       align-items: center;
@@ -100,43 +99,46 @@
       font-size: 0.7em;
       transition: transform 0.3s;
     }
-    .city-section.active .toggle-icon {
+    .section.collapsed .toggle-icon {
+      transform: rotate(0deg);
+    }
+    .section:not(.collapsed) .toggle-icon {
       transform: rotate(180deg);
     }
-    .city-content {
+    .section-content {
       display: none;
       background: white;
     }
-    .city-section.active .city-content {
+    .section:not(.collapsed) .section-content {
       display: block;
     }
 
-    /* Place item */
-    .place {
+    /* Item */
+    .item {
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
     }
-    .place:last-child {
+    .item:last-child {
       border-bottom: none;
     }
-    .place.visited {
+    .item.visited {
       background-color: var(--visited-bg);
     }
-    .place.visited .place-name,
-    .place.visited .place-desc {
+    .item.visited .item-name,
+    .item.visited .item-desc {
       color: #5a7b7a;
       text-decoration: line-through;
     }
-    .place.visited::before {
+    .item.visited::before {
       content: "✅ ";
       color: var(--primary);
     }
-    .place-name {
+    .item-name {
       font-weight: 600;
       margin-bottom: 4px;
       font-size: 1.05em;
     }
-    .place-meta {
+    .item-meta {
       font-size: 0.85em;
       color: var(--light-text);
       margin-bottom: 6px;
@@ -146,7 +148,7 @@
     .stars {
       color: #FFD700;
     }
-    .place-desc {
+    .item-desc {
       font-size: 0.95em;
       margin: 8px 0;
       color: var(--text);
@@ -166,10 +168,6 @@
       font-size: 0.85em;
       font-weight: 600;
       cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    button:active {
-      opacity: 0.8;
     }
     .btn-done {
       background: #e0f2f1;
@@ -193,16 +191,6 @@
       font-weight: bold;
     }
 
-    /* Progress bar */
-    .progress {
-      background: #f0f5f5;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      font-size: 0.9em;
-      color: var(--light-text);
-    }
-
     @media (min-width: 768px) {
       body { max-width: 800px; margin: 0 auto; }
     }
@@ -213,8 +201,6 @@
     <h1>Южная Корея — наше свадебное путешествие</h1>
     <p class="subtitle">Июль–август 2026</p>
   </header>
-
-  <div class="progress" id="progressBar"></div>
 
   <div class="tabs">
     <button class="tab active" data-tab="itinerary">🗓️ Маршрут</button>
@@ -249,47 +235,39 @@
     const places = [
       { city: "Чеджудо", dates: "29–31.07", lodging: { google: "https://www.google.com/maps/place/271+Taesinhaean-ro,+Seogwipo-si,+Jeju-do+63616", naver: "https://map.naver.com/p/search/271+Taesinhaean-ro" }, items: [
         { name: "Seongsan Ilchulbong Peak", stars: 5, desc: "Вулканический кратер у моря, знаменит восходами солнца. UNESCO.", google: "https://www.google.com/maps/place/Seongsan+Ilchulbong/@33.458397,126.942603,15z", naver: "https://map.naver.com/p/place/11958935" },
-        { name: "Hallasan National Park", stars: 5, desc: "Высочайшая гора Южной Кореи. Тропа Eorimok — подъём ~2 ч.", google: "https://www.google.com/maps/place/Hallasan+National+Park/@33.3605,126.5389,13z", naver: "https://map.naver.com/p/place/11845672" },
-        { name: "Manjanggul Lava Tube", stars: 5, desc: "Одна из самых длинных лавовых пещер в мире.", google: "https://www.google.com/maps/place/Manjanggul+Lava+Tube/@33.4986,126.8461,15z", naver: "https://map.naver.com/p/place/11845673" }
+        { name: "Hallasan National Park", stars: 5, desc: "Высочайшая гора Южной Кореи. Тропа Eorimok — подъём ~2 ч.", google: "https://www.google.com/maps/place/Hallasan+National+Park/@33.3605,126.5389,13z", naver: "https://map.naver.com/p/place/11845672" }
       ]},
       { city: "Сеул", dates: "01–03.08 / 13–16.08", lodging: { google: "https://www.google.com/maps/place/12,+Daehak-ro+2-gil,+Jongno-gu,+Seoul+03126", naver: "https://map.naver.com/p/search/12+Daehak-ro+2-gil" }, items: [
         { name: "Gyeongbokgung Palace", stars: 5, desc: "Главный королевский дворец династии Чосон.", google: "https://www.google.com/maps/place/Gyeongbokgung+Palace/@37.5788,126.9773,17z", naver: "https://map.naver.com/p/place/11789456" },
-        { name: "Bukchon Hanok Village", stars: 5, desc: "Исторический район с традиционными домами.", google: "https://www.google.com/maps/place/Bukchon+Hanok+Village/@37.5812,126.9903,16z", naver: "https://map.naver.com/p/place/11789457" },
         { name: "Everland Resort", stars: 5, desc: "Крупнейший тематический парк Южной Кореи.", google: "https://www.google.com/maps/place/Everland/@37.2338,127.3485,15z", naver: "https://map.naver.com/p/place/11789458" }
       ]},
       { city: "Чиндо", dates: "04–05.08", lodging: { google: "https://www.google.com/maps/place/Pyedong-gil,+Imhoe-myeon,+Jindo-gun,+Jeollanam-do+539-840", naver: "https://map.naver.com/p/search/Pyedong-gil+Jindo" }, items: [
         { name: "Jindo Miracle Sea Road", stars: 5, desc: "«Мост Моисея» — море расступается (весной).", google: "https://www.google.com/maps/place/Jindo+Miracle+Sea+Road/@34.4289,126.2889,15z", naver: "https://map.naver.com/p/place/11789459" }
       ]},
       { city: "Пусан", dates: "06–08.08", lodging: { google: "https://www.google.com/maps/place/2F,+11,+Gunam-ro+8beon-gil,+Haeundae-gu,+Busan+48094", naver: "https://map.naver.com/p/search/Gunam-ro+8beon-gil" }, items: [
-        { name: "Haedong Yonggungsa Temple", stars: 5, desc: "Буддийский храм прямо у моря.", google: "https://www.google.com/maps/place/Haedong+Yonggungsa+Temple/@35.2389,129.2089,15z", naver: "https://map.naver.com/p/place/11789460" },
-        { name: "Jagalchi Fish Market", stars: 5, desc: "Крупнейший рыбный рынок Кореи.", google: "https://www.google.com/maps/place/Jagalchi+Fish+Market/@35.1022,129.0403,17z", naver: "https://map.naver.com/p/place/11789461" }
+        { name: "Haedong Yonggungsa Temple", stars: 5, desc: "Буддийский храм прямо у моря.", google: "https://www.google.com/maps/place/Haedong+Yonggungsa+Temple/@35.2389,129.2089,15z", naver: "https://map.naver.com/p/place/11789460" }
       ]},
       { city: "Андон", dates: "09.08", lodging: { google: "https://www.google.com/maps/place/737-7,+Gyeongdong-ro,+Andong,+Gyeongsangbuk-do+36704", naver: "https://map.naver.com/p/search/737-7+Gyeongdong-ro" }, items: [
         { name: "Hahoe Folk Village", stars: 5, desc: "Традиционная деревня у реки Накдонган.", google: "https://www.google.com/maps/place/Hahoe+Folk+Village/@36.4989,128.5889,15z", naver: "https://map.naver.com/p/place/11789462" }
       ]},
       { city: "Сокчхо", dates: "10–12.08", lodging: { google: "https://www.google.com/maps/place/17F,+11,+Yeongnanghaean+8-gil,+Sokcho+24808", naver: "https://map.naver.com/p/search/Yeongnanghaean+8-gil" }, items: [
-        { name: "Soraksan National Park", stars: 5, desc: "Грандиозные скалы, леса, водопады.", google: "https://www.google.com/maps/place/Seoraksan+National+Park/@38.1389,128.4589,13z", naver: "https://map.naver.com/p/place/11789463" },
-        { name: "Naksansa Temple", stars: 4, desc: "Храм у Восточного моря.", google: "https://www.google.com/maps/place/Naksansa+Temple/@38.1189,128.5889,15z", naver: "https://map.naver.com/p/place/11789464" }
+        { name: "Soraksan National Park", stars: 5, desc: "Грандиозные скалы, леса, водопады.", google: "https://www.google.com/maps/place/Seoraksan+National+Park/@38.1389,128.4589,13z", naver: "https://map.naver.com/p/place/11789463" }
       ]}
     ];
 
     const eats = [
       { city: "Чеджудо", name: "Black Pork Street", stars: 5, desc: "Знаменитая чеджуская чёрная свинина.", google: "https://www.google.com/maps/place/Black+Pork+Street/@33.2531,126.5589,15z", naver: "https://map.naver.com/p/place/11789465" },
       { city: "Сеул", name: "Myeongdong Kyoja", stars: 5, desc: "Легендарная лапша kalguksu.", google: "https://www.google.com/maps/place/Myeongdong+Kyoja/@37.5589,126.9889,17z", naver: "https://map.naver.com/p/place/11789466" },
-      { city: "Чонджу", name: "Bibimbap Alley", stars: 5, desc: "Родина бибимбапа!", google: "https://www.google.com/maps/place/Jeonju+Bibimbap+Alley/@35.8189,127.1519,15z", naver: "https://map.naver.com/p/place/11789467" },
-      { city: "Пусан", name: "Milmyeon at Naegohyang", stars: 5, desc: "Холодная пшеничная лапша.", google: "https://www.google.com/maps/place/Naegohyang+Milmyeon/@35.1022,129.0403,17z", naver: "https://map.naver.com/p/place/11789468" },
-      { city: "Сокчхо", name: "Fresh Crab Restaurants", stars: 5, desc: "Живой краб, приготовленный тут же.", google: "https://www.google.com/maps/place/Sokcho+Jungang+Market/@38.1989,128.5989,15z", naver: "https://map.naver.com/p/place/11789469" }
+      { city: "Пусан", name: "Milmyeon at Naegohyang", stars: 5, desc: "Холодная пшеничная лапша.", google: "https://www.google.com/maps/place/Naegohyang+Milmyeon/@35.1022,129.0403,17z", naver: "https://map.naver.com/p/place/11789468" }
     ];
 
-    // === СОСТОЯНИЕ ===
     let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
     let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 
-    // === ФУНКЦИИ ===
     function renderItinerary() {
-      let html = '<div class="city-section" style="border-left: 4px solid #e9c46a;"><div class="city-header" style="justify-content: center;">🗓️ Маршрут по дням</div><div class="city-content">';
+      let html = '<div class="section"><div class="section-header">🗓️ Маршрут по дням</div><div class="section-content">';
       itinerary.forEach(item => {
-        html += `<div class="place"><strong>${item.date} ${item.day}</strong><br>${item.event}</div>`;
+        html += `<div class="item"><strong>${item.date} ${item.day}</strong><br>${item.event}</div>`;
       });
       html += '</div></div>';
       return html;
@@ -298,31 +276,31 @@
     function renderSights() {
       let html = '';
       places.forEach(cityData => {
-        const cityId = `city-${cityData.city}`;
         html += `
-          <div class="city-section">
-            <div class="city-header">
-              <div class="city-title">
+          <div class="section collapsed">
+            <div class="section-header">
+              <div class="section-title">
                 <span>${cityData.city}</span>
-                <span class="city-dates">(${cityData.dates})</span>
+                <span class="section-dates">(${cityData.dates})</span>
               </div>
-              <div class="city-actions">
-                <button class="btn-lodging" onclick="openMaps('${cityData.lodging.google}', '${cityData.lodging.naver}')">🏨 Ночлег</button>
+              <div class="section-actions">
+                <button class="btn-lodging" onclick="window.open('${cityData.lodging.google}', '_blank')">gMaps</button>
+                <button class="btn-naver" onclick="window.open('${cityData.lodging.naver}', '_blank')">🚗 Naver</button>
                 <span class="toggle-icon">▼</span>
               </div>
             </div>
-            <div class="city-content">`;
+            <div class="section-content">`;
         cityData.items.forEach(item => {
           const id = `place-${cityData.city}-${item.name}`;
           const isVisited = visitedPlaces[id];
           html += `
-            <div class="place ${isVisited ? 'visited' : ''}">
-              <div class="place-name">${item.name}</div>
-              <div class="place-meta"><span class="stars">${'⭐'.repeat(item.stars)}</span></div>
-              <div class="place-desc">${item.desc}</div>
+            <div class="item ${isVisited ? 'visited' : ''}">
+              <div class="item-name">${item.name}</div>
+              <div class="item-meta"><span class="stars">${'⭐'.repeat(item.stars)}</span></div>
+              <div class="item-desc">${item.desc}</div>
               <div class="actions">
-                <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
-                <button class="btn-google" onclick="window.open('${item.google}', '_blank')">🗺️ Google</button>
+                <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅' : '☑️'} Отметить</button>
+                <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
                 <button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
               </div>
             </div>`;
@@ -333,18 +311,18 @@
     }
 
     function renderEats() {
-      let html = '<div class="city-section" style="border-left: 4px solid #e9c46a;"><div class="city-header" style="justify-content: center;">🍽️ Где поесть</div><div class="city-content">';
+      let html = '<div class="section"><div class="section-header">🍽️ Где поесть</div><div class="section-content">';
       eats.forEach(eat => {
         const id = `eat-${eat.city}-${eat.name}`;
         const isVisited = visitedEats[id];
         html += `
-          <div class="place ${isVisited ? 'visited' : ''}">
-            <div class="place-name">${eat.city}: ${eat.name}</div>
-            <div class="place-meta"><span class="stars">${'⭐'.repeat(eat.stars)}</span></div>
-            <div class="place-desc">${eat.desc}</div>
+          <div class="item ${isVisited ? 'visited' : ''}">
+            <div class="item-name">${eat.city}: ${eat.name}</div>
+            <div class="item-meta"><span class="stars">${'⭐'.repeat(eat.stars)}</span></div>
+            <div class="item-desc">${eat.desc}</div>
             <div class="actions">
-              <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Попробовано' : '☑️ Отметить'}</button>
-              <button class="btn-google" onclick="window.open('${eat.google}', '_blank')">🗺️ Google</button>
+              <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅' : '☑️'} Отметить</button>
+              <button class="btn-google" onclick="window.open('${eat.google}', '_blank')">gMaps</button>
               <button class="btn-naver" onclick="window.open('${eat.naver}', '_blank')">🚗 Naver</button>
             </div>
           </div>`;
@@ -353,59 +331,54 @@
       return html;
     }
 
-    function updateProgress() {
-      const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
-      const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
-      const totalEats = eats.length;
-      const visitedEatsCount = Object.values(visitedEats).filter(v => v).length;
-      document.getElementById('progressBar').innerHTML = 
-        `✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов`;
-    }
+    // === ОБРАБОТЧИКИ ===
+    document.addEventListener('click', function(e) {
+      // Переключение вкладок
+      if (e.target.classList.contains('tab')) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        e.target.classList.add('active');
+        const tabName = e.target.dataset.tab;
+        let content = '';
+        if (tabName === 'itinerary') content = renderItinerary();
+        else if (tabName === 'sights') content = renderSights();
+        else if (tabName === 'eats') content = renderEats();
+        document.getElementById('content').innerHTML = content;
 
-    function openMaps(googleUrl, naverUrl) {
-      if (confirm('Открыть карты для навигации?')) {
-        window.open(googleUrl, '_blank');
-        window.open(naverUrl, '_blank');
-      }
-    }
-
-    // === ИНИЦИАЛИЗАЦИЯ ===
-    function init() {
-      // Вкладки
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const tabName = tab.dataset.tab;
-          let content = '';
-          if (tabName === 'itinerary') content = renderItinerary();
-          else if (tabName === 'sights') content = renderSights();
-          else if (tabName === 'eats') content = renderEats();
-          document.getElementById('content').innerHTML = content;
-          updateProgress();
+        // Активируем аккордеоны
+        document.querySelectorAll('.section-header').forEach(header => {
+          header.addEventListener('click', function() {
+            const section = this.closest('.section');
+            section.classList.toggle('collapsed');
+          });
         });
-      });
 
-      // Обработчики отметок
-      document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('btn-done')) {
-          const id = e.target.dataset.id;
-          if (id.startsWith('place-')) {
-            visitedPlaces[id] = !visitedPlaces[id];
-            localStorage.setItem('visitedPlaces_korea2026', JSON.stringify(visitedPlaces));
-          } else if (id.startsWith('eat-')) {
-            visitedEats[id] = !visitedEats[id];
-            localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
-          }
-          document.querySelector('.tab.active').click(); // refresh
-        }
-      });
+        // Обработка отметок
+        document.querySelectorAll('.btn-done').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            if (id.startsWith('place-')) {
+              visitedPlaces[id] = !visitedPlaces[id];
+              localStorage.setItem('visitedPlaces_korea2026', JSON.stringify(visitedPlaces));
+            } else if (id.startsWith('eat-')) {
+              visitedEats[id] = !visitedEats[id];
+              localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
+            }
+            document.querySelector('.tab.active').click(); // refresh
+          });
+        });
+      }
 
-      // Загрузка первой вкладки
+      // Аккордеоны вне вкладок (на случай)
+      if (e.target.closest('.section-header')) {
+        const section = e.target.closest('.section');
+        section.classList.toggle('collapsed');
+      }
+    });
+
+    // Загрузка первой вкладки
+    window.onload = () => {
       document.querySelector('.tab[data-tab="itinerary"]').click();
-    }
-
-    init();
+    };
   </script>
 </body>
 </html>
