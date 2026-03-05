@@ -13,13 +13,19 @@
       --light-text: #6a7b7d;
       --visited-bg: #a5d6a7;
       --border: #e0e6e6;
+      --button-bg-google: #e3f2fd;
+      --button-bg-naver: #f9fbe7;
+      --button-bg-done: #e0f2f1;
     }
     .dark-mode {
-      --bg: #1a1e22;
+      --bg: #1e1e1e;
       --text: #e0e6e6;
       --light-text: #a0b0b0;
       --visited-bg: #1e3a28;
       --border: #333c3c;
+      --button-bg-google: #1e2a3a;
+      --button-bg-naver: #2a2a1e;
+      --button-bg-done: #1e2a28;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -147,6 +153,7 @@
     }
     .item.visited .item-name,
     .item.visited .item-desc,
+    .item.visited .price-info,
     .item.visited .avg-check {
       text-decoration: line-through !important;
       color: #00695c !important;
@@ -158,31 +165,17 @@
       padding-left: 20px;
       color: var(--text) !important;
     }
-    .item-meta {
-      font-size: 0.85em;
-      color: var(--light-text);
-      margin-bottom: 6px;
-      display: flex;
-      gap: 12px;
-      padding-left: 20px;
-    }
-    .stars {
-      color: #FFD700;
-    }
-    .price-tag {
-      display: inline-block;
-      background: #fff8e1;
-      color: #ff8f00;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.8em;
-      cursor: help;
-    }
     .item-desc {
       font-size: 0.95em;
       margin: 8px 0;
       color: var(--text) !important;
       padding-left: 20px;
+    }
+    .price-info {
+      font-size: 0.9em;
+      color: #ff8f00;
+      padding-left: 20px;
+      margin-top: 4px;
     }
     .avg-check {
       font-size: 0.9em;
@@ -210,19 +203,19 @@
       min-height: 44px;
     }
     .btn-done {
-      background: #e0f2f1;
+      background: var(--button-bg-done);
       color: var(--primary);
     }
     .btn-done.done {
-      background: #a5d6a7;
+      background: var(--visited-bg);
       color: #00695c;
     }
     .btn-google {
-      background: #e3f2fd;
+      background: var(--button-bg-google);
       color: #1565c0;
     }
     .btn-naver {
-      background: #f9fbe7;
+      background: var(--button-bg-naver);
       color: #5d4037;
     }
 
@@ -302,7 +295,8 @@
 
   <div id="content"></div>
   <button id="backToTop">↑</button>
-    <script>
+
+  <script>
     // === ТЕМА ===
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -317,7 +311,7 @@
       themeToggle.textContent = isDark ? '🌞' : '🌓';
     };
 
-    // === МАРШРУТ ИЗ EXCEL ===
+    // === МАРШРУТ ===
     const itinerary = [
       { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
       { date: "26.07", city: "Ульяновск", event: "Свадьба, второй день", time: "весь день" },
@@ -343,25 +337,29 @@
       { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
     ];
 
-    // === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: ГЕНЕРАЦИЯ Naver URL ===
+    // === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: Naver URL ===
     function getNaverUrl(googleUrl) {
-      // Для демонстрации — заменяем на корректный формат
-      // В реальности можно извлечь координаты или использовать известные ID
       return googleUrl
         .replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
         .replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
     }
 
-    // === МЕСТА (49) — В ПОРЯДКЕ МАРШРУТА ===
+    // === МЕСТА (49) ===
     const places = [
       {
         city: "Чеджудо",
         dates: "29–31.07",
         items: [
+          { name: "Seongsan Ilchulbong Peak", google: "https://maps.app.goo.gl/6XJjKkYQeFzZxWqR8", naver: getNaverUrl("https://maps.app.goo.gl/6XJjKkYQeFzZxWqR8"), desc: "Вулканический кратер у моря, знаменит восходами солнца. UNESCO.", stars: 5, price: "5 000 ₩ (~350 ₽)" },
           { name: "Hallasan", google: "https://maps.app.goo.gl/VJHXBTd1ya6mcASS9", naver: getNaverUrl("https://maps.app.goo.gl/VJHXBTd1ya6mcASS9"), desc: "Потухший вулкан с самой высокой вершиной в Южной Корее. Прогулки только днём.", stars: 5, price: null },
           { name: "Manjanggul Lava Tube", google: "https://maps.app.goo.gl/o2rre6nCiMuu9bta6", naver: getNaverUrl("https://maps.app.goo.gl/o2rre6nCiMuu9bta6"), desc: "Длинная лавовая трубка: уникальные сталактиты и сталагмиты, летучие мыши и насекомые.", stars: 5, price: "2 000 ₩ (~140 ₽)" },
+          { name: "Udo Island", google: "https://maps.app.goo.gl/UdoIsland", naver: getNaverUrl("https://maps.app.goo.gl/UdoIsland"), desc: "Маленький остров у Чеджудо. Паром 15 мин, аренда скутера.", stars: 4, price: "10 000 ₩ (~700 ₽)" },
           { name: "Cheonjeyeon Waterfall", google: "https://maps.app.goo.gl/SYALg4ejWNE7kyyg7", naver: getNaverUrl("https://maps.app.goo.gl/SYALg4ejWNE7kyyg7"), desc: "Водопад.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
-          { name: "Hamdeok Beach", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: getNaverUrl("https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7"), desc: "Пляж.", stars: 4, price: null }
+          { name: "Hamdeok Beach", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: getNaverUrl("https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7"), desc: "Пляж.", stars: 4, price: null },
+          { name: "Jeju Olle Trail Course 07", google: "https://maps.app.goo.gl/Olle07", naver: getNaverUrl("https://maps.app.goo.gl/Olle07"), desc: "Прогулочная тропа от Seogwipo к водопаду Cheonjiyeon (~5 км).", stars: 4, price: null },
+          { name: "Loveland Jeju", google: "https://maps.app.goo.gl/LovelandJeju", naver: getNaverUrl("https://maps.app.goo.gl/LovelandJeju"), desc: "Музей эротического искусства под открытым небом. Возраст 18+.", stars: 3, price: "12 000 ₩ (~840 ₽)" },
+          { name: "Teddy Bear Museum Jeju", google: "https://maps.app.goo.gl/TeddyBearJeju", naver: getNaverUrl("https://maps.app.goo.gl/TeddyBearJeju"), desc: "Коллекция медведей в исторических костюмах.", stars: 2, price: "10 000 ₩ (~700 ₽)" },
+          { name: "Jeju Folk Village Museum", google: "https://maps.app.goo.gl/JFVM", naver: getNaverUrl("https://maps.app.goo.gl/JFVM"), desc: "Реконструкция деревни XVIII века.", stars: 2, price: "8 000 ₩ (~560 ₽)" }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
@@ -371,9 +369,13 @@
           { name: "Everland", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: getNaverUrl("https://maps.app.goo.gl/MFSPBRxuYLR51QgY8"), desc: "Популярный загородный парк развлечений с аттракционами, представлениями, магазинами, ресторанами и зоопарком.", stars: 5, price: "64 000 ₩ (~4 480 ₽)" },
           { name: "Lotte World", google: "https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6", naver: getNaverUrl("https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6"), desc: "Семейный парк развлечений с аттракционами, водными горками и выставками морских животных.", stars: 5, price: "59 000 ₩ (~4 130 ₽)" },
           { name: "N Seoul Tower", google: "https://maps.app.goo.gl/GtR1ecNoH3p4yyou5", naver: getNaverUrl("https://maps.app.goo.gl/GtR1ecNoH3p4yyou5"), desc: "Всемирно известная башня 1980 года с панорамным видом на город и вращающимся рестораном.", stars: 5, price: "12 500 ₩ (~875 ₽)" },
+          { name: "Gyeongbokgung Palace", google: "https://maps.app.goo.gl/Gyeongbokgung", naver: getNaverUrl("https://maps.app.goo.gl/Gyeongbokgung"), desc: "Главный королевский дворец династии Чосон.", stars: 5, price: "3 000 ₩ (~210 ₽)" },
           { name: "Bukchon Hanok Village", google: "https://maps.app.goo.gl/uRax1hojgvW4fZMk9", naver: getNaverUrl("https://maps.app.goo.gl/uRax1hojgvW4fZMk9"), desc: "Деревня с узкими улицами и отреставрированными домами в традиционном корейском стиле, построенная в XIV веке.", stars: 5, price: null },
-          { name: "Gwangjang Market", google: "https://maps.app.goo.gl/RWtgP9ievju5Y2w66", naver: getNaverUrl("https://maps.app.goo.gl/RWtgP9ievju5Y2w66"), desc: "Оживлённый торговый район с широким выбором традиционных продуктов питания, одежды и сувениров.", stars: 4, price: null },
-          { name: "COEX Mall & Starfield Library", google: "https://maps.app.goo.gl/hjVu7uvYHjMue8z96", naver: getNaverUrl("https://maps.app.goo.gl/hjVu7uvYHjMue8z96"), desc: "Самая красивая библиотека в Азии — двухэтажный зал с 60 000 книг. Эффект \"Интерстеллар\". Вход свободный.", stars: 4, price: null }
+          { name: "COEX Mall & Starfield Library", google: "https://maps.app.goo.gl/hjVu7uvYHjMue8z96", naver: getNaverUrl("https://maps.app.goo.gl/hjVu7uvYHjMue8z96"), desc: "Самая красивая библиотека в Азии — двухэтажный зал с 60 000 книг. Эффект \"Интерстеллар\". Вход свободный.", stars: 4, price: null },
+          { name: "Myeongdong Shopping Street", google: "https://maps.app.goo.gl/wHsZoFKPSbwLhS1K6", naver: getNaverUrl("https://maps.app.goo.gl/wHsZoFKPSbwLhS1K6"), desc: "Центральная торговая улица Сеула. Магазины средней и высокой ценовой категории, международные и корейские косметические бренды.", stars: 4, price: null },
+          { name: "Insadong", google: "https://maps.app.goo.gl/Insadong", naver: getNaverUrl("https://maps.app.goo.gl/Insadong"), desc: "Улица антиквариата, чайных домов и корейской культуры.", stars: 4, price: null },
+          { name: "Hongdae Street", google: "https://maps.app.goo.gl/71yXZLrTD7XWW3fM7", naver: getNaverUrl("https://maps.app.goo.gl/71yXZLrTD7XWW3fM7"), desc: "Яркие вывески, стрит-фуд, Wall of Love, 3D Trick Art Museum — популярные фото-зоны.", stars: 3, price: null },
+          { name: "Dongdaemun Design Plaza (DDP)", google: "https://maps.app.goo.gl/2Nmqfgk5k6stmNh48", naver: getNaverUrl("https://maps.app.goo.gl/2Nmqfgk5k6stmNh48"), desc: "Футуристический архитектурный комплекс с рынком дизайнерских изделий и еды.", stars: 3, price: null }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
@@ -388,8 +390,10 @@
         city: "Чиндо",
         dates: "04–05.08",
         items: [
+          { name: "Jindo Miracle Sea Road", google: "https://maps.app.goo.gl/JindoMiracle", naver: getNaverUrl("https://maps.app.goo.gl/JindoMiracle"), desc: "«Мост Моисея» — море расступается 1–2 раза в год (апрель–май). В августе НЕ работает.", stars: 5, price: null },
           { name: "Ностальгия 1", google: "https://maps.app.goo.gl/4SxqYtpkzoSG3oTY7", naver: getNaverUrl("https://maps.app.goo.gl/4SxqYtpkzoSG3oTY7"), desc: "Поселок. Место, где жил и работал 2 месяца в 2019 году.", stars: 5, price: null },
-          { name: "Ностальгия 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: getNaverUrl("https://maps.app.goo.gl/oWkExLckP84Aoec57"), desc: "Пристань. Место, где жил и работал 2 месяца в 2019 году. Выходил отсюда в море.", stars: 5, price: null }
+          { name: "Ностальгия 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: getNaverUrl("https://maps.app.goo.gl/oWkExLckP84Aoec57"), desc: "Пристань. Место, где жил и работал 2 месяца в 2019 году. Выходил отсюда в море.", stars: 5, price: null },
+          { name: "Ностальгия 3", google: "https://maps.app.goo.gl/8FnignXcCoL7sZD9A", naver: getNaverUrl("https://maps.app.goo.gl/8FnignXcCoL7sZD9A"), desc: "Место, куда я ходил купаться после работы или в выходные дни в 2019 году.", stars: 5, price: null }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
@@ -398,53 +402,104 @@
         items: [
           { name: "Haedong Yonggungsa Temple", google: "https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7", naver: getNaverUrl("https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7"), desc: "Храм на побережье Восточного моря среди скал. Считается, что здесь исполняются желания.", stars: 5, price: null },
           { name: "Jagalchi Market (Рынок Чагальчхи)", google: "https://maps.app.goo.gl/hzqzbADXyNq1w54U9", naver: getNaverUrl("https://maps.app.goo.gl/hzqzbADXyNq1w54U9"), desc: "Крупнейший рыбный рынок в Азии. Свежие морепродукты: морские огурцы, живые осьминоги, морские ушки.", stars: 5, price: null },
-          { name: "Gamcheon Culture Village", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: getNaverUrl("https://maps.app.goo.gl/th2ccHaMFK3GyTHA9"), desc: "Живописная деревня с разноцветными домами, настенными росписями, магазинами и кафе.", stars: 4, price: "5 000 ₩ (~350 ₽)" }
+          { name: "Gamcheon Culture Village", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: getNaverUrl("https://maps.app.goo.gl/th2ccHaMFK3GyTHA9"), desc: "Живописная деревня с разноцветными домами, настенными росписями, магазинами и кафе.", stars: 4, price: "5 000 ₩ (~350 ₽)" },
+          { name: "Haeundae Beach", google: "https://maps.app.goo.gl/oHpFrAyibsCshKCr8", naver: getNaverUrl("https://maps.app.goo.gl/oHpFrAyibsCshKCr8"), desc: "Главный пляж Пусана. Прогулки, фото, уличный стритфуд и вечерняя атмосфера с музыкой.", stars: 4, price: null },
+          { name: "Gwangalli Beach", google: "https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9", naver: getNaverUrl("https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9"), desc: "Популярный изогнутый пляж с золотистым песком, соломенными зонтиками и видом на мост Кванан.", stars: 4, price: null },
+          { name: "Beomeosa Temple", google: "https://maps.app.goo.gl/Beomeosa", naver: getNaverUrl("https://maps.app.goo.gl/Beomeosa"), desc: "Древний буддийский храм в горах.", stars: 4, price: null },
+          { name: "Haeundae Blueline Park", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: getNaverUrl("https://maps.app.goo.gl/nqqFpzfLmDCg22N39"), desc: "Парк вдоль скалистого побережья. Sky Capsule — разноцветные кабинки.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
         city: "Кёнджу",
         dates: "09.08",
         items: [
-          { name: "Bulguksa Temple", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: getNaverUrl("https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6"), desc: "Шедевр буддийской архитектуры VIII века, объект ЮНЕСКО. Каменные пагоды Сеокгап и Дабоп.", stars: 5, price: "6 000 ₩ (~420 ₽)" },
-          { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: getNaverUrl("https://maps.app.goo.gl/ioybbGuoWnpKxVDU6"), desc: "Древнейшая обсерватория в Восточной Азии (VII век). Построена во времена королевы Сондок.", stars: 5, price: null }
+          { name: "Bulguksa Temple", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: getNaverUrl("https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6"), desc: "Шедевр буддийской архитектуры VIII века, объект ЮНЕСКО.", stars: 5, price: "6 000 ₩ (~420 ₽)" },
+          { name: "Seokguram Grotto", google: "https://maps.app.goo.gl/Seokguram", naver: getNaverUrl("https://maps.app.goo.gl/Seokguram"), desc: "Каменная пещера с буддийской статуей.", stars: 4, price: "6 000 ₩ (~420 ₽)" },
+          { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: getNaverUrl("https://maps.app.goo.gl/ioybbGuoWnpKxVDU6"), desc: "Древнейшая обсерватория в Восточной Азии (VII век).", stars: 4, price: null },
+          { name: "Anapji Pond", google: "https://maps.app.goo.gl/Anapji", naver: getNaverUrl("https://maps.app.goo.gl/Anapji"), desc: "Искусственное озеро эпохи Силла.", stars: 3, price: null }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
         city: "Андон",
         dates: "09.08",
         items: [
-          { name: "Hahoe Folk Village", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: getNaverUrl("https://maps.app.goo.gl/F751rGBbkpVj7MhP6"), desc: "Традиционная деревня ханоков, объект ЮНЕСКО. Родовое поместье клана Рю с 600-летней историей.", stars: 5, price: "5 000 ₩ (~350 ₽)" }
+          { name: "Hahoe Folk Village", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: getNaverUrl("https://maps.app.goo.gl/F751rGBbkpVj7MhP6"), desc: "Традиционная деревня ханоков, объект ЮНЕСКО.", stars: 5, price: "5 000 ₩ (~350 ₽)" },
+          { name: "Andong Mask Dance Festival Museum", google: "https://maps.app.goo.gl/AndongMaskMuseum", naver: getNaverUrl("https://maps.app.goo.gl/AndongMaskMuseum"), desc: "Музей, посвящённый фестивалю масок.", stars: 3, price: "3 000 ₩ (~210 ₽)" }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
         city: "Сокчхо",
         dates: "10–12.08",
         items: [
-          { name: "Seoraksan NP Entrance (Seorak-dong)", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: getNaverUrl("https://maps.app.goo.gl/SL7yfUmvvSqQceR8A"), desc: "Главный вход в национальный парк. Начало основных маршрутов.", stars: 5, price: null },
-          { name: "Ulsanbawi Peak", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: getNaverUrl("https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6"), desc: "Восхождение на знаменитую скалу с 800 ступенями. Потрясающие виды на горы и море.", stars: 5, price: null },
-          { name: "Seorak Hot Springs", google: "https://maps.app.goo.gl/SeorakSpaValley", naver: "https://map.naver.com/p/search/Seorak+Spa+Valley", desc: "Горячие источники после треккинга — идеальное завершение дня. Без ночлега, вход включает душ, сауну, бассейн.", stars: 4, price: "12 000 ₩ (~840 ₽)" }
+          { name: "Seoraksan NP Entrance", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: getNaverUrl("https://maps.app.goo.gl/SL7yfUmvvSqQceR8A"), desc: "Главный вход в национальный парк. Начало основных маршрутов.", stars: 5, price: null },
+          { name: "Ulsanbawi Peak", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: getNaverUrl("https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6"), desc: "Восхождение на знаменитую скалу с 800 ступенями.", stars: 5, price: null },
+          { name: "Sinheungsa Temple", google: "https://maps.app.goo.gl/4eUe1KpCvvLRNebB6", naver: getNaverUrl("https://maps.app.goo.gl/4eUe1KpCvvLRNebB6"), desc: "Древний буддийский храм с подвесным мостом.", stars: 4, price: null },
+          { name: "Seorak Hot Springs", google: "https://maps.app.goo.gl/SeorakSpaValley", naver: "https://map.naver.com/p/search/Seorak+Spa+Valley", desc: "Горячие источники после треккинга — идеальное завершение дня. Без ночлега.", stars: 4, price: "12 000 ₩ (~840 ₽)" },
+          { name: "Naksansa Temple", google: "https://maps.app.goo.gl/Naksansa", naver: getNaverUrl("https://maps.app.goo.gl/Naksansa"), desc: "Храм у Восточного моря.", stars: 4, price: null }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       },
       {
         city: "Самчхок",
         dates: "10.08",
         items: [
-          { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: getNaverUrl("https://maps.app.goo.gl/98DJqVfivdeHAmWt9"), desc: "Единственный в стране маршрут для катания на велосипеде по побережью Восточного моря. Длина 5,4 км, туннель со световыми шоу, сосны Gomsol.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" }
+          { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: getNaverUrl("https://maps.app.goo.gl/98DJqVfivdeHAmWt9"), desc: "Маршрут для катания на велосипеде по побережью Восточного моря.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" }
         ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
       }
     ];
 
-    // === ЕДА (35) — аналогично, в порядке маршрута ===
+    // === ЕДА (35) ===
     const eats = [
       {
         city: "Чеджудо",
         dates: "29–31.07",
         items: [
-          { name: "Yeondong Doldam Black Pork", google: "https://maps.app.goo.gl/noyXi6zwUnWkjYjS6", naver: getNaverUrl("https://maps.app.goo.gl/noyXi6zwUnWkjYjS6"), desc: "Фирменное блюдо острова! Нежнейшая свинина, приготовленная на гриле.", dish: "Чёрная свинина Чеджу", stars: 4.6, avgCheck: "22 000 ₩ (1 540 ₽)" },
-          { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: getNaverUrl("https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9"), desc: "Традиционное блюдо Чеджу. Свинину подают на деревянной доске.", dish: "Чёрная свинина, домбегоги", stars: 4.7, avgCheck: "25 000 ₩ (1 750 ₽)" }
+          { name: "Yeondong Doldam Black Pork", google: "https://maps.app.goo.gl/noyXi6zwUnWkjYjS6", naver: getNaverUrl("https://maps.app.goo.gl/noyXi6zwUnWkjYjS6"), desc: "Фирменное блюдо острова! Нежнейшая свинина, приготовленная на гриле.", avgCheck: "22 000 ₩ (1 540 ₽)", stars: 4.6 },
+          { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: getNaverUrl("https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9"), desc: "Традиционное блюдо Чеджу. Свинину подают на деревянной доске.", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.7 },
+          { name: "Gozip Dol Wooluck", google: "https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A", naver: getNaverUrl("https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A"), desc: "Свежие морепродукты с видом на море.", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
+          { name: "Hamdeok Beach Seafood Restaurants", google: "https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26", naver: getNaverUrl("https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26"), desc: "Рестораны у пляжа Хамдок. Свежие морепродукты от хэнё.", avgCheck: "30 000 ₩ (2 100 ₽)", stars: 4.5 }
+        ].sort((a, b) => b.stars - a.stars)
+      },
+      {
+        city: "Сеул",
+        dates: "01–03.08 / 13–16.08",
+        items: [
+          { name: "N Grill", google: "https://maps.app.goo.gl/XXXLPP5eafu27RJN7", naver: getNaverUrl("https://maps.app.goo.gl/XXXLPP5eafu27RJN7"), desc: "Ресторан с панорамным видом 360° на вращающейся площадке.", avgCheck: "80 000 ₩ (5 600 ₽)", stars: 4.7 },
+          { name: "Bukchon Traditional Tea House", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: getNaverUrl("https://maps.app.goo.gl/eypKWbH6RA5QVhzA6"), desc: "Уютное место в традиционном доме в деревне Пукчхон.", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
+          { name: "Hankook Jib", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: getNaverUrl("https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6"), desc: "Старейший ресторан пибимбапа (с 1952 года!).", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
+          { name: "Everland Food Court", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: getNaverUrl("https://maps.app.goo.gl/MFSPBRxuYLR51QgY8"), desc: "Разнообразная еда внутри парка Everland.", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.5 }
+        ].sort((a, b) => b.stars - a.stars)
+      },
+      {
+        city: "Пусан",
+        dates: "06–08.08",
+        items: [
+          { name: "Haeundae Amsogalbijip", google: "https://maps.app.goo.gl/2yogqxPPFTmLFmTc7", naver: getNaverUrl("https://maps.app.goo.gl/2yogqxPPFTmLFmTc7"), desc: "Одно из лучших BBQ мест в Пусане. Премиум говядина хану.", avgCheck: "45 000 ₩ (3 150 ₽)", stars: 4.7 },
+          { name: "총각상회 (Chong Gak Jagalchi Market)", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: getNaverUrl("https://maps.app.goo.gl/3jDzgSmUaCsXaYg47"), desc: "Ешьте прямо на рынке! Свежайшие морепродукты.", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.6 }
+        ].sort((a, b) => b.stars - a.stars)
+      },
+      {
+        city: "Сокчхо",
+        dates: "10–12.08",
+        items: [
+          { name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: getNaverUrl("https://maps.app.goo.gl/74maPUUkfnqdR5hb9"), desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами.", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.9 },
+          { name: "황가네찜 (Hwanggane Jjim)", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: getNaverUrl("https://maps.app.goo.gl/k6fScSGt8j5HoEaL8"), desc: "Ресторан с традиционной корейской рыбой на пару.", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 }
+        ].sort((a, b) => b.stars - a.stars)
+      },
+      {
+        city: "Чонджу",
+        dates: "04.08",
+        items: [
+          { name: "Gogung Suragan", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: getNaverUrl("https://maps.app.goo.gl/drdaeYG6DioZEne7A"), desc: "Один из лучших ресторанов пибимбапа!", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.6 },
+          { name: "Hankook Jib", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: getNaverUrl("https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6"), desc: "Старейший ресторан пибимбапа (с 1952 года!).", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 }
+        ].sort((a, b) => b.stars - a.stars)
+      },
+      {
+        city: "Андон",
+        dates: "09.08",
+        items: [
+          { name: "Andong Jjimdak Alley Restaurants", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: getNaverUrl("https://maps.app.goo.gl/NsMA9HFNURKJeVtk6"), desc: "Улица с десятками ресторанов ччимтака!", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.5 }
         ].sort((a, b) => b.stars - a.stars)
       }
-      // ... остальные города — по такому же принципу
     ];
 
     // === ЧИМЧИЛЬБАНЫ ===
@@ -452,14 +507,14 @@
       {
         city: "Сеул",
         items: [
-          { name: "Samho Gungjeon Sauna", google: "https://maps.app.goo.gl/YAKin24Y17vFW1Hj7", naver: getNaverUrl("https://maps.app.goo.gl/YAKin24Y17vFW1Hj7"), desc: "Самый пафосный и красивый из всех чимчильбан.", stars: 4.8, price: "22 000 ₩ (~1 540 ₽)" },
-          { name: "Riverside Spa Land", google: "https://maps.app.goo.gl/LmG4dU1QkyNukhLq9", naver: getNaverUrl("https://maps.app.goo.gl/LmG4dU1QkyNukhLq9"), desc: "Чимчильбан. Тут я ночевал в 2019.", stars: 4.5, price: "18 000 ₩ (~1 260 ₽)" }
+          { name: "Samho Gungjeon Sauna", google: "https://maps.app.goo.gl/YAKin24Y17vFW1Hj7", naver: getNaverUrl("https://maps.app.goo.gl/YAKin24Y17vFW1Hj7"), desc: "Самый пафосный и красивый из всех чимчильбан.", price: "22 000 ₩ (~1 540 ₽)", stars: 4.8 },
+          { name: "Riverside Spa Land", google: "https://maps.app.goo.gl/LmG4dU1QkyNukhLq9", naver: getNaverUrl("https://maps.app.goo.gl/LmG4dU1QkyNukhLq9"), desc: "Чимчильбан. Тут я ночевал в 2019.", price: "18 000 ₩ (~1 260 ₽)", stars: 4.5 }
         ].sort((a, b) => b.stars - a.stars)
       },
       {
         city: "Сокчхо",
         items: [
-          { name: "Seorak Spa Valley", google: "https://maps.app.goo.gl/SeorakSpaValley", naver: "https://map.naver.com/p/search/Seorak+Spa+Valley", desc: "Горячие источники после треккинга — идеальное завершение дня. Без ночлега, вход включает душ, сауну, бассейн.", stars: 4.6, price: "12 000 ₩ (~840 ₽)" }
+          { name: "Seorak Spa Valley", google: "https://maps.app.goo.gl/SeorakSpaValley", naver: "https://map.naver.com/p/search/Seorak+Spa+Valley", desc: "Горячие источники после треккинга — идеальное завершение дня. Без ночлега.", price: "12 000 ₩ (~840 ₽)", stars: 4.6 }
         ].sort((a, b) => b.stars - a.stars)
       }
     ];
@@ -469,10 +524,10 @@
     let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
     let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 
-    // === ФУНКЦИИ ОТОБРАЖЕНИЯ ===
+    // === ФУНКЦИИ ===
     function renderItinerary() {
       return `
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmNWY1ZjUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2NjYyI+TWFwIG9mIEtvcmVhPC90ZXh0Pjwvc3ZnPg==" alt="Маршрут по Южной Корее" class="route-map">
+        <img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
         <table class="calendar">
           <thead><tr><th>Дата</th><th>Город</th><th>Событие</th><th>Время</th></tr></thead>
           <tbody>${itinerary.map(i => `<tr><td>${i.date}</td><td>${i.city}</td><td>${i.event}</td><td>${i.time}</td></tr>`).join('')}</tbody>
@@ -489,8 +544,9 @@
           const isVisited = visitedPlaces[id];
           html += `
             <div class="item ${isVisited ? 'visited' : ''}">
-              <div class="item-name">${item.name}${item.price ? `<span class="price-tag" title="Вход: ${item.price}">💵</span>` : ''}</div>
+              <div class="item-name">${item.name}</div>
               <div class="item-desc">${item.desc}</div>
+              ${item.price ? `<div class="price-info">Вход: ${item.price}</div>` : ''}
               <div class="actions">
                 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
                 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -538,7 +594,7 @@
             <div class="item ${isVisited ? 'visited' : ''}">
               <div class="item-name">${item.name}</div>
               <div class="item-desc">${item.desc}</div>
-              <div class="avg-check">Вход: ${item.price}</div>
+              <div class="price-info">Вход: ${item.price}</div>
               <div class="actions">
                 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
                 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -616,5 +672,5 @@
       document.querySelector('.tab[data-tab="itinerary"]').click();
     };
   </script>
-  </body>
+</body>
 </html>
