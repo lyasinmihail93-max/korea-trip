@@ -17,7 +17,8 @@
 --button-bg-naver: #f9fbe7;
 --button-bg-done: #e0f2f1;
 }
-/* .dark-mode был удалён */
+/* .dark-mode и связанные переменные удалены */
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -42,7 +43,7 @@ color: var(--primary);
 font-size: 0.9em;
 color: var(--light-text);
 }
-/* Theme toggle был удалён */
+/* Theme toggle полностью удалён */
 /* Tabs */
 .tabs {
 display: flex;
@@ -93,9 +94,10 @@ min-height: 44px;
 }
 .toggle-icon {
 font-size: 0.7em;
-transition: transform 0.3s;
+transition.3s;
 }
-.section.collapsed .toggle rotate(0deg);
+.section.collapsed .toggle-icon {
+transform: rotate(0deg);
 }
 .section:not(.collapsed) .toggle-icon {
 transform: rotate(180deg);
@@ -239,7 +241,8 @@ right: 20px;
 background: var(--primary);
 color: white;
 width: 44px;
-height: 44px 50%;
+height: 44px;
+border-radius: 50%;
 border: none;
 font-size: 18px;
 cursor: pointer;
@@ -267,12 +270,6 @@ body { max-width: 800px; margin: 0 auto; }
 <div id="content"></div>
 <button id="backToTop">↑</button>
 <script>
-// === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: Naver URL ===
-function getNaverUrl(googleUrl) {
-return googleUrl
-.replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
-.replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
-}
 // === МАРШРУТ ===
 const itinerary = [
 { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
@@ -298,6 +295,12 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
+// === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: Naver URL ===
+function getNaverUrl(googleUrl) {
+return googleUrl
+.replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
+.replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
+}
 // === МЕСТА (47) ===
 const places = [
 {
@@ -361,7 +364,7 @@ items: [
 { name: "Gwangalli Beach", google: "https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9", naver: getNaverUrl("https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9"), desc: "Популярный изогнутый пляж с золотистым песком, соломенными зонтиками и видом на мост Кванан.", stars: 4, price: null },
 { name: "Haeundae Blueline Park - Cheongsapo", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: getNaverUrl("https://maps.app.goo.gl/nqqFpzfLmDCg22N39"), desc: "Парк протяжённостью 4,8 км вдоль скалистого побережья. Двухуровневый маршрут: внизу Beach Train, сверху Sky Capsule — разноцветные кабинки.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" },
 { name: "Ahopsan Forest", google: "https://maps.app.goo.gl/GcdrV3QAfdac3GJ88", naver: getNaverUrl("https://maps.app.goo.gl/GcdrV3QAfdac3GJ88"), desc: "Королевский бамбуковый лес. Давным-давно сюда привезли бамбуковые ростки из Китая для императорской знати. Атмосфера как в дорамах.", stars: 4, price: null },
-{ name: "Dadaepo Beach", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: getNaverUrl("https://maps.app.goo.glVF2u6487XA"), desc: "Морской пляж. Мелкий.", stars: 3, price: null }
+{ name: "Dadaepo Beach", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: getNaverUrl("https://maps.app.goo.gl/tLteQedVF2u6487XA"), desc: "Морской пляж. Мелкий.", stars: 3, price: null }
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 },
 {
@@ -439,9 +442,7 @@ items: [
 { name: "Gogung Suragan", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: getNaverUrl("https://maps.app.goo.gl/drdaeYG6DioZEne7A"), desc: "Один из лучших ресторанов пибимбапа! Подают в традиционном доме в деревне ханоков.", dish: "Чонджу пибимпап", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.6 },
 { name: "Jeonju Hanok Village Food Stalls", google: "https://maps.app.goo.gl/US8YxCkGmuHN1rhH9", naver: getNaverUrl("https://maps.app.goo.gl/US8YxCkGmuHN1rhH9"), desc: "Уличные закуски в деревне ханоков. Попробуйте традиционные корейские сладости.", dish: "Чхонгваджа, юкчон", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.4 }
 ].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Чиндо",
+ "Чиндо",
 dates: "04–05.08",
 items: [
 { name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5", naver: getNaverUrl("https://maps.app.goo.gl/uREFpsm6b4dGT8qu5"), desc: "Уютный семейный ресторан с домашней корейской кухней. Идеален после работы на море.", dish: "Местный суп с морепродуктами, свежая рыба", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.0 },
@@ -457,7 +458,7 @@ items: [
 { name: "Millac Live Fish Sashimi Market", google: "https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA", naver: getNaverUrl("https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA"), desc: "Центр сырой рыбы с десятками ресторанов. Выбираете рыбу — вам её готовят.", dish: "Сашими из свежей рыбы", avgCheck: "40 000 ₩ (2 800 ₽)", stars: 4.5 },
 { name: "Gwangalli Beach Restaurants", google: "https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9", naver: getNaverUrl("https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9"), desc: "Рестораны у пляжа Кваналли с видом на освещённый мост. Идеально для вечера.", dish: "Морепродукты, пиво с видом на мост", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.5 },
 { name: "총각상회 (Chong Gak Jagalchi Market)", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: getNaverUrl("https://maps.app.goo.gl/3jDzgSmUaCsXaYg47"), desc: "Ешьте прямо на рынке! Свежайшие морепродукты, которые выбрали сами.", dish: "Сашими, живые осьминоги", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.5 },
-{ name: "Gaemi-jip Seomyeon", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: getNaverUrl("https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7"), desc: "Популярный ресторан с отличным соотношением цены и качества.", dish: "Чорихэ, морепродукты", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.4 }
+{ name: "Gaemi-jip Seomyeon", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: getNaverUrl("https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7"), desc: "Популярный ресторан с отличным соотношением цены и качества.", dish: "Чорихэ, морепродукты", avgCheck: "20 00 ₩ (1 400 ₽)", stars: 4.4 }
 ].sort((a, b) => b.stars - a.stars)
 },
 {
@@ -465,7 +466,7 @@ city: "Кёнджу",
 dates: "09.08",
 items: [
 { name: "Hwangnamppang Original Store", google: "https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7", naver: getNaverUrl("https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7"), desc: "Легендарная выпечка Кёнджу! Печётся с 1939 года. Must-try перекус.", dish: "Хваннамппан", avgCheck: "2 000 ₩ (140 ₽)", stars: 4.8 },
-{ name: "Starbucks Hanok", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: getNaverUrl("https://maps.app.goo.gl/h3NGUnbd2rxir1A49"), desc: "Старбакс в корейском здании ханока.", dish: "Кофе, десерты", avgCheck: "6 000 ₩ (420 ₽)", stars: 4.5 },
+{ name: "Starbucks Hanok", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: getNaverUrl("https://maps.app.goo.gl/h3NGUnbd2rxir1A49"), desc: "Ст корейском здании ханока.", dish: "Кофе, десерты", avgCheck: "6 000 ₩ (420 ₽)", stars: 4.5 },
 { name: "Gyori Gimbap", google: "https://maps.app.goo.gl/vShDCxT34ueAPT7RA", naver: getNaverUrl("https://maps.app.goo.gl/vShDCxT34ueAPT7RA"), desc: "Известный ресторан с традиционным кимбапом. Работает десятилетиями.", dish: "Кимбап, традиционная корейская еда", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.5 }
 ].sort((a, b) => b.stars - a.stars)
 },
@@ -474,14 +475,15 @@ city: "Андон",
 dates: "09.08",
 items: [
 { name: "Andong Jjimdak Alley Restaurants", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: getNaverUrl("https://maps.app.goo.gl/NsMA9HFNURKJeVtk6"), desc: "Улица с десятками ресторанов ччимтака! Курица с овощами и лапшой в соевом соусе.", dish: "Андон ччимтак", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.5 },
-{ name: "Okya Restaurant", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: getNaverUrl("https://maps.app.goo.gl/CDx49fwiHDUNHobB9"), desc: "Ресторан с традиционной кухней Андона. Попробуйте местную лапшу из гороховой муки.", dish: "Андон кукси, традиционные блюда", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.4 }
+{ name: "Okya Restaurant", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: getNaverUrl("https://maps.app.goo.gl/CDx49fwiHDUNHobB9"), desc: "Ресторан с традиционной кухней Андона. Попробуйте местную лапшу из гороховой му "Андон кукси, традиционные блюда", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.4 }
 ].sort((a, b) => b.stars - a.stars)
 },
 {
 city: "Сокчхо/Сораксан",
 dates: "10–12.08",
 items: [
-{ name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: getNaverUrl("https://maps.app.goo.gl/74maPUUkfnqdR5hb9"), desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами. Недалеко от Сораксана.", dish: "Морепродукты от хэнё, абалон", avgCheck: "35 000 ₩ (2 450 ₽)", stars: { name: "황가네찜 (Hwanggane Jjim)", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: getNaverUrl("https://maps.app.goo.gl/k6fScSGt8j5HoEaL8"), desc: "Ресторан с традиционной корейской рыбой на пару. Нежно и полезно. Местные жители и туристы высоко оценивают.", dish: "생선찜 (рыба на пару), 매운탕 (острый рыбный суп)", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
+{ name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: getNaverUrl("https://maps.app.goo.gl/74maPUUkfnqdR5hb9"), desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами. Недалеко от Сораксана.", dish: "Морепродукты от хэнё, абалон", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.9 },
+{ name: "황가네찜 (Hwanggane Jjim)", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: getNaverUrl("https://maps.app.goo.gl/k6fScSGt8j5HoEaL8"), desc: "Ресторан с традиционной корейской рыбой на пару. Нежно и полезно. Местные жители и туристы высоко оценивают.", dish: "생선찜 (рыба на пару), 매운탕 (острый рыбный суп)", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
 { name: "Sokcho Tourist Fish Market", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: getNaverUrl("https://maps.app.goo.gl/BvnGzoeeSCZVLRV76"), desc: "Рынок с фудкортом. Попробуйте всё: от жареной рыбы до морских блинчиков.", dish: "Уличная еда, жареные морепродукты", avgCheck: "10 000 ₩ (700 ₽)", stars: 4.3 },
 { name: "Cheongchosu Mulheo", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: getNaverUrl("https://maps.app.goo.gl/6JSvSoz41R6qxZbT7"), desc: "Легендарный ресторан с фирменным холодным супом из свежей рыбы. Освежающе!", dish: "Мульхо", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.2 }
 ].sort((a, b) => b.stars - a.stars)
@@ -508,18 +510,7 @@ let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) 
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 
-// === ФУНКЦИИ ===
-function renderItinerary() {
-return `
-<img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
-<table class="calendar">
-<thead><tr><th>Дата</th><th>Город</th><th>Событие</th><th>Время</th></tr></thead>
-<tbody>${itinerary.map(i => `<tr><td>${i.date}</td><td>${i.city}</td><td>${i.event}</td><td>${i.time}</td></tr>`).join('')}</tbody>
-</table>
-`;
-}
-
-// --- Функция для генерации иконок звёзд ---
+// --- НОВАЯ ФУНКЦИЯ: Отрисовка иконок звёзд ---
 function renderStars(rating) {
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating % 1 >= 0.5;
@@ -535,6 +526,17 @@ for (let i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
 starsHtml += '☆';
 }
 return `<span class="item-stars">${starsHtml}</span>`;
+}
+
+// === ФУНКЦИИ ===
+function renderItinerary() {
+return `
+<img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
+<table class="calendar">
+<thead><tr><th>Дата</th><th>Город</th><th>Событие</th><th>Время</th></tr></thead>
+<tbody>${itinerary.map(i => `<tr><td>${i.date}</td><td>${i.city}</td><td>${i.event}</td><td>${i.time}</td></tr>`).join('')}</tbody>
+</table>
+`;
 }
 
 function renderSights() {
@@ -553,7 +555,7 @@ ${item.price ? `<div class="price-info">💰 Вход: ${item.price}</div>` : ''
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
-<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
+<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗>
 </div>
 </div>`;
 });
@@ -565,7 +567,7 @@ return html;
 function renderEats() {
 let html = '';
 eats.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div><div class="section-content">`;
+html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="</span></div><div class="section-content">`;
 cityData.items.forEach(item => {
 const id = `eat-${cityData.city}-${item.name}`;
 const isVisited = visitedEats[id];
