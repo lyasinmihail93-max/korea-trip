@@ -538,26 +538,23 @@ return `
 </table>
 `;
 }
-
 function renderSights() {
 let html = '';
 places.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div><div class="section-content">`;
+html += '<div class="section collapsed"><div class="section-header">' + cityData.city + ' (' + cityData.dates + ')<span class="toggle-icon">▼</span></div><div class="section-content">';
 cityData.items.forEach(item => {
-const id = `place-${cityData.city}-${item.name}`;
+const id = 'place-' + cityData.city + '-' + item.name;
 const isVisited = visitedPlaces[id];
-html += `
-<div class="item ${isVisited ? 'visited' : ''}">
-<div class="item-name">${item.name}</div>
-${renderStars(item.stars)} <!-- Иконки звёзд -->
-<div class="item-desc">${item.desc}</div>
-${item.price ? `<div class="price-info">💰 Вход: ${item.price}</div>` : ''}
-<div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
-<button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
-<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗>
-</div>
-</div>`;
+html += '<div class="item ' + (isVisited ? 'visited' : '') + '">' +
+'<div class="item-name">' + item.name + '</div>' +
+'<div class="item-desc">' + (item.desc || '') + '</div>' +
+(item.price ? '<div class="price-info">Вход: ' + item.price + '</div>' : '') +
+'<div class="actions">' +
+'<button class="btn-done ' + (isVisited ? 'done' : '') + '" data-id="' + id + '">' + (isVisited ? '✅ Посещено' : '☑️ Отметить') + '</button>' +
+'<button class="btn-google" onclick="window.open(\'' + item.google.replace(/'/g, '\\\'') + '\', \'_blank\')">gMaps</button>' +
+'<button class="btn-naver" onclick="window.open(\'' + item.naver.replace(/'/g, '\\\'') + '\', \'_blank\')">🚗 Naver</button>' +
+'</div>' +
+'</div>';
 });
 html += '</div></div>';
 });
@@ -567,22 +564,66 @@ return html;
 function renderEats() {
 let html = '';
 eats.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div><div class="section-content">`;
+html += '<div class="section collapsed"><div class="section-header">' + cityData.city + ' (' + cityData.dates + ')<span class="toggle-icon">▼</span></div><div class="section-content">';
 cityData.items.forEach(item => {
-const id = `eat-${cityData.city}-${item.name}`;
+const id = 'eat-' + cityData.city + '-' + item.name;
 const isVisited = visitedEats[id];
-html += `
-<div class="item ${isVisited ? 'visited' : ''}">
-<div class="item-name">${item.name}</div>
-${renderStars(item.stars)} <!-- Иконки звёзд -->
-<div class="item-desc">${item.desc}</div>
-<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>
-<div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Попробовано' : '☑️ Отметить'}</button>
-<button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
-<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
-</div>
-</div>`;
+html += '<div class="item ' + (isVisited ? 'visited' : '') + '">' +
+'<div class="item-name">' + item.name + '</div>' +
+'<div class="item-desc">' + (item.desc || '') + '</div>' +
+'<div class="avg-check">Средний чек: ' + item.avgCheck + '</div>' +
+'<div class="actions">' +
+'<button class="btn-done ' + (isVisited ? 'done' : '') + '" data-id="' + id + '">' + (isVisited ? '✅ Попробовано' : '☑️ Отметить') + '</button>' +
+'<button class="btn-google" onclick="window.open(\'' + item.google.replace(/'/g, '\\\'') + '\', \'_blank\')">gMaps</button>' +
+'<button class="btn-naver" onclick="window.open(\'' + item.naver.replace(/'/g, '\\\'') + '\', \'_blank\')">🚗 Naver</button>' +
+'</div>' +
+'</div>';
+});
+html += '</div></div>';
+});
+return html;
+}
+    
+function renderSights() {
+let html = '';
+places.forEach(cityData => {
+html += '<div class="section collapsed"><div class="section-header">' + cityData.city + ' (' + cityData.dates + ')<span class="toggle-icon">▼</span></div><div class="section-content">';
+cityData.items.forEach(item => {
+const id = 'place-' + cityData.city + '-' + item.name;
+const isVisited = visitedPlaces[id];
+html += '<div class="item ' + (isVisited ? 'visited' : '') + '">' +
+'<div class="item-name">' + item.name + '</div>' +
+'<div class="item-desc">' + (item.desc || '') + '</div>' +
+(item.price ? '<div class="price-info">Вход: ' + item.price + '</div>' : '') +
+'<div class="actions">' +
+'<button class="btn-done ' + (isVisited ? 'done' : '') + '" data-id="' + id + '">' + (isVisited ? '✅ Посещено' : '☑️ Отметить') + '</button>' +
+'<button class="btn-google" onclick="window.open(\'' + item.google.replace(/'/g, '\\\'') + '\', \'_blank\')">gMaps</button>' +
+'<button class="btn-naver" onclick="window.open(\'' + item.naver.replace(/'/g, '\\\'') + '\', \'_blank\')">🚗 Naver</button>' +
+'</div>' +
+'</div>';
+});
+html += '</div></div>';
+});
+return html;
+}
+
+function renderEats() {
+let html = '';
+eats.forEach(cityData => {
+html += '<div class="section collapsed"><div class="section-header">' + cityData.city + ' (' + cityData.dates + ')<span class="toggle-icon">▼</span></div><div class="section-content">';
+cityData.items.forEach(item => {
+const id = 'eat-' + cityData.city + '-' + item.name;
+const isVisited = visitedEats[id];
+html += '<div class="item ' + (isVisited ? 'visited' : '') + '">' +
+'<div class="item-name">' + item.name + '</div>' +
+'<div class="item-desc">' + (item.desc || '') + '</div>' +
+'<div class="avg-check">Средний чек: ' + item.avgCheck + '</div>' +
+'<div class="actions">' +
+'<button class="btn-done ' + (isVisited ? 'done' : '') + '" data-id="' + id + '">' + (isVisited ? '✅ Попробовано' : '☑️ Отметить') + '</button>' +
+'<button class="btn-google" onclick="window.open(\'' + item.google.replace(/'/g, '\\\'') + '\', \'_blank\')">gMaps</button>' +
+'<button class="btn-naver" onclick="window.open(\'' + item.naver.replace(/'/g, '\\\'') + '\', \'_blank\')">🚗 Naver</button>' +
+'</div>' +
+'</div>';
 });
 html += '</div></div>';
 });
@@ -592,35 +633,24 @@ return html;
 function renderSpas() {
 let html = '';
 spas.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city}<span class="toggle-icon">▼</span></div><div class="section-content">`;
+html += '<div class="section collapsed"><div class="section-header">' + cityData.city + '<span class="toggle-icon">▼</span></div><div class="section-content">';
 cityData.items.forEach(item => {
-const id = `spa-${cityData.city}-${item.name}`;
+const id = 'spa-' + cityData.city + '-' + item.name;
 const isVisited = visitedSpas[id];
-html += `
-<div class="item ${isVisited ? 'visited' : ''}">
-<div class="item-name">${item.name}</div>
-${renderStars(item.stars)} <!-- Иконки звёзд -->
-<div class="item-desc">${item.desc}</div>
-<div class="price-info">💰 Вход: ${item.price}</div>
-<div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
-<button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
-<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
-</div>
-</div>`;
+html += '<div class="item ' + (isVisited ? 'visited' : '') + '">' +
+'<div class="item-name">' + item.name + '</div>' +
+'<div class="item-desc">' + (item.desc || '') + '</div>' +
+'<div class="price-info">Вход: ' + item.price + '</div>' +
+'<div class="actions">' +
+'<button class="btn-done ' + (isVisited ? 'done' : '') + '" data-id="' + id + '">' + (isVisited ? '✅ Посещено' : '☑️ Отметить') + '</button>' +
+'<button class="btn-google" onclick="window.open(\'' + item.google.replace(/'/g, '\\\'') + '\', \'_blank\')">gMaps</button>' +
+'<button class="btn-naver" onclick="window.open(\'' + item.naver.replace(/'/g, '\\\'') + '\', \'_blank\')">🚗 Naver</button>' +
+'</div>' +
+'</div>';
 });
 html += '</div></div>';
 });
 return html;
-}
-
-function updateProgress() {
-const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
-const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
-const totalEats = eats.reduce((sum, c) => sum + c.items.length, 0);
-const visitedEatsCount = Object.values(visitedEats).filter(v => v).length;
-document.getElementById('progressBar').innerHTML =
-`✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов`;
 }
 
 // === ИНИЦИАЛИЗАЦИЯ ===
