@@ -8,7 +8,7 @@
 :root {
 --primary: #2a9d8f;
 --accent: #e9c46a;
---bg: #ffffff;
+--bg: #ffffff; /* Изменено: убрана переменная для темного фона */
 --text: #264653;
 --light-text: #6a7b7d;
 --visited-bg: #a5d6a7;
@@ -17,11 +17,12 @@
 --button-bg-naver: #f9fbe7;
 --button-bg-done: #e0f2f1;
 }
-/* .dark-mode был удалён */
+/* .dark-mode полностью удалён */
+/* Все остальные стили без изменений */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-background: var(--bg);
+background: var(--bg); /* Используется белый фон по умолчанию */
 color: var(--text);
 padding: 12px;
 line-height: 1.5;
@@ -31,7 +32,7 @@ text-align: center;
 margin-bottom: 16px;
 padding-bottom: 12px;
 border-bottom: 1px solid var(--border);
-/* position: relative; - убрано, так как кнопка темы удалена */
+/* position: relative; удален, так как кнопка темы удалена */
 }
 h1 {
 font-size: 1.3em;
@@ -42,7 +43,7 @@ color: var(--primary);
 font-size: 0.9em;
 color: var(--light-text);
 }
-/* Theme toggle был удалён */
+/* Theme toggle полностью удалён */
 /* Tabs */
 .tabs {
 display: flex;
@@ -140,10 +141,11 @@ padding-left: 20px;
 color: var(--text) !important;
 }
 .item-stars { /* Новый стиль для отображения звёзд */
-font-size: 0.9em;
+font-size: 1.1em;
 color: #ff8f00;
 padding-left: 20px;
 margin-top: 2px;
+display: inline-block;
 }
 .item-desc {
 font-size: 0.95em;
@@ -268,12 +270,8 @@ body { max-width: 800px; margin: 0 auto; }
 <div id="content"></div>
 <button id="backToTop">↑</button>
 <script>
-// === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: Naver URL ===
-function getNaverUrl(googleUrl) {
-return googleUrl
-.replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
-.replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
-}
+// === ТЕМА (полностью удалён) ===
+// Весь блок кода от 'const themeToggle = ...' до конца строки, содержащей 'themeToggle.textContent ...' удалён.
 // === МАРШРУТ ===
 const itinerary = [
 { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
@@ -299,6 +297,12 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
+// === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: Naver URL ===
+function getNaverUrl(googleUrl) {
+return googleUrl
+.replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
+.replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
+}
 // === МЕСТА (47) ===
 const places = [
 {
@@ -424,10 +428,10 @@ items: [
 { name: "Bukchon Traditional Tea House", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: getNaverUrl("https://maps.app.goo.gl/eypKWbH6RA5QVhzA6"), desc: "Уютное место в традиционном доме в деревне Пукчхон. Атмосфера старой Кореи.", dish: "Традиционный корейский чай, хангва", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
 { name: "Myeongdong Kyoja", google: "https://maps.app.goo.gl/9GfXED4rtdFxmP1M8", naver: getNaverUrl("https://maps.app.goo.gl/9GfXED4rtdFxmP1M8"), desc: "Легендарный ресторан в Мёндоне с 50-летней историей. Очереди всегда, но оно того стоит.", dish: "Кальгуксу, манду", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.6 },
 { name: "Ikseon-dong Hanok Cafes", google: "https://maps.app.goo.gl/peAhgNSNjjyw4oyj7", naver: getNaverUrl("https://maps.app.goo.gl/peAhgNSNjjyw4oyj7"), desc: "Модный район с сотнями кафе в традиционных ханоках. Instagrammable место.", dish: "Традиционные корейские десерты, чай", avgCheck: "10 000 ₩ (700 ₽)", stars: 4.6 },
-{ name: "Gwangjang Market Food Stalls", google: "https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9", naver: getNaverUrl("https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9"), desc: "Старейший рынок Сеула, featured in Netflix. Уличные закуски от местных бабушек.", dish: "Пхёньюк, кимбап, юкхе", avgCheck: "8 000 ₩ (560 ₽)", stars: 4.5 },
+{ name: "Gwangjang Market Food Stalls", google: "https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9", naver: getNaverUrl("https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9"), desc: "Старейший рынок Сеула, featured in Netflix. Уличные закуски от местных бабушек.", dish: "П, кимбап, юкхе", avgCheck: "8 000 ₩ (560 ₽)", stars: 4.5 },
 { name: "COEX Starfield Library Cafe", google: "https://maps.app.goo.gl/riKB21QGhFyF8bcR7", naver: getNaverUrl("https://maps.app.goo.gl/riKB21QGhFyF8bcR7"), desc: "Кафе в самой красивой библиотеке Азии. Эффект 'Интерстеллар' с бесконечными полками.", dish: "Кофе, десерты", avgCheck: "7 000 ₩ (490 ₽)", stars: 4.5 },
-{ name: "Gangnam BBQ Restaurants", google: "https://www.google.com/maps/search/Gangnam+BBQ+Seoul", naver: getNaverUrl("https://www.google.com/maps/search/Gangnam+BBQ+Seoul"), desc: "Стильные рестораны в Каннаме. Высокое качество мяса, модная атмосфера.", dish: "Хану, кальби", avgCheck: "40 000 ₩ (2 800 ₽)", stars: 4.5 },
-{ name: "Wangbijip Myeongdong", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: getNaverUrl("https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9"), desc: "Популярная сеть для корейского барбекю. Отличное соотношение цены и качества.", dish: "Самгёпсаль, хану", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.4 },
+{ name: "Gangnam BBQ Restaurants", google: "https://www.google.com/maps/search/Gangnam+BBQ+Seoul", naver: getNaverUrl("https://www.google.com/maps/search/Gangnam+BBQ+Seoul"), descльные рестораны в Каннаме. Высокое качество мяса, модная атмосфера.", dish: "Хану, кальби", avgCheck: "40 000 ₩ (2 800 ₽)", stars: 4.5 },
+{ name: "Wangbijip Myeongdong", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: getNaverUrl("https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9"), desc: "Популярная сеть для корейского барбекю. Отличношение цены и качества.", dish: "Самгёпсаль, хану", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.4 },
 { name: "Hongdae Dakgalbi", google: "https://maps.app.goo.gl/wE1f5ytm673pCKv88", naver: getNaverUrl("https://maps.app.goo.gl/wE1f5ytm673pCKv88"), desc: "Молодёжное место в Хондэ с яркой атмосферой. Идеально для групп.", dish: "Чжончхон даккальби", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.3 },
 { name: "Hongdae Street Food", google: "https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6", naver: getNaverUrl("https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6"), desc: "Уличная еда на Hongik University Street. Яркие вывески, молодёжная тусовка.", dish: "Ттокпокки, одэн, корн-доги", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.2 }
 ].sort((a, b) => b.stars - a.stars)
@@ -510,7 +514,25 @@ let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) 
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 
-// === ФУНКЦИИ ===
+// --- НОВАЯ ФУНКЦИЯ: Отрисовка иконок звёзд ---
+function renderStars(rating) {
+const fullStars = Math.floor(rating);
+const hasHalfStar = rating % 1 >= 0.5; // Проверяем, есть ли 0.5
+let starsHtml = '';
+for (let i = 0; i < fullStars; i++) {
+starsHtml += '★'; // Полная звезда
+}
+if (hasHalfStar) {
+starsHtml += '☆'; // Половинка звезды
+}
+// Оставшиеся пустые звёзды до 5
+for (let i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+starsHtml += '☆';
+}
+return `<span class="item-stars">${starsHtml}</span>`;
+}
+
+// === ФУНК
 function renderItinerary() {
 return `
 <img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
@@ -531,9 +553,9 @@ const isVisited = visitedPlaces[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}">
 <div class="item-name">${item.name}</div>
-<div class="item-stars">(${item.stars}/5)</div> <!-- Отображение звёзд -->
+${renderStars(item.stars)} <!-- Иконки звёзд -->
 <div class="item-desc">${item.desc}</div>
-${item.price ? `<div class="price-info">Вход: ${item.price}</div>` : ''}
+${item.price ? `<div class="price-info">💰 Вход: ${item.price}</div>` : ''}
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -556,9 +578,9 @@ const isVisited = visitedEats[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}">
 <div class="item-name">${item.name}</div>
-<div class="item-stars">(${item.stars}/5)</div> <!-- Отображение звёзд -->
+${renderStars(item.stars)} <!-- Иконки звёзд -->
 <div class="item-desc">${item.desc}</div>
-<div class="avg-check">Средний чек: ${item.avgCheck}</div>
+<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Попробовано' : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -581,9 +603,9 @@ const isVisited = visitedSpas[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}">
 <div class="item-name">${item.name}</div>
-<div class="item-stars">(${item.stars}/5)</div> <!-- Отображение звёзд -->
+${renderStars(item.stars)} <!-- Иконки звёзд -->
 <div class="item-desc">${item.desc}</div>
-<div class="price-info">Вход: ${item.price}</div>
+<div class="price-info">💰 Вход: ${item.price}</div>
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -620,13 +642,13 @@ else if (tabName === 'eats') content = renderEats();
 else if (tabName === 'spas') content = renderSpas();
 document.getElementById('content').innerHTML = content;
 
+// --- ВАЖНО: Вешаем обработчики событий ПОСЛЕ обновления innerHTML ---
 // Активация аккордеонов (для новых элементов DOM)
 document.querySelectorAll('.section-header').forEach(header => {
 header.addEventListener('click', function() {
 this.parentElement.classList.toggle('collapsed');
 });
 });
-
 // Обработка отметок (для новых элементов DOM)
 document.querySelectorAll('.btn-done').forEach(btn => {
 btn.addEventListener('click', function() {
@@ -647,7 +669,6 @@ this.classList.toggle('done');
 updateProgress();
 });
 });
-
 // Обновляем прогресс
 updateProgress();
 });
