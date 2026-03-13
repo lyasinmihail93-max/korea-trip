@@ -11,12 +11,12 @@
 --bg: #ffffff;
 --text: #264653;
 --light-text: #6a7b7d;
---visited-bg: #c8e6c9;
---visited-text: #00695c;
+--visited-bg: #a5d6a7;
 --border: #e0e6e6;
 --button-bg-google: #e3f2fd;
 --button-bg-naver: #f9fbe7;
 --button-bg-done: #e0f2f1;
+--progress-light: #e8f5e9;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -43,7 +43,7 @@ color: var(--light-text);
 }
 .tabs {
 display: flex;
-gap: 6px;
+gap: 8px;
 margin-bottom: 16px;
 flex-wrap: wrap;
 position: sticky;
@@ -54,8 +54,8 @@ z-index: 100;
 }
 .tab {
 flex: 1;
-min-width: 70px;
-padding: 8px 6px;
+min-width: 80px;
+padding: 10px;
 background: #f0f5f5;
 border: none;
 border-radius: 8px;
@@ -63,8 +63,6 @@ font-weight: 600;
 color: var(--text);
 cursor: pointer;
 min-height: 44px;
-font-size: 0.85em;
-white-space: nowrap;
 }
 .tab.active {
 background: var(--primary);
@@ -88,30 +86,28 @@ justify-content: space-between;
 align-items: center;
 border-bottom: 1px solid var(--border);
 min-height: 44px;
-flex-wrap: wrap;
-gap: 10px;
-}
-.city-progress {
-width: 100%;
-height: 6px;
-background: #f0f5f5;
-border-radius: 3px;
-margin-top: 8px;
+position: relative;
 overflow: hidden;
 }
-.city-progress-bar {
+.section-header::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
 height: 100%;
-background: var(--visited-bg);
+background: var(--progress-light);
 transition: width 0.3s ease;
+z-index: 0;
 }
-.city-progress-text {
-font-size: 0.75em;
-color: var(--light-text);
-margin-top: 4px;
+.section-header .header-text {
+position: relative;
+z-index: 1;
 }
 .toggle-icon {
 font-size: 0.7em;
 transition: transform 0.3s;
+position: relative;
+z-index: 1;
 }
 .section.collapsed .toggle-icon {
 transform: rotate(0deg);
@@ -135,7 +131,6 @@ to { opacity: 1; transform: translateY(0); }
 padding: 14px 16px;
 border-bottom: 1px solid var(--border);
 position: relative;
-transition: all 0.2s ease;
 }
 .item:last-child {
 border-bottom: none;
@@ -148,7 +143,7 @@ background-color: var(--visited-bg) !important;
 .item.visited .price-info,
 .item.visited .avg-check {
 text-decoration: line-through !important;
-color: var(--visited-text) !important;
+color: #00695c !important;
 }
 .item-name {
 font-weight: 600;
@@ -192,7 +187,7 @@ padding-left: 20px;
 }
 button {
 flex: 1;
-min-width: 80px;
+min-width: 90px;
 padding: 10px;
 border: none;
 border-radius: 6px;
@@ -206,8 +201,8 @@ background: var(--button-bg-done);
 color: var(--primary);
 }
 .btn-done.done {
-background: var(--button-bg-done);
-color: var(--primary);
+background: var(--visited-bg);
+color: #00695c;
 }
 .btn-google {
 background: var(--button-bg-google);
@@ -247,6 +242,13 @@ margin-bottom: 16px;
 font-size: 0.9em;
 color: var(--light-text);
 }
+.city-progress-text {
+font-size: 0.8em;
+color: var(--light-text);
+padding: 8px 16px;
+background: #fafafa;
+border-top: 1px solid var(--border);
+}
 #backToTop {
 position: fixed;
 bottom: 20px;
@@ -264,13 +266,10 @@ z-index: 99;
 }
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
-.tab { min-width: 90px; padding: 10px; font-size: 0.9em; }
 }
 @media (max-width: 480px) {
-.tab { min-width: 60px; padding: 8px 4px; font-size: 0.75em; }
-.item-name { font-size: 1em; }
-.actions { gap: 6px; }
-.actions button { min-width: 70px; padding: 8px; font-size: 0.8em; }
+.tab { min-width: 70px; padding: 8px 4px; font-size: 0.8em; }
+.section-header { font-size: 1em; padding: 12px 14px; }
 }
 </style>
 </head>
@@ -281,7 +280,7 @@ body { max-width: 800px; margin: 0 auto; }
 </header>
 <div class="progress-bar" id="progressBar">Загрузка...</div>
 <div class="tabs">
-<button class="tab active" data-tab="itinerary">🗺️ Маршрут</button>
+<button class="tab active" data-tab="itinerary">🗺️ Общий маршрут</button>
 <button class="tab" data-tab="sights">🏞️ Места</button>
 <button class="tab" data-tab="eats">🍽️ Еда</button>
 <button class="tab" data-tab="spas">🧖 Бани</button>
@@ -556,8 +555,8 @@ const id = `place-${cityData.city}-${item.name}`;
 return visitedPlaces[id];
 }).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div>`;
-html += `<div class="city-progress"><div class="city-progress-bar" style="width: ${progressPercent}%"></div></div>`;
+html += `<div class="section collapsed" data-city="${cityData.city}" data-type="place">`;
+html += `<div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
 html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
 html += `<div class="section-content">`;
 cityData.items.forEach(item => {
@@ -589,8 +588,8 @@ const id = `eat-${cityData.city}-${item.name}`;
 return visitedEats[id];
 }).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div>`;
-html += `<div class="city-progress"><div class="city-progress-bar" style="width: ${progressPercent}%"></div></div>`;
+html += `<div class="section collapsed" data-city="${cityData.city}" data-type="eat">`;
+html += `<div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
 html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
 html += `<div class="section-content">`;
 cityData.items.forEach(item => {
@@ -616,7 +615,9 @@ return html;
 function renderSpas() {
 let html = '';
 spas.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city}<span class="toggle-icon">▼</span></div><div class="section-content">`;
+html += `<div class="section collapsed" data-city="${cityData.city}" data-type="spa">`;
+html += `<div class="section-header" style="--progress-width: 0%"><div class="header-text">${cityData.city}<span class="toggle-icon">▼</span></div></div>`;
+html += `<div class="section-content">`;
 cityData.items.forEach(item => {
 const id = `spa-${cityData.city}-${item.name}`;
 const isVisited = visitedSpas[id];
@@ -646,33 +647,30 @@ document.getElementById('progressBar').innerHTML =
 `✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов`;
 }
 function updateCityProgress() {
-// Обновляем прогресс-бары городов без полной перерисовки
 document.querySelectorAll('.section').forEach(section => {
-const header = section.querySelector('.section-header');
-if (!header) return;
-const cityMatch = header.textContent.match(/^(.+?)\s*\(/);
-if (!cityMatch) return;
-const cityName = cityMatch[1].trim();
-// Определяем тип вкладки
+const city = section.dataset.city;
+const type = section.dataset.type;
 let items, visitedData, prefix;
-if (currentTab === 'sights') {
-items = places.find(c => c.city === cityName);
+if (type === 'place') {
+items = places.find(c => c.city === city);
 visitedData = visitedPlaces;
 prefix = 'place-';
-} else if (currentTab === 'eats') {
-items = eats.find(c => c.city === cityName);
+} else if (type === 'eat') {
+items = eats.find(c => c.city === city);
 visitedData = visitedEats;
 prefix = 'eat-';
-} else {
-return;
+} else if (type === 'spa') {
+items = spas.find(c => c.city === city);
+visitedData = visitedSpas;
+prefix = 'spa-';
 }
 if (!items) return;
 const totalItems = items.items.length;
-const visitedCount = items.items.filter(item => visitedData[`${prefix}${cityName}-${item.name}`]).length;
+const visitedCount = items.items.filter(item => visitedData[`${prefix}${city}-${item.name}`]).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-const progressBar = section.querySelector('.city-progress-bar');
+const header = section.querySelector('.section-header');
 const progressText = section.querySelector('.city-progress-text');
-if (progressBar) progressBar.style.width = `${progressPercent}%`;
+if (header) header.style.setProperty('--progress-width', `${progressPercent}%`);
 if (progressText) progressText.textContent = `${visitedCount} из ${totalItems} посещено (${progressPercent}%)`;
 });
 }
@@ -689,7 +687,6 @@ localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
 visitedSpas[id] = !visitedSpas[id];
 localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas));
 }
-// Находим родительский элемент item и обновляем его класс
 const item = btn.closest('.item');
 if (item) {
 if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) {
@@ -702,9 +699,7 @@ btn.classList.remove('done');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
-// Обновляем прогресс-бары городов
 updateCityProgress();
-// Обновляем общий прогресс
 updateProgress();
 }
 // === ИНИЦИАЛИЗАЦИЯ ===
@@ -731,7 +726,6 @@ e.stopPropagation();
 handleDoneClick(this);
 });
 });
-// Добавляем обработчики для уже существующих кнопок
 document.querySelectorAll('.item').forEach(item => {
 item.addEventListener('click', function(e) {
 if (e.target.classList.contains('btn-done')) return;
