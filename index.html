@@ -11,7 +11,8 @@
 --bg: #ffffff;
 --text: #264653;
 --light-text: #6a7b7d;
---visited-bg: #a5d6a7;
+--visited-bg: #c8e6c9;
+--visited-text: #00695c;
 --border: #e0e6e6;
 --button-bg-google: #e3f2fd;
 --button-bg-naver: #f9fbe7;
@@ -42,7 +43,7 @@ color: var(--light-text);
 }
 .tabs {
 display: flex;
-gap: 8px;
+gap: 6px;
 margin-bottom: 16px;
 flex-wrap: wrap;
 position: sticky;
@@ -53,8 +54,8 @@ z-index: 100;
 }
 .tab {
 flex: 1;
-min-width: 80px;
-padding: 10px;
+min-width: 70px;
+padding: 8px 6px;
 background: #f0f5f5;
 border: none;
 border-radius: 8px;
@@ -62,6 +63,8 @@ font-weight: 600;
 color: var(--text);
 cursor: pointer;
 min-height: 44px;
+font-size: 0.85em;
+white-space: nowrap;
 }
 .tab.active {
 background: var(--primary);
@@ -85,6 +88,26 @@ justify-content: space-between;
 align-items: center;
 border-bottom: 1px solid var(--border);
 min-height: 44px;
+flex-wrap: wrap;
+gap: 10px;
+}
+.city-progress {
+width: 100%;
+height: 6px;
+background: #f0f5f5;
+border-radius: 3px;
+margin-top: 8px;
+overflow: hidden;
+}
+.city-progress-bar {
+height: 100%;
+background: var(--visited-bg);
+transition: width 0.3s ease;
+}
+.city-progress-text {
+font-size: 0.75em;
+color: var(--light-text);
+margin-top: 4px;
 }
 .toggle-icon {
 font-size: 0.7em;
@@ -112,6 +135,7 @@ to { opacity: 1; transform: translateY(0); }
 padding: 14px 16px;
 border-bottom: 1px solid var(--border);
 position: relative;
+transition: all 0.2s ease;
 }
 .item:last-child {
 border-bottom: none;
@@ -124,7 +148,7 @@ background-color: var(--visited-bg) !important;
 .item.visited .price-info,
 .item.visited .avg-check {
 text-decoration: line-through !important;
-color: #00695c !important;
+color: var(--visited-text) !important;
 }
 .item-name {
 font-weight: 600;
@@ -168,7 +192,7 @@ padding-left: 20px;
 }
 button {
 flex: 1;
-min-width: 90px;
+min-width: 80px;
 padding: 10px;
 border: none;
 border-radius: 6px;
@@ -182,8 +206,8 @@ background: var(--button-bg-done);
 color: var(--primary);
 }
 .btn-done.done {
-background: var(--visited-bg);
-color: #00695c;
+background: var(--button-bg-done);
+color: var(--primary);
 }
 .btn-google {
 background: var(--button-bg-google);
@@ -240,6 +264,13 @@ z-index: 99;
 }
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
+.tab { min-width: 90px; padding: 10px; font-size: 0.9em; }
+}
+@media (max-width: 480px) {
+.tab { min-width: 60px; padding: 8px 4px; font-size: 0.75em; }
+.item-name { font-size: 1em; }
+.actions { gap: 6px; }
+.actions button { min-width: 70px; padding: 8px; font-size: 0.8em; }
 }
 </style>
 </head>
@@ -250,10 +281,10 @@ body { max-width: 800px; margin: 0 auto; }
 </header>
 <div class="progress-bar" id="progressBar">Загрузка...</div>
 <div class="tabs">
-<button class="tab active" data-tab="itinerary">🗺️ Общий маршрут</button>
+<button class="tab active" data-tab="itinerary">🗺️ Маршрут</button>
 <button class="tab" data-tab="sights">🏞️ Места</button>
 <button class="tab" data-tab="eats">🍽️ Еда</button>
-<button class="tab" data-tab="spas">🧖 Чимчильбаны</button>
+<button class="tab" data-tab="spas">🧖 Спа</button>
 </div>
 <div id="content"></div>
 <button id="backToTop">↑</button>
@@ -264,14 +295,12 @@ return googleUrl
 .replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
 .replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
 }
-
 // === НОВАЯ ФУНКЦИЯ: Генерация звёзд ===
 function generateStars(rating) {
-  const full = Math.floor(rating);
-  const hasHalf = rating % 1 >= 0.5;
-  return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
+const full = Math.floor(rating);
+const hasHalf = rating % 1 >= 0.5;
+return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
-
 // === МАРШРУТ ===
 const itinerary = [
 { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
@@ -297,7 +326,6 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
-
 // === МЕСТА (47) ===
 const places = [
 {
@@ -402,7 +430,6 @@ items: [
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 }
 ];
-
 // === ЕДА (35) ===
 const eats = [
 {
@@ -445,7 +472,7 @@ items: [
 city: "Чиндо",
 dates: "04–05.08",
 items: [
-{ name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5  ", naver: getNaverUrl("https://maps.app.goo.gl/uREFpsm6b4dGT8qu5  "), desc: "Уютный семейный ресторан с домашней корейской кухней. Идеален после работы на море.", dish: "Местный суп с морепродуктами, свежая рыба", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.0 },
+{ name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5  ", naver: getNaverUrl("https://maps.app.goo.gl/uREFpsm6б4dGT8qu5  "), desc: "Уютный семейный ресторан с домашней корейской кухней. Идеален после работы на море.", dish: "Местный суп с морепродуктами, свежая рыба", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.0 },
 { name: "용성식당", google: "https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7  ", naver: getNaverUrl("https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7  "), desc: "Традиционный ресторан с блюдами из морепродуктов. Рекомендуется свежая рыба на гриле.", dish: "Свежая рыба на гриле, морской салат", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.0 },
 { name: "이화식당", google: "https://maps.app.goo.gl/5aZCPqAsvGN5DVf57  ", naver: getNaverUrl("https://maps.app.goo.gl/5aZCPqAsvGN5DVf57  "), desc: "Семейный ресторан с уютной атмосферой. Попробуйте местный суп с морепродуктами.", dish: "Суп с морепродуктами, рис с морской капустой", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.0 }
 ].sort((a, b) => b.stars - a.stars)
@@ -489,7 +516,6 @@ items: [
 ].sort((a, b) => b.stars - a.stars)
 }
 ];
-
 // === ЧИМЧИЛЬБАНЫ ===
 const spas = [
 {
@@ -506,12 +532,10 @@ items: [
 ].sort((a, b) => b.stars - a.stars)
 }
 ];
-
 // === СОСТОЯНИЕ ===
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
-
 // === ФУНКЦИИ ===
 function renderItinerary() {
 return `
@@ -522,11 +546,19 @@ return `
 </table>
 `;
 }
-
 function renderSights() {
 let html = '';
 places.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div><div class="section-content">`;
+const totalItems = cityData.items.length;
+const visitedCount = cityData.items.filter(item => {
+const id = `place-${cityData.city}-${item.name}`;
+return visitedPlaces[id];
+}).length;
+const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
+html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div>`;
+html += `<div class="city-progress"><div class="city-progress-bar" style="width: ${progressPercent}%"></div></div>`;
+html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
+html += `<div class="section-content">`;
 cityData.items.forEach(item => {
 const id = `place-${cityData.city}-${item.name}`;
 const isVisited = visitedPlaces[id];
@@ -547,11 +579,19 @@ html += '</div></div>';
 });
 return html;
 }
-
 function renderEats() {
 let html = '';
 eats.forEach(cityData => {
-html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div><div class="section-content">`;
+const totalItems = cityData.items.length;
+const visitedCount = cityData.items.filter(item => {
+const id = `eat-${cityData.city}-${item.name}`;
+return visitedEats[id];
+}).length;
+const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
+html += `<div class="section collapsed"><div class="section-header">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div>`;
+html += `<div class="city-progress"><div class="city-progress-bar" style="width: ${progressPercent}%"></div></div>`;
+html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
+html += `<div class="section-content">`;
 cityData.items.forEach(item => {
 const id = `eat-${cityData.city}-${item.name}`;
 const isVisited = visitedEats[id];
@@ -572,7 +612,6 @@ html += '</div></div>';
 });
 return html;
 }
-
 function renderSpas() {
 let html = '';
 spas.forEach(cityData => {
@@ -597,7 +636,6 @@ html += '</div></div>';
 });
 return html;
 }
-
 function updateProgress() {
 const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
 const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
@@ -606,7 +644,6 @@ const visitedEatsCount = Object.values(visitedEats).filter(v => v).length;
 document.getElementById('progressBar').innerHTML =
 `✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов`;
 }
-
 // === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
 document.querySelectorAll('.tab').forEach(tab => {
@@ -620,13 +657,11 @@ else if (tabName === 'sights') content = renderSights();
 else if (tabName === 'eats') content = renderEats();
 else if (tabName === 'spas') content = renderSpas();
 document.getElementById('content').innerHTML = content;
-
 document.querySelectorAll('.section-header').forEach(header => {
 header.addEventListener('click', function() {
 this.parentElement.classList.toggle('collapsed');
 });
 });
-
 document.querySelectorAll('.btn-done').forEach(btn => {
 btn.addEventListener('click', function() {
 const id = this.dataset.id;
@@ -640,16 +675,14 @@ localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
 visitedSpas[id] = !visitedSpas[id];
 localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas));
 }
-this.textContent = this.textContent.includes('✅') ? '☑️ Отметить' : '✅ Посещено';
-this.classList.toggle('done');
+// Перерисовываем текущую вкладку для мгновенного обновления стилей
+this.closest('.tab').click();
 updateProgress();
 });
 });
-
 updateProgress();
 });
 });
-
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block';
@@ -658,7 +691,6 @@ else btn.style.display = 'none';
 document.getElementById('backToTop').addEventListener('click', () => {
 window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-
 document.querySelector('.tab[data-tab="itinerary"]').click();
 });
 </script>
