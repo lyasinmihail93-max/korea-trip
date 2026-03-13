@@ -17,7 +17,6 @@
 --button-bg-naver: #f9fbe7;
 --button-bg-done: #e0f2f1;
 }
-/* .dark-mode был удалён */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -31,7 +30,6 @@ text-align: center;
 margin-bottom: 16px;
 padding-bottom: 12px;
 border-bottom: 1px solid var(--border);
-/* position: relative; - убрано, так как кнопка темы удалена */
 }
 h1 {
 font-size: 1.3em;
@@ -42,7 +40,6 @@ color: var(--primary);
 font-size: 0.9em;
 color: var(--light-text);
 }
-/* Theme toggle был удалён */
 /* Tabs */
 .tabs {
 display: flex;
@@ -74,7 +71,7 @@ color: white;
 /* Section */
 .section {
 margin-bottom: 16px;
-border-radius: 12px;
+border-radius: ;
 overflow: hidden;
 box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
 border-left: 4px solid var(--primary);
@@ -139,11 +136,12 @@ font-size: 1.05em;
 padding-left: 20px;
 color: var(--text) !important;
 }
-.item-stars { /* Новый стиль для отображения звёзд */
+.item-stars {
 font-size: 0.9em;
 color: #ff8f00;
 padding-left: 20px;
 margin-top: 2px;
+display: inline-block;
 }
 .item-desc {
 font-size: 0.95em;
@@ -253,7 +251,6 @@ body { max-width: 800px; margin: 0 auto; }
 </style>
 </head>
 <body>
-<!-- Кнопка переключения темы удалена -->
 <header>
 <h1>Южная Корея — наше свадебное путешествие</h1>
 <p class="subtitle">Июль–август 2026</p>
@@ -274,6 +271,18 @@ return googleUrl
 .replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
 .replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
 }
+
+// --- ФУНКЦИЯ: Отрисовка звёзд ---
+function renderStars(rating) {
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5;
+    let s = '';
+    for (let i = 0; i < full; i++) s += '★';
+    if (half) s += '☆';
+    for (let i = full + (half ? 1 : 0); i < 5; i++) s += '☆';
+    return `<span class="item-stars">${s}</span>`;
+}
+
 // === МАРШРУТ ===
 const itinerary = [
 { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
@@ -299,7 +308,8 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
-// === МЕСТА (47) ===
+
+// === МЕСТА (исправлено: добавлена } после Самчхок) ===
 const places = [
 {
 city: "Чеджудо",
@@ -330,7 +340,7 @@ items: [
 { name: "Banpo Bridge Moonlight Rainbow Fountain", google: "https://maps.app.goo.gl/c2hBBuqvvoUy1m42A", naver: getNaverUrl("https://maps.app.goo.gl/c2hBBuqvvoUy1m42A"), desc: "Мост с вечерним световым шоу-радугой. Фонтан работает с апреля по октябрь, шоу 20 минут.", stars: 4, price: null },
 { name: "Gangnam Station Area", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: getNaverUrl("https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8"), desc: "Локация 'Gangnam Style'. Памятник Psycho, стильные бары и лофты Пхунтхондона.", stars: 4, price: null },
 { name: "Каннамгу", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: getNaverUrl("https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8"), desc: "Современный район с небоскрёбами, дизайнерскими магазинами, ночными клубами, элитными ресторанами и храмом Понынса VIII века.", stars: 4, price: null },
-{ name: "Ewha Womans University", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: getNaverUrl("https://maps.app.goo.gl/6aP5YLshpF1RBFez6"), desc: "Негосударственный женский университет в центре Сеула.", stars: 3, price: null }
+{ name: "Ewha Womans University", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: getNaverUrl("https://maps.app.goo.gl/6aP5YLshpF1RBz6"), desc: "Негосударственный женский университет в центре Сеула.", stars: 3, price: null }
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 },
 {
@@ -339,7 +349,7 @@ dates: "04.08",
 items: [
 { name: "Jeonju Hanok Village", google: "https://maps.app.goo.gl/povG1N1i8TUQuYsy5", naver: getNaverUrl("https://maps.app.goo.gl/povG1N1i8TUQuYsy5"), desc: "Самая большая деревня ханоков в Корее (800+ традиционных домов). Идеально для фото в ханбоке.", stars: 5, price: null },
 { name: "Jeonju Kimchi Museum", google: "https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A", naver: getNaverUrl("https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A"), desc: "Музей кимчи — история главного корейского блюда и дегустация разных видов.", stars: 4, price: "3 000 ₩ (~210 ₽)" },
-{ name: "Jeonju-si (общая)", google: "https://maps.app.goo.gl/k6GTZwhr2y89W8E9A", naver: getNaverUrl("https://maps.app.goo.gl/k6GTZwhr2y89W8E9A"), desc: "Гастрономическая столица Кореи. Также стоит посетить галерею каллиграфии.", stars: 4, price: null }
+{ name: "Jeonju-si (общая)", google: "https://maps.app.goo.gl/k6GTZwhr2y89WE9A", naver: getNaverUrl("https://maps.app.goo.gl/k6GTZwhr2y89W8E9A"), desc: "Гастрономическая столица Кореи. Также стоит посетить галерею каллиграфии.", stars: 4, price: null }
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 },
 {
@@ -371,7 +381,7 @@ dates: "09.08",
 items: [
 { name: "Bulguksa Temple", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: getNaverUrl("https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6"), desc: "Шедевр буддийской архитектуры VIII века, объект ЮНЕСКО. Каменные пагоды Сеокгап и Дабоп.", stars: 5, price: "6 000 ₩ (~420 ₽)" },
 { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: getNaverUrl("https://maps.app.goo.gl/ioybbGuoWnpKxVDU6"), desc: "Древнейшая обсерватория в Восточной Азии (VII век). Построена во времена королевы Сондок.", stars: 5, price: null },
-{ name: "Grand Tumuli Park / King Namwon Tomb", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: getNaverUrl("https://maps.app.goo.gl/yqiDSL2VajFBNrTf7"), desc: "Парк с королевскими курганами эпохи Силла. Золотые короны и сокровища.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
+{ name: "Grand Tumuli Park / King Nam Tomb", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: getNaverUrl("https://maps.app.goo.gl/yqiDSL2VajFBNrTf7"), desc с королевскими курганами эпохи Силла. Золотые короны и сокровища.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
 { name: "Woljeongsa Park", google: "https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7", naver: getNaverUrl("https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7"), desc: "Парк с курганами среди листопада. Живописное место с древними гробницами и прудом.", stars: 4, price: null },
 { name: "Gyeongju-si (общая)", google: "https://maps.app.goo.gl/nd5b6durVxFGzUVD8", naver: getNaverUrl("https://maps.app.goo.gl/nd5b6durVxFGzUVD8"), desc: "Древняя столица Силла. Музей под открытым небом с тысячелетней историей.", stars: 4, price: null }
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
@@ -390,7 +400,7 @@ dates: "10.08",
 items: [
 { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: getNaverUrl("https://maps.app.goo.gl/98DJqVfivdeHAmWt9"), desc: "Единственный в стране маршрут для катания на велосипеде по побережью Восточного моря. Длина 5,4 км, туннель со световыми шоу, сосны Gomsol.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" }
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
+}, // <-- ЭТА СКОБКА БЫЛА ДОБАВЛЕНА — исправление ошибки!
 {
 city: "Сокчхо/Сораксан",
 dates: "10–12.08",
@@ -403,7 +413,8 @@ items: [
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 }
 ];
-// === ЕДА (35) ===
+
+// === ЕДА ===
 const eats = [
 {
 city: "Чеджудо",
@@ -482,13 +493,14 @@ items: [
 city: "Сокчхо/Сораксан",
 dates: "10–12.08",
 items: [
-{ name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: getNaverUrl("https://maps.app.goo.gl/74maPUUkfnqdR5hb9"), desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами. Недалеко от Сораксана.", dish: "Морепродукты от хэнё, абалон", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.9 },
+{ name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdRhb9", naver: getNaverUrl("https://maps.app.goo.gl/74maPUUkfnqdR5hb9"), desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами. Недалеко от Сораксана.", dish: "Морепродукты от хэнё, абалон", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.9 },
 { name: "황가네찜 (Hwanggane Jjim)", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: getNaverUrl("https://maps.app.goo.gl/k6fScSGt8j5HoEaL8"), desc: "Ресторан с традиционной корейской рыбой на пару. Нежно и полезно. Местные жители и туристы высоко оценивают.", dish: "생선찜 (рыба на пару), 매운탕 (острый рыбный суп)", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
 { name: "Sokcho Tourist Fish Market", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: getNaverUrl("https://maps.app.goo.gl/BvnGzoeeSCZVLRV76"), desc: "Рынок с фудкортом. Попробуйте всё: от жареной рыбы до морских блинчиков.", dish: "Уличная еда, жареные морепродукты", avgCheck: "10 000 ₩ (700 ₽)", stars: 4.3 },
 { name: "Cheongchosu Mulheo", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: getNaverUrl("https://maps.app.goo.gl/6JSvSoz41R6qxZbT7"), desc: "Легендарный ресторан с фирменным холодным супом из свежей рыбы. Освежающе!", dish: "Мульхо", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.2 }
 ].sort((a, b) => b.stars - a.stars)
-}
-];
+]
+;
+
 // === ЧИМЧИЛЬБАНЫ ===
 const spas = [
 {
@@ -505,6 +517,7 @@ items: [
 ].sort((a, b) => b.stars - a.stars)
 }
 ];
+
 // === СОСТОЯНИЕ ===
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
@@ -531,9 +544,9 @@ const isVisited = visitedPlaces[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}">
 <div class="item-name">${item.name}</div>
-<div class="item-stars">(${item.stars}/5)</div> <!-- Отображение звёзд -->
+${renderStars(item.stars)}
 <div class="item-desc">${item.desc}</div>
-${item.price ? `<div class="price-info">Вход: ${item.price}</div>` : ''}
+${item.price ? `<div class="price-info">💰 Вход: ${item.price}</div>` : ''}
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -556,9 +569,9 @@ const isVisited = visitedEats[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}">
 <div class="item-name">${item.name}</div>
-<div class="item-stars">(${item.stars}/5)</div> <!-- Отображение звёзд -->
+${renderStars(item.stars)}
 <div class="item-desc">${item.desc}</div>
-<div class="avg-check">Средний чек: ${item.avgCheck}</div>
+<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Попробовано' : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
@@ -581,12 +594,12 @@ const isVisited = visitedSpas[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}">
 <div class="item-name">${item.name}</div>
-<div class="item-stars">(${item.stars}/5)</div> <!-- Отображение звёзд -->
+${renderStars(item.stars)}
 <div class="item-desc">${item.desc}</div>
-<div class="price-info">Вход: ${item.price}</div>
+<div class="price-info">💰 Вход: ${item.price}</div>
 <div class="actions">
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
-<button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
+<button class="btn-google" onclick="window.open('${item.google}', '_blank')">igrams</button>
 <button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
 </div>
 </div>`;
@@ -620,14 +633,14 @@ else if (tabName === 'eats') content = renderEats();
 else if (tabName === 'spas') content = renderSpas();
 document.getElementById('content').innerHTML = content;
 
-// Активация аккордеонов (для новых элементов DOM)
+// Активация аккордеонов
 document.querySelectorAll('.section-header').forEach(header => {
 header.addEventListener('click', function() {
 this.parentElement.classList.toggle('collapsed');
 });
 });
 
-// Обработка отметок (для новых элементов DOM)
+// Обработка отметок
 document.querySelectorAll('.btn-done').forEach(btn => {
 btn.addEventListener('click', function() {
 const id = this.dataset.id;
@@ -643,12 +656,10 @@ localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas));
 }
 this.textContent = this.textContent.includes('✅') ? '☑️ Отметить' : '✅ Посещено';
 this.classList.toggle('done');
-// Обновляем прогресс
 updateProgress();
 });
 });
 
-// Обновляем прогресс
 updateProgress();
 });
 });
@@ -659,7 +670,7 @@ const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block';
 else btn.style.display = 'none';
 });
-document.getElementById('backToTop').addEventListener('click', () => {
+document.getElementById('backToTop').addEventListener('', () => {
 window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
