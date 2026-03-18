@@ -58,20 +58,156 @@ font-weight: 400;
 }
 .tabs {
 display: flex;
-gap: 8px;
+gap: 6px;
 margin-bottom: 16px;
 flex-wrap: wrap;
 position: sticky;
 top: 0;
 background: rgba(255,255,255,0.95);
 backdrop-filter: blur(10px);
-padding: 8px 0;
+padding: 8px 4px;
 z-index: 100;
 border-radius: 12px;
+overflow-x: auto;
 }
 .tab {
+flex: 0 0 auto;
+min-width: 70px;
+padding: 8px 10px;
+background: #f0f5f5;
+border: 1px solid var(--primary);
+border-radius: 8px;
+font-weight: 600;
+color: var(--text);
+cursor: pointer;
+min-height: 44px;
+transition: all 0.3s ease;
+font-family: 'Noto Sans', sans-serif;
+font-size: 0.85em;
+white-space: nowrap;
+}
+.tab.active {
+background: var(--primary);
+color: white;
+}
+.progress-bar {
+background: rgba(255,255,255,0.95);
+padding: 12px;
+border-radius: 8px;
+margin-bottom: 16px;
+font-size: 0.9em;
+color: var(--light-text);
+border: 1px solid var(--primary);
+position: relative;
+overflow: hidden;
+backdrop-filter: blur(10px);
+}
+.progress-bar::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+background: var(--visited-light);
+width: var(--progress-width, 0%);
+transition: width 0.5s ease;
+z-index: 0;
+}
+.progress-bar .progress-text {
+position: relative;
+z-index: 1;
+}
+.city-banner {
+width: 100%;
+height: 200px;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+border-radius: 12px;
+margin-bottom: 16px;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.city-banner::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+border-radius: 12px;
+}
+.city-banner .city-name {
+position: relative;
+z-index: 1;
+color: white;
+font-size: 1.5em;
+font-weight: 700;
+text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.accommodation {
+background: white;
+border-radius: 12px;
+padding: 16px;
+margin-bottom: 16px;
+box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
+border-left: 4px solid var(--primary);
+}
+.accommodation-title {
+font-weight: 600;
+margin-bottom: 8px;
+color: var(--primary);
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.accommodation-name {
+font-weight: 600;
+margin-bottom: 4px;
+font-size: 1.05em;
+}
+.accommodation-address {
+font-size: 0.9em;
+color: var(--light-text);
+margin-bottom: 8px;
+}
+.accommodation-links {
+display: flex;
+gap: 8px;
+}
+.accommodation-links a {
 flex: 1;
-min-width: 80px;
+padding: 8px;
+text-align: center;
+border-radius: 6px;
+text-decoration: none;
+font-size: 0.85em;
+font-weight: 600;
+min-height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.link-google {
+background: var(--button-bg-google);
+color: #1565c0;
+border: 1px solid #1565c0;
+}
+.link-naver {
+background: var(--button-bg-naver);
+color: #5d4037;
+border: 1px solid #5d4037;
+}
+.city-subtabs {
+display: flex;
+gap: 8px;
+margin-bottom: 16px;
+flex-wrap: wrap;
+}
+.subtab {
+flex: 1;
+min-width: 100px;
 padding: 10px;
 background: #f0f5f5;
 border: 1px solid var(--primary);
@@ -83,7 +219,7 @@ min-height: 44px;
 transition: all 0.3s ease;
 font-family: 'Noto Sans', sans-serif;
 }
-.tab.active {
+.subtab.active {
 background: var(--primary);
 color: white;
 }
@@ -263,34 +399,6 @@ border-radius: 12px;
 margin: 16px 0;
 box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.progress-bar {
-background: rgba(255,255,255,0.95);
-padding: 12px;
-border-radius: 8px;
-margin-bottom: 16px;
-font-size: 0.9em;
-color: var(--light-text);
-border: 1px solid var(--primary);
-position: relative;
-overflow: hidden;
-backdrop-filter: blur(10px);
-}
-.progress-bar::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-height: 100%;
-background: var(--visited-light);
-width: var(--progress-width, 0%);
-transition: width 0.5s ease;
-z-index: 0;
-}
-.progress-bar .progress-text {
-position: relative;
-z-index: 1;
-text-shadow: 0 0 3px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.6);
-}
 .city-progress-text {
 font-size: 0.8em;
 color: var(--light-text);
@@ -316,12 +424,15 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
+.tab { min-width: 80px; padding: 10px 12px; }
 }
 @media (max-width: 480px) {
-.tab { min-width: 70px; padding: 8px 4px; font-size: 0.8em; }
+.tab { min-width: 60px; padding: 8px 6px; font-size: 0.75em; }
 .section-header { font-size: 1em; padding: 12px 14px; }
 header { padding: 50px 12px; }
 h1 { font-size: 1.2em; }
+.city-banner { height: 160px; }
+.city-banner .city-name { font-size: 1.3em; }
 }
 </style>
 </head>
@@ -331,11 +442,17 @@ h1 { font-size: 1.2em; }
 <p class="subtitle">Июль–август 2026</p>
 </header>
 <div class="progress-bar" id="progressBar"><span class="progress-text">Загрузка...</span></div>
-<div class="tabs">
+<div class="tabs" id="mainTabs">
 <button class="tab active" data-tab="itinerary">🗺️ Маршрут</button>
-<button class="tab" data-tab="sights">🏞️ Места</button>
-<button class="tab" data-tab="eats">🍽️ Еда</button>
-<button class="tab" data-tab="spas">🧖 Бани</button>
+<button class="tab" data-tab="jeju">🏙️ Чеджудо</button>
+<button class="tab" data-tab="seoul1">🏙️ Сеул (1)</button>
+<button class="tab" data-tab="jeonju">🏙️ Чонджу</button>
+<button class="tab" data-tab="jindo">🏙️ Чиндо</button>
+<button class="tab" data-tab="busan">🏙️ Пусан</button>
+<button class="tab" data-tab="gyeongju">🏙️ Кёнджу</button>
+<button class="tab" data-tab="andong">🏙️ Андон</button>
+<button class="tab" data-tab="sokcho">🏙️ Сокчхо</button>
+<button class="tab" data-tab="seoul2">🏙️ Сеул (2)</button>
 </div>
 <div id="content"></div>
 <button id="backToTop">↑</button>
@@ -377,6 +494,51 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
+// === ЖИЛЬЁ ===
+const accommodations = {
+jeju: {
+name: "Seogwipo-si",
+address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616",
+google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77",
+naver: getNaverUrl("https://maps.app.goo.gl/F4addr6TrUVHqcd77")
+},
+seoul1: {
+name: "Toegye-ro Stay",
+address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629",
+google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58",
+naver: getNaverUrl("https://maps.app.goo.gl/vZGmRbgYLm5onJZ58")
+},
+jindo: {
+name: "Imhoe-myeon Guesthouse",
+address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840",
+google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7",
+naver: getNaverUrl("https://maps.app.goo.gl/moqvjniubSLUBzCy7")
+},
+busan: {
+name: "O'guest in Haeundae",
+address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094",
+google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69",
+naver: getNaverUrl("https://maps.app.goo.gl/HoYeo3wRjgEKbVU69")
+},
+andong: {
+name: "Haru The Guesthouse",
+address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704",
+google: "https://maps.app.goo.gl/BzbmgVBongeqmty89",
+naver: getNaverUrl("https://maps.app.goo.gl/BzbmgVBongeqmty89")
+},
+sokcho: {
+name: "Sokcho Summitbay 1807 \"Ocean View\"",
+address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808",
+google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6",
+naver: getNaverUrl("https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6")
+},
+seoul2: {
+name: "Seoul DDJ STAY 대동장",
+address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126",
+google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8",
+naver: getNaverUrl("https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8")
+}
+};
 // === МЕСТА (47) ===
 const places = [
 {
@@ -568,26 +730,21 @@ items: [
 }
 ];
 // === БАНИ ===
-const spas = [
-{
-city: "Сеул",
-items: [
+const spas = {
+seoul: [
 { name: "Samho Gungjeon Sauna", google: "https://maps.app.goo.gl/YAKin24Y17vFW1Hj7", naver: getNaverUrl("https://maps.app.goo.gl/YAKin24Y17vFW1Hj7"), desc: "Самый пафосный и красивый из всех чимчильбан.", price: "22 000 ₩ (~1 540 ₽)", stars: 4.8 },
 { name: "Riverside Spa Land", google: "https://maps.app.goo.gl/LmG4dU1QkyNukhLq9", naver: getNaverUrl("https://maps.app.goo.gl/LmG4dU1QkyNukhLq9"), desc: "Чимчильбан. Тут я ночевал в 2019.", price: "18 000 ₩ (~1 260 ₽)", stars: 4.5 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Сокчхо/Сораксан",
-items: [
+].sort((a, b) => b.stars - a.stars),
+sokcho: [
 { name: "Seorak Spa Valley", google: "https://maps.app.goo.gl/SeorakSpaValley", naver: "https://map.naver.com/p/search/Seorak+Spa+Valley", desc: "Горячие источники после треккинга — идеальное завершение дня. Без ночлега.", price: "12 000 ₩ (~840 ₽)", stars: 4.6 }
 ].sort((a, b) => b.stars - a.stars)
-}
-];
+};
 // === СОСТОЯНИЕ ===
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 let currentTab = 'itinerary';
+let currentCitySubtab = {};
 // === ФУНКЦИИ ===
 function renderItinerary() {
 return `
@@ -598,21 +755,48 @@ return `
 </table>
 `;
 }
-function renderSights() {
+function renderCityBanner(cityKey, cityName) {
+return `<div class="city-banner" style="background-image: url('${cityKey}-banner.jpg')">
+<div class="city-name">${cityName}</div>
+</div>`;
+}
+function renderAccommodation(key) {
+const acc = accommodations[key];
+if (!acc) return '';
+return `
+<div class="accommodation">
+<div class="accommodation-title">🏠 Жильё</div>
+<div class="accommodation-name">${acc.name}</div>
+<div class="accommodation-address">${acc.address}</div>
+<div class="accommodation-links">
+<a href="${acc.google}" target="_blank" class="link-google">🗺️ Google Maps</a>
+<a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver Maps</a>
+</div>
+</div>
+`;
+}
+function renderSubtabs(cityKey, hasSpa) {
+let html = `<div class="city-subtabs">`;
+html += `<button class="subtab active" data-type="places" data-city="${cityKey}">🏞️ Места</button>`;
+html += `<button class="subtab" data-type="eats" data-city="${cityKey}">🍽️ Еда</button>`;
+if (hasSpa) {
+html += `<button class="subtab" data-type="spas" data-city="${cityKey}">🧖 Бани</button>`;
+}
+html += `</div>`;
+return html;
+}
+function renderCityPlaces(cityName) {
+const cityData = places.find(c => c.city === cityName);
+if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Места пока не добавлены</p>';
 let html = '';
-places.forEach(cityData => {
 const totalItems = cityData.items.length;
-const visitedCount = cityData.items.filter(item => {
-const id = `place-${cityData.city}-${item.name}`;
-return visitedPlaces[id];
-}).length;
+const visitedCount = cityData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-html += `<div class="section collapsed" data-city="${cityData.city}" data-type="place">`;
-html += `<div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
+html += `<div class="section collapsed"><div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityName} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
 html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
 html += `<div class="section-content">`;
 cityData.items.forEach(item => {
-const id = `place-${cityData.city}-${item.name}`;
+const id = `place-${cityName}-${item.name}`;
 const isVisited = visitedPlaces[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
@@ -628,24 +812,20 @@ ${item.price ? `<div class="price-info">💰 Вход: ${item.price}</div>` : ''
 </div>`;
 });
 html += '</div></div>';
-});
 return html;
 }
-function renderEats() {
+function renderCityEats(cityName) {
+const cityData = eats.find(c => c.city === cityName);
+if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Рестораны пока не добавлены</p>';
 let html = '';
-eats.forEach(cityData => {
 const totalItems = cityData.items.length;
-const visitedCount = cityData.items.filter(item => {
-const id = `eat-${cityData.city}-${item.name}`;
-return visitedEats[id];
-}).length;
+const visitedCount = cityData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-html += `<div class="section collapsed" data-city="${cityData.city}" data-type="eat">`;
-html += `<div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityData.city} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
+html += `<div class="section collapsed"><div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityName} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
 html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
 html += `<div class="section-content">`;
 cityData.items.forEach(item => {
-const id = `eat-${cityData.city}-${item.name}`;
+const id = `eat-${cityName}-${item.name}`;
 const isVisited = visitedEats[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
@@ -661,17 +841,14 @@ html += `
 </div>`;
 });
 html += '</div></div>';
-});
 return html;
 }
-function renderSpas() {
+function renderCitySpas(cityKey) {
+const cityData = spas[cityKey];
+if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Бани пока не добавлены</p>';
 let html = '';
-spas.forEach(cityData => {
-html += `<div class="section collapsed" data-city="${cityData.city}" data-type="spa">`;
-html += `<div class="section-header" style="--progress-width: 0%"><div class="header-text">${cityData.city}<span class="toggle-icon">▼</span></div></div>`;
-html += `<div class="section-content">`;
-cityData.items.forEach(item => {
-const id = `spa-${cityData.city}-${item.name}`;
+cityData.forEach(item => {
+const id = `spa-${cityKey}-${item.name}`;
 const isVisited = visitedSpas[id];
 html += `
 <div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
@@ -686,8 +863,23 @@ html += `
 </div>
 </div>`;
 });
-html += '</div></div>';
-});
+return html;
+}
+function renderCityContent(cityKey, cityName, subtab) {
+let html = renderCityBanner(cityKey, cityName);
+if (accommodations[cityKey]) {
+html += renderAccommodation(cityKey);
+}
+const hasSpa = cityKey === 'seoul1' || cityKey === 'seoul2' || cityKey === 'sokcho';
+html += renderSubtabs(cityKey, hasSpa);
+if (subtab === 'places') {
+html += renderCityPlaces(cityName);
+} else if (subtab === 'eats') {
+html += renderCityEats(cityName);
+} else if (subtab === 'spas' && hasSpa) {
+const spaKey = cityKey === 'seoul1' || cityKey === 'seoul2' ? 'seoul' : 'sokcho';
+html += `<div class="section"><div class="section-content">${renderCitySpas(spaKey)}</div></div>`;
+}
 return html;
 }
 function updateProgress() {
@@ -702,33 +894,25 @@ const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
 progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов (${progressPercent}%)</span>`;
 }
-function updateCityProgress() {
-document.querySelectorAll('.section').forEach(section => {
-const city = section.dataset.city;
-const type = section.dataset.type;
+function updateCityProgress(cityName, type) {
 let items, visitedData, prefix;
 if (type === 'place') {
-items = places.find(c => c.city === city);
+items = places.find(c => c.city === cityName);
 visitedData = visitedPlaces;
 prefix = 'place-';
 } else if (type === 'eat') {
-items = eats.find(c => c.city === city);
+items = eats.find(c => c.city === cityName);
 visitedData = visitedEats;
 prefix = 'eat-';
-} else if (type === 'spa') {
-items = spas.find(c => c.city === city);
-visitedData = visitedSpas;
-prefix = 'spa-';
 }
 if (!items) return;
 const totalItems = items.items.length;
-const visitedCount = items.items.filter(item => visitedData[`${prefix}${city}-${item.name}`]).length;
+const visitedCount = items.items.filter(item => visitedData[`${prefix}${cityName}-${item.name}`]).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-const header = section.querySelector('.section-header');
-const progressText = section.querySelector('.city-progress-text');
+const header = document.querySelector(`.section-header .header-text`)?.closest('.section-header');
+const progressText = document.querySelector('.city-progress-text');
 if (header) header.style.setProperty('--progress-width', `${progressPercent}%`);
 if (progressText) progressText.textContent = `${visitedCount} из ${totalItems} посещено (${progressPercent}%)`;
-});
 }
 function handleDoneClick(btn) {
 const id = btn.dataset.id;
@@ -753,25 +937,75 @@ item.classList.remove('visited');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
-updateCityProgress();
 updateProgress();
 }
 // === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
-document.querySelectorAll('.tab').forEach(tab => {
+// Главные вкладки (города)
+document.querySelectorAll('#mainTabs .tab').forEach(tab => {
 tab.addEventListener('click', function() {
-document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('#mainTabs .tab').forEach(t => t.classList.remove('active'));
 this.classList.add('active');
 currentTab = this.dataset.tab;
 let content = '';
-if (currentTab === 'itinerary') content = renderItinerary();
-else if (currentTab === 'sights') content = renderSights();
-else if (currentTab === 'eats') content = renderEats();
-else if (currentTab === 'spas') content = renderSpas();
+if (currentTab === 'itinerary') {
+content = renderItinerary();
+} else {
+const cityMap = {
+jeju: 'Чеджудо',
+seoul1: 'Сеул',
+jeonju: 'Чонджу',
+jindo: 'Чиндо',
+busan: 'Пусан',
+gyeongju: 'Кёнджу',
+andong: 'Андон',
+sokcho: 'Сокчхо/Сораксан',
+seoul2: 'Сеул'
+};
+const cityName = cityMap[currentTab];
+currentCitySubtab[currentTab] = currentCitySubtab[currentTab] || 'places';
+content = renderCityContent(currentTab, cityName, currentCitySubtab[currentTab]);
+}
 document.getElementById('content').innerHTML = content;
+// Обработчики для аккордеона
 document.querySelectorAll('.section-header').forEach(header => {
 header.addEventListener('click', function() {
 this.parentElement.classList.toggle('collapsed');
+});
+});
+// Обработчики для подвкладок (Места/Еда/Бани)
+document.querySelectorAll('.subtab').forEach(subtab => {
+subtab.addEventListener('click', function(e) {
+e.stopPropagation();
+document.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
+this.classList.add('active');
+const city = this.dataset.city;
+const type = this.dataset.type;
+currentCitySubtab[city] = type;
+const cityName = {'jeju':'Чеджудо','seoul1':'Сеул','jeonju':'Чонджу','jindo':'Чиндо','busan':'Пусан','gyeongju':'Кёнджу','andong':'Андон','sokcho':'Сокчхо/Сораксан','seoul2':'Сеул'}[city];
+const container = document.getElementById('content');
+const banner = container.querySelector('.city-banner')?.outerHTML || '';
+const acc = accommodations[city] ? renderAccommodation(city) : '';
+const hasSpa = city === 'seoul1' || city === 'seoul2' || city === 'sokcho';
+const subtabs = renderSubtabs(city, hasSpa);
+let newContent = '';
+if (type === 'places') newContent = renderCityPlaces(cityName);
+else if (type === 'eats') newContent = renderCityEats(cityName);
+else if (type === 'spas' && hasSpa) {
+const spaKey = city === 'seoul1' || city === 'seoul2' ? 'seoul' : 'sokcho';
+newContent = `<div class="section"><div class="section-content">${renderCitySpas(spaKey)}</div></div>`;
+}
+container.innerHTML = banner + acc + subtabs + newContent;
+// Перепривязываем обработчики
+document.querySelectorAll('.section-header').forEach(h => {
+h.addEventListener('click', function() {
+this.parentElement.classList.toggle('collapsed');
+});
+});
+document.querySelectorAll('.subtab').forEach(s => {
+s.addEventListener('click', function(e) {
+e.stopPropagation();
+// Рекурсивный вызов не нужен, обработчик уже есть
 });
 });
 document.querySelectorAll('.btn-done').forEach(btn => {
@@ -780,16 +1014,19 @@ e.stopPropagation();
 handleDoneClick(this);
 });
 });
-document.querySelectorAll('.item').forEach(item => {
-item.addEventListener('click', function(e) {
-if (e.target.classList.contains('btn-done')) return;
-const btn = this.querySelector('.btn-done');
-if (btn) handleDoneClick(btn);
+});
+});
+// Обработчики для кнопок "Посещено"
+document.querySelectorAll('.btn-done').forEach(btn => {
+btn.addEventListener('click', function(e) {
+e.stopPropagation();
+handleDoneClick(this);
 });
 });
 updateProgress();
 });
 });
+// Кнопка "Наверх"
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block';
@@ -798,6 +1035,7 @@ else btn.style.display = 'none';
 document.getElementById('backToTop').addEventListener('click', () => {
 window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+// Загружаем маршрут по умолчанию
 document.querySelector('.tab[data-tab="itinerary"]').click();
 });
 </script>
