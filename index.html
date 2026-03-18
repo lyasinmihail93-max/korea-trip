@@ -30,17 +30,24 @@ line-height: 1.5;
 header {
 text-align: center;
 margin-bottom: 16px;
-padding-bottom: 12px;
+padding: 60px 12px;
 border-bottom: 1px solid var(--border);
+background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+            url('header-bg.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+color: white;
+text-shadow: 0 2px 4px rgba(0,0,0,0.7);
 }
 h1 {
 font-size: 1.3em;
 margin-bottom: 4px;
-color: var(--primary);
+color: white;
 }
 .subtitle {
 font-size: 0.9em;
-color: var(--light-text);
+color: rgba(255,255,255,0.9);
 }
 .tabs {
 display: flex;
@@ -297,6 +304,8 @@ body { max-width: 800px; margin: 0 auto; }
 @media (max-width: 480px) {
 .tab { min-width: 70px; padding: 8px 4px; font-size: 0.8em; }
 .section-header { font-size: 1em; padding: 12px 14px; }
+header { padding: 50px 12px; }
+h1 { font-size: 1.2em; }
 }
 </style>
 </head>
