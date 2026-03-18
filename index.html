@@ -12,6 +12,7 @@
 --text: #264653;
 --light-text: #6a7b7d;
 --visited-bg: #a5d6a7;
+--visited-light: #c8e6c9;
 --border: #e0e6e6;
 --button-bg-google: #e3f2fd;
 --button-bg-naver: #f9fbe7;
@@ -57,12 +58,13 @@ flex: 1;
 min-width: 80px;
 padding: 10px;
 background: #f0f5f5;
-border: none;
+border: 1px solid var(--primary);
 border-radius: 8px;
 font-weight: 600;
 color: var(--text);
 cursor: pointer;
 min-height: 44px;
+transition: all 0.3s ease;
 }
 .tab.active {
 background: var(--primary);
@@ -95,13 +97,15 @@ position: absolute;
 top: 0;
 left: 0;
 height: 100%;
-background: var(--progress-light);
-transition: width 0.3s ease;
+background: var(--visited-light);
+width: var(--progress-width, 0%);
+transition: width 0.5s ease;
 z-index: 0;
 }
 .section-header .header-text {
 position: relative;
 z-index: 1;
+text-shadow: 0 0 3px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.6);
 }
 .toggle-icon {
 font-size: 0.7em;
@@ -131,6 +135,7 @@ to { opacity: 1; transform: translateY(0); }
 padding: 14px 16px;
 border-bottom: 1px solid var(--border);
 position: relative;
+transition: all 0.3s ease;
 }
 .item:last-child {
 border-bottom: none;
@@ -189,20 +194,22 @@ button {
 flex: 1;
 min-width: 90px;
 padding: 10px;
-border: none;
+border: 1px solid var(--primary);
 border-radius: 6px;
 font-size: 0.85em;
 font-weight: 600;
 cursor: pointer;
 min-height: 44px;
+transition: all 0.3s ease;
 }
 .btn-done {
 background: var(--button-bg-done);
 color: var(--primary);
 }
 .btn-done.done {
-background: var(--visited-bg);
-color: #00695c;
+background: var(--button-bg-done);
+color: var(--primary);
+border-color: var(--primary);
 }
 .btn-google {
 background: var(--button-bg-google);
@@ -236,11 +243,30 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 .progress-bar {
 background: #f0f5f5;
-padding: 10px;
+padding: 12px;
 border-radius: 8px;
 margin-bottom: 16px;
 font-size: 0.9em;
 color: var(--light-text);
+border: 1px solid var(--primary);
+position: relative;
+overflow: hidden;
+}
+.progress-bar::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+background: var(--visited-light);
+width: var(--progress-width, 0%);
+transition: width 0.5s ease;
+z-index: 0;
+}
+.progress-bar .progress-text {
+position: relative;
+z-index: 1;
+text-shadow: 0 0 3px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.6);
 }
 .city-progress-text {
 font-size: 0.8em;
@@ -258,11 +284,12 @@ color: white;
 width: 44px;
 height: 44px;
 border-radius: 50%;
-border: none;
+border: 2px solid white;
 font-size: 18px;
 cursor: pointer;
 display: none;
 z-index: 99;
+box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
@@ -278,9 +305,9 @@ body { max-width: 800px; margin: 0 auto; }
 <h1>Южная Корея — наше свадебное путешествие</h1>
 <p class="subtitle">Июль–август 2026</p>
 </header>
-<div class="progress-bar" id="progressBar">Загрузка...</div>
+<div class="progress-bar" id="progressBar"><span class="progress-text">Загрузка...</span></div>
 <div class="tabs">
-<button class="tab active" data-tab="itinerary">🗺️ Общий маршрут</button>
+<button class="tab active" data-tab="itinerary">🗺️ Маршрут</button>
 <button class="tab" data-tab="sights">🏞️ Места</button>
 <button class="tab" data-tab="eats">🍽️ Еда</button>
 <button class="tab" data-tab="spas">🧖 Бани</button>
@@ -643,8 +670,12 @@ const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
 const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
 const totalEats = eats.reduce((sum, c) => sum + c.items.length, 0);
 const visitedEatsCount = Object.values(visitedEats).filter(v => v).length;
-document.getElementById('progressBar').innerHTML =
-`✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов`;
+const totalItems = totalPlaces + totalEats;
+const visitedTotal = visitedCount + visitedEatsCount;
+const progressPercent = totalItems > 0 ? Math.round((visitedTotal / totalItems) * 100) : 0;
+const progressBar = document.getElementById('progressBar');
+progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
+progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount} / ${totalPlaces} мест | ${visitedEatsCount} / ${totalEats} ресторанов (${progressPercent}%)</span>`;
 }
 function updateCityProgress() {
 document.querySelectorAll('.section').forEach(section => {
@@ -691,11 +722,9 @@ const item = btn.closest('.item');
 if (item) {
 if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) {
 item.classList.add('visited');
-btn.classList.add('done');
 btn.textContent = type === 'eat' ? '✅ Попробовано' : '✅ Посещено';
 } else {
 item.classList.remove('visited');
-btn.classList.remove('done');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
