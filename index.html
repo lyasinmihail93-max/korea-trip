@@ -30,15 +30,15 @@ background-size: 20px 20px;
 color: var(--text);
 padding: 12px;
 line-height: 1.6;
-scroll-behavior: smooth;
+/* Убрали smooth scroll для body, чтобы скрипт мог точно контролировать позицию */
 }
 header {
 text-align: center;
 margin-bottom: 16px;
 padding: 60px 12px;
 border-bottom: 1px solid var(--border);
-background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-            url('header-bg.jpg');
+background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+url('header-bg.jpg');
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -572,7 +572,7 @@ naver: getNaverUrl("https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6"),
 dates: "10–12.08"
 }]
 };
-// === МЕСТА (49 с Самчхок) ===
+// === МЕСТА ===
 const places = [
 {
 city: "Чеджудо",
@@ -677,7 +677,7 @@ items: [
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 }
 ];
-// === ЕДА (37 с Самчхок) ===
+// === ЕДА ===
 const eats = [
 {
 city: "Чеджудо",
@@ -771,7 +771,7 @@ items: [
 ].sort((a, b) => b.stars - a.stars)
 }
 ];
-// === БАНИ (4) ===
+// === БАНИ ===
 const spas = {
 seoul: [
 { name: "Samho Gungjeon Sauna", google: "https://maps.app.goo.gl/YAKin24Y17vFW1Hj7", naver: getNaverUrl("https://maps.app.goo.gl/YAKin24Y17vFW1Hj7"), desc: "Самый пафосный и красивый из всех чимчильбан.", price: "22 000 ₩ (~1 540 ₽)", stars: 4.8 },
@@ -790,6 +790,7 @@ let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 let currentCity = null;
 let currentSubtab = 'places';
+
 // === ФУНКЦИИ ===
 function renderItinerary() {
 return `
@@ -847,30 +848,37 @@ html += '</div>';
 html += '</div>';
 return html;
 }
+
+// Обновленная функция прогресса города (учитывает бани)
 function renderCityProgress(cityKey) {
 const cityName = getCityDisplayName(cityKey);
 let total = 0, visited = 0;
+
 // Места
 const placesData = places.find(c => c.city === cityName);
 if (placesData) {
 total += placesData.items.length;
 visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
 }
+
 // Еда
 const eatsData = eats.find(c => c.city === cityName);
 if (eatsData) {
 total += eatsData.items.length;
 visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
 }
-// Бани
+
+// Бани (теперь учитываются в общем прогрессе города)
 const spaKey = getSpaKeyForCity(cityKey);
 if (spaKey && spas[spaKey]) {
 total += spas[spaKey].length;
 visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityKey}-${item.name}`]).length;
 }
+
 const percent = total > 0 ? Math.round((visited / total) * 100) : 0;
 return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">✅ Посещено: ${visited} из ${total} (${percent}%)</span></div>`;
 }
+
 function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
 html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">Места</button>`;
@@ -881,6 +889,7 @@ html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data
 html += `</div>`;
 return html;
 }
+
 function getCityDisplayName(cityKey) {
 const map = {
 jeju: 'Чеджудо',
@@ -895,12 +904,14 @@ sokcho: 'Сокчхо/Сораксан'
 };
 return map[cityKey] || cityKey;
 }
+
 function getSpaKeyForCity(cityKey) {
 if (cityKey === 'sokcho') return 'sokcho';
 if (cityKey === 'busan') return 'busan';
 if (cityKey === 'seoul') return 'seoul';
 return null;
 }
+
 function renderItemsList(items, type, cityKey, cityName) {
 if (!items || items.length === 0) {
 return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
@@ -925,6 +936,7 @@ ${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avg
 }).join('')}
 </div>`;
 }
+
 function renderCityContent(cityKey, subtab) {
 const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
@@ -934,6 +946,7 @@ if (accHtml) html += accHtml;
 html += renderCityProgress(cityKey);
 const hasSpa = getSpaKeyForCity(cityKey) !== null;
 html += renderSubtabs(cityKey, hasSpa);
+
 if (subtab === 'places') {
 const items = places.find(c => c.city === cityName)?.items || [];
 html += renderItemsList(items, 'place', cityKey, cityName);
@@ -947,6 +960,7 @@ html += renderItemsList(items, 'spa', cityKey, cityName);
 }
 return html;
 }
+
 function updateProgress() {
 const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
 const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
@@ -954,13 +968,17 @@ const totalEats = eats.reduce((sum, c) => sum + c.items.length, 0);
 const visitedEatsCount = Object.values(visitedEats).filter(v => v).length;
 const totalSpas = Object.values(spas).reduce((sum, arr) => sum + arr.length, 0);
 const visitedSpasCount = Object.values(visitedSpas).filter(v => v).length;
+
 const totalItems = totalPlaces + totalEats + totalSpas;
 const visitedTotal = visitedCount + visitedEatsCount + visitedSpasCount;
+
 const progressPercent = totalItems > 0 ? Math.round((visitedTotal / totalItems) * 100) : 0;
+
 const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
 progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount}/${totalPlaces} мест | ${visitedEatsCount}/${totalEats} ресторанов | ${visitedSpasCount}/${totalSpas} бань (${progressPercent}%)</span>`;
 }
+
 function handleDoneClick(btn) {
 const id = btn.dataset.id;
 const type = btn.dataset.type;
@@ -974,6 +992,7 @@ localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
 visitedSpas[id] = !visitedSpas[id];
 localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas));
 }
+
 const item = btn.closest('.item');
 if (item) {
 if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) {
@@ -984,8 +1003,10 @@ item.classList.remove('visited');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
+
 // Обновляем прогресс сразу
 updateProgress();
+
 // Обновляем прогресс города если он открыт
 if (currentCity) {
 const cityProgress = document.querySelector('.city-progress');
@@ -994,40 +1015,52 @@ cityProgress.outerHTML = renderCityProgress(currentCity);
 }
 }
 }
+
 function attachEventListeners() {
 document.querySelectorAll('.subtab').forEach(subtab => {
 subtab.addEventListener('click', function(e) {
 e.preventDefault();
 e.stopPropagation();
+
+// 1. Сохраняем текущую позицию скролла
+const scrollPosition = window.scrollY;
+
+// 2. Переключаем активный класс
 document.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
 this.classList.add('active');
 currentSubtab = this.dataset.type;
 const city = this.dataset.city;
-const container = document.getElementById('content');
-const banner = container.querySelector('.city-banner')?.outerHTML || '';
-const acc = accommodations[city] ? renderAccommodation(city) : '';
-const progress = renderCityProgress(city);
-const hasSpa = getSpaKeyForCity(city) !== null;
-const subtabs = renderSubtabs(city, hasSpa);
+
+// 3. Находим контейнер списка элементов (чтобы заменить только его, а не всю страницу)
+const itemsContainer = document.querySelector('.items-list');
+if (!itemsContainer) return;
+
 let newContent = '';
-if (currentSubtab === 'places') {
 const cityName = getCityDisplayName(city);
+
+if (currentSubtab === 'places') {
 const items = places.find(c => c.city === cityName)?.items || [];
 newContent = renderItemsList(items, 'place', city, cityName);
 } else if (currentSubtab === 'eats') {
-const cityName = getCityDisplayName(city);
 const items = eats.find(c => c.city === cityName)?.items || [];
 newContent = renderItemsList(items, 'eat', city, cityName);
-} else if (currentSubtab === 'spas' && hasSpa) {
-const cityName = getCityDisplayName(city);
+} else if (currentSubtab === 'spas') {
 const spaKey = getSpaKeyForCity(city);
 const items = spas[spaKey] || [];
 newContent = renderItemsList(items, 'spa', city, cityName);
 }
-container.innerHTML = banner + acc + progress + subtabs + newContent;
+
+// 4. Заменяем только контент списка
+itemsContainer.outerHTML = newContent;
+
+// 5. Восстанавливаем позицию скролла мгновенно
+window.scrollTo(0, scrollPosition);
+
+// 6. Переназначаем обработчики событий для новых кнопок
 attachEventListeners();
 });
 });
+
 document.querySelectorAll('.btn-done').forEach(btn => {
 btn.addEventListener('click', function(e) {
 e.preventDefault();
@@ -1036,6 +1069,7 @@ handleDoneClick(this);
 });
 });
 }
+
 // === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('routeTab').addEventListener('click', function(e) {
@@ -1046,6 +1080,7 @@ currentCity = null;
 document.getElementById('content').innerHTML = renderItinerary();
 updateProgress();
 });
+
 document.querySelectorAll('.city-tab').forEach(tab => {
 tab.addEventListener('click', function(e) {
 e.preventDefault();
@@ -1059,13 +1094,16 @@ attachEventListeners();
 updateProgress();
 });
 });
+
 updateProgress();
 });
+
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block';
 else btn.style.display = 'none';
 });
+
 document.getElementById('backToTop').addEventListener('click', (e) => {
 e.preventDefault();
 window.scrollTo({ top: 0, behavior: 'smooth' });
