@@ -30,7 +30,6 @@ background-size: 20px 20px;
 color: var(--text);
 padding: 12px;
 line-height: 1.6;
-scroll-behavior: smooth;
 }
 header {
 text-align: center;
@@ -139,7 +138,7 @@ color: white;
 }
 .city-banner {
 width: 100%;
-height: 200px;
+min-height: 200px;
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -147,15 +146,16 @@ border-radius: 12px;
 margin-bottom: 16px;
 position: relative;
 display: flex;
-align-items: center;
-justify-content: center;
+flex-direction: column;
+justify-content: flex-end;
+padding: 20px;
 box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 .city-banner::before {
 content: '';
 position: absolute;
 top: 0; left: 0; right: 0; bottom: 0;
-background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
 border-radius: 12px;
 }
 .city-banner .city-name {
@@ -165,6 +165,23 @@ color: white;
 font-size: 1.5em;
 font-weight: 700;
 text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+margin-bottom: 8px;
+}
+.city-banner .city-dates {
+position: relative;
+z-index: 1;
+color: rgba(255,255,255,0.9);
+font-size: 0.95em;
+text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+.city-banner .city-events {
+position: relative;
+z-index: 1;
+color: rgba(255,255,255,0.85);
+font-size: 0.85em;
+margin-top: 8px;
+line-height: 1.4;
+text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 .accommodation {
 background: white;
@@ -391,47 +408,6 @@ color: #1565c0;
 background: var(--button-bg-naver);
 color: #5d4037;
 }
-/* Маршрут: карта + таблица с прозрачным фоном */
-.route-container {
-position: relative;
-border-radius: 12px;
-overflow: hidden;
-margin: 16px 0;
-}
-.route-map {
-width: 100%;
-display: block;
-filter: brightness(0.85);
-}
-.route-table-overlay {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-background: rgba(255,255,255,0.85);
-backdrop-filter: blur(4px);
-border-radius: 12px;
-padding: 16px;
-max-width: 95%;
-max-height: 85%;
-overflow: auto;
-box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.calendar {
-width: 100%;
-border-collapse: collapse;
-font-size: 0.85em;
-}
-.calendar th,
-.calendar td {
-padding: 6px;
-text-align: left;
-border-bottom: 1px solid var(--border);
-}
-.calendar th {
-background: rgba(240,245,245,0.8);
-font-weight: 600;
-}
 #backToTop {
 position: fixed;
 bottom: 20px;
@@ -451,15 +427,13 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
 .city-tab { min-width: 80px; padding: 10px 8px; }
-.route-table-overlay { max-width: 85%; }
 }
 @media (max-width: 480px) {
 .city-tab { flex: 1 0 calc(25% - 8px); min-width: 60px; padding: 8px 4px; font-size: 0.7em; }
 header { padding: 50px 12px; }
 h1 { font-size: 1.2em; }
-.city-banner { height: 160px; }
+.city-banner { min-height: 160px; padding: 16px; }
 .city-banner .city-name { font-size: 1.3em; }
-.route-table-overlay { padding: 12px; font-size: 0.8em; }
 }
 </style>
 </head>
@@ -496,7 +470,7 @@ const full = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
 return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
-// === МАРШРУТ ===
+// === МАРШРУТ (для распределения по городам) ===
 const itinerary = [
 { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
 { date: "26.07", city: "Ульяновск", event: "Свадьба, второй день", time: "весь день" },
@@ -521,6 +495,25 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
+// === Функция для получения событий по городу ===
+function getCityEvents(cityKey) {
+const cityMap = {
+jeju: ['Чеджудо'],
+seoul: ['Сеул'],
+jeonju: ['Чонджу'],
+jindo: ['Чиндо'],
+busan: ['Пусан'],
+gyeongju: ['Кёнджу'],
+andong: ['Андон'],
+samcheok: ['Самчхок'],
+sokcho: ['Сокчхо']
+};
+const cityNames = cityMap[cityKey] || [];
+const events = itinerary.filter(i => 
+cityNames.some(name => i.city.includes(name) || i.event.includes(name))
+);
+return events;
+}
 // === ЖИЛЬЁ ===
 const accommodations = {
 jeju: [{
@@ -795,18 +788,18 @@ function renderItinerary() {
 return `
 <div class="route-container">
 <img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
-<div class="route-table-overlay">
-<table class="calendar">
-<thead><tr><th>Дата</th><th>Город</th><th>Событие</th><th>Время</th></tr></thead>
-<tbody>${itinerary.map(i => `<tr><td>${i.date}</td><td>${i.city}</td><td>${i.event}</td><td>${i.time}</td></tr>`).join('')}</tbody>
-</table>
-</div>
 </div>
 `;
 }
 function renderCityBanner(cityKey, cityName) {
-return `<div class="city-banner" style="background-image: url('${cityKey}-banner.jpg')">
+const events = getCityEvents(cityKey);
+const dates = events.length > 0 ? events[0].date + (events.length > 1 ? '–' + events[events.length-1].date : '') : '';
+const eventList = events.map(e => `${e.date}: ${e.event}`).join(' • ');
+return `
+<div class="city-banner" style="background-image: url('${cityKey}-banner.jpg')">
 <div class="city-name">${cityName}</div>
+${dates ? `<div class="city-dates">📅 ${dates}</div>` : ''}
+${eventList ? `<div class="city-events">${eventList}</div>` : ''}
 </div>`;
 }
 function renderAccommodation(cityKey) {
