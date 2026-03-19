@@ -30,6 +30,7 @@ background-size: 20px 20px;
 color: var(--text);
 padding: 12px;
 line-height: 1.6;
+scroll-behavior: smooth;
 }
 header {
 text-align: center;
@@ -239,6 +240,35 @@ background: var(--button-bg-naver);
 color: #5d4037;
 border: 1px solid #5d4037;
 }
+/* Прогресс города - компактный */
+.city-progress {
+background: rgba(255,255,255,0.95);
+padding: 10px 16px;
+border-radius: 8px;
+margin-bottom: 16px;
+font-size: 0.85em;
+color: var(--light-text);
+border: 1px solid var(--primary);
+position: relative;
+overflow: hidden;
+backdrop-filter: blur(4px);
+}
+.city-progress::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+background: linear-gradient(90deg, var(--visited-light) 0%, #81c784 50%, var(--visited-light) 100%);
+width: var(--progress-width, 0%);
+transition: width 0.5s ease;
+z-index: 0;
+}
+.city-progress .progress-text {
+position: relative;
+z-index: 1;
+font-weight: 600;
+}
 .city-subtabs {
 display: flex;
 gap: 8px;
@@ -264,67 +294,13 @@ background: var(--primary);
 color: white;
 transform: scale(1.02);
 }
-.section {
-margin-bottom: 16px;
+/* Списки без аккордеона */
+.items-list {
+background: white;
 border-radius: 12px;
 overflow: hidden;
 box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
 border-left: 4px solid var(--primary);
-background: white;
-}
-.section-header {
-background: white;
-padding: 14px 16px;
-font-weight: bold;
-font-size: 1.1em;
-cursor: pointer;
-display: flex;
-justify-content: space-between;
-align-items: center;
-border-bottom: 1px solid var(--border);
-min-height: 44px;
-position: relative;
-overflow: hidden;
-}
-.section-header::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-height: 100%;
-background: linear-gradient(90deg, var(--visited-light) 0%, #81c784 50%, var(--visited-light) 100%);
-width: var(--progress-width, 0%);
-transition: width 0.5s ease;
-z-index: 0;
-}
-.section-header .header-text {
-position: relative;
-z-index: 1;
-text-shadow: 0 0 2px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.7);
-}
-.toggle-icon {
-font-size: 0.7em;
-transition: transform 0.3s;
-position: relative;
-z-index: 1;
-}
-.section.collapsed .toggle-icon {
-transform: rotate(0deg);
-}
-.section:not(.collapsed) .toggle-icon {
-transform: rotate(180deg);
-}
-.section-content {
-display: none;
-background: white;
-}
-.section:not(.collapsed) .section-content {
-display: block;
-animation: slideDown 0.3s ease;
-}
-@keyframes slideDown {
-from { opacity: 0; transform: translateY(-10px); }
-to { opacity: 1; transform: translateY(0); }
 }
 .item {
 padding: 14px 16px;
@@ -456,13 +432,6 @@ border-bottom: 1px solid var(--border);
 background: rgba(240,245,245,0.8);
 font-weight: 600;
 }
-.city-progress-text {
-font-size: 0.8em;
-color: var(--light-text);
-padding: 8px 16px;
-background: #fafafa;
-border-top: 1px solid var(--border);
-}
 #backToTop {
 position: fixed;
 bottom: 20px;
@@ -486,7 +455,6 @@ body { max-width: 800px; margin: 0 auto; }
 }
 @media (max-width: 480px) {
 .city-tab { flex: 1 0 calc(25% - 8px); min-width: 60px; padding: 8px 4px; font-size: 0.7em; }
-.section-header { font-size: 1em; padding: 12px 14px; }
 header { padding: 50px 12px; }
 h1 { font-size: 1.2em; }
 .city-banner { height: 160px; }
@@ -879,6 +847,30 @@ html += '</div>';
 html += '</div>';
 return html;
 }
+function renderCityProgress(cityKey) {
+const cityName = getCityDisplayName(cityKey);
+let total = 0, visited = 0;
+// Места
+const placesData = places.find(c => c.city === cityName);
+if (placesData) {
+total += placesData.items.length;
+visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
+}
+// Еда
+const eatsData = eats.find(c => c.city === cityName);
+if (eatsData) {
+total += eatsData.items.length;
+visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
+}
+// Бани
+const spaKey = getSpaKeyForCity(cityKey);
+if (spaKey && spas[spaKey]) {
+total += spas[spaKey].length;
+visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityKey}-${item.name}`]).length;
+}
+const percent = total > 0 ? Math.round((visited / total) * 100) : 0;
+return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">✅ Посещено: ${visited} из ${total} (${percent}%)</span></div>`;
+}
 function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
 html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">Места</button>`;
@@ -909,122 +901,49 @@ if (cityKey === 'busan') return 'busan';
 if (cityKey === 'seoul') return 'seoul';
 return null;
 }
-function renderCityPlaces(cityName) {
-const cityData = places.find(c => c.city === cityName);
-if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Места пока не добавлены</p>';
-let html = '';
-const totalItems = cityData.items.length;
-const visitedCount = cityData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
-const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-html += `<div class="section collapsed"><div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityName} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
-html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
-html += `<div class="section-content">`;
-cityData.items.forEach(item => {
-const id = `place-${cityName}-${item.name}`;
-const isVisited = visitedPlaces[id];
-html += `
+function renderItemsList(items, type, cityKey, cityName) {
+if (!items || items.length === 0) {
+return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
+}
+return `<div class="items-list">
+${items.map(item => {
+const id = `${type}-${cityName}-${item.name}`;
+const isVisited = type === 'place' ? visitedPlaces[id] : (type === 'eat' ? visitedEats[id] : visitedSpas[id]);
+return `
 <div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
 <div class="item-name">${item.name}</div>
 <div class="item-stars">${generateStars(item.stars)}</div>
 <div class="item-desc">${item.desc}</div>
-${item.price ? `<div class="price-info">💰 Вход: ${item.price}</div>` : ''}
+${item.price ? `<div class="price-info">💰 ${type === 'place' ? 'Вход: ' : ''}${item.price}</div>` : ''}
+${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>` : ''}
 <div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="place">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
+<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="${type}">${isVisited ? (type === 'eat' ? '✅ Попробовано' : '✅ Посещено') : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
 <button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
 </div>
 </div>`;
-});
-html += '</div></div>';
-return html;
-}
-function renderCityEats(cityName) {
-const cityData = eats.find(c => c.city === cityName);
-if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Рестораны пока не добавлены</p>';
-let html = '';
-const totalItems = cityData.items.length;
-const visitedCount = cityData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
-const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-html += `<div class="section collapsed"><div class="section-header" style="--progress-width: ${progressPercent}%"><div class="header-text">${cityName} (${cityData.dates})<span class="toggle-icon">▼</span></div></div>`;
-html += `<div class="city-progress-text">${visitedCount} из ${totalItems} посещено (${progressPercent}%)</div>`;
-html += `<div class="section-content">`;
-cityData.items.forEach(item => {
-const id = `eat-${cityName}-${item.name}`;
-const isVisited = visitedEats[id];
-html += `
-<div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
-<div class="item-name">${item.name}</div>
-<div class="item-stars">${generateStars(item.stars)}</div>
-<div class="item-desc">${item.desc}</div>
-<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>
-<div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="eat">${isVisited ? '✅ Попробовано' : '☑️ Отметить'}</button>
-<button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
-<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
-</div>
+}).join('')}
 </div>`;
-});
-html += '</div></div>';
-return html;
-}
-function renderCitySpas(cityKey) {
-const spaKey = getSpaKeyForCity(cityKey);
-const cityData = spas[spaKey];
-if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Бани пока не добавлены</p>';
-let html = '';
-cityData.forEach(item => {
-const id = `spa-${cityKey}-${item.name}`;
-const isVisited = visitedSpas[id];
-html += `
-<div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
-<div class="item-name">${item.name}</div>
-<div class="item-stars">${generateStars(item.stars)}</div>
-<div class="item-desc">${item.desc}</div>
-<div class="price-info">💰 Вход: ${item.price}</div>
-<div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="spa">${isVisited ? '✅ Посещено' : '☑️ Отметить'}</button>
-<button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
-<button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
-</div>
-</div>`;
-});
-return html;
-}
-function calculateCityProgress(cityKey) {
-const cityName = getCityDisplayName(cityKey);
-let total = 0, visited = 0;
-// Места
-const placesData = places.find(c => c.city === cityName);
-if (placesData) {
-total += placesData.items.length;
-visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
-}
-// Еда
-const eatsData = eats.find(c => c.city === cityName);
-if (eatsData) {
-total += eatsData.items.length;
-visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
-}
-// Бани
-const spaKey = getSpaKeyForCity(cityKey);
-if (spaKey && spas[spaKey]) {
-total += spas[spaKey].length;
-visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityKey}-${item.name}`]).length;
-}
-return total > 0 ? Math.round((visited / total) * 100) : 0;
 }
 function renderCityContent(cityKey, subtab) {
 const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
-html += renderAccommodation(cityKey);
+const accHtml = renderAccommodation(cityKey);
+if (accHtml) html += accHtml;
+// Прогресс города ПОСЛЕ жилья, ПЕРЕД кнопками
+html += renderCityProgress(cityKey);
 const hasSpa = getSpaKeyForCity(cityKey) !== null;
 html += renderSubtabs(cityKey, hasSpa);
 if (subtab === 'places') {
-html += renderCityPlaces(cityName);
+const items = places.find(c => c.city === cityName)?.items || [];
+html += renderItemsList(items, 'place', cityKey, cityName);
 } else if (subtab === 'eats') {
-html += renderCityEats(cityName);
+const items = eats.find(c => c.city === cityName)?.items || [];
+html += renderItemsList(items, 'eat', cityKey, cityName);
 } else if (subtab === 'spas' && hasSpa) {
-html += `<div class="section"><div class="section-content">${renderCitySpas(cityKey)}</div></div>`;
+const spaKey = getSpaKeyForCity(cityKey);
+const items = spas[spaKey] || [];
+html += renderItemsList(items, 'spa', cityKey, cityName);
 }
 return html;
 }
@@ -1041,35 +960,6 @@ const progressPercent = totalItems > 0 ? Math.round((visitedTotal / totalItems) 
 const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
 progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount}/${totalPlaces} мест | ${visitedEatsCount}/${totalEats} ресторанов | ${visitedSpasCount}/${totalSpas} бань (${progressPercent}%)</span>`;
-}
-function updateCityProgressUI() {
-const section = document.querySelector('.section');
-if (!section) return;
-const header = section.querySelector('.section-header');
-const progressText = section.querySelector('.city-progress-text');
-if (!header || !currentCity) return;
-const progressPercent = calculateCityProgress(currentCity);
-header.style.setProperty('--progress-width', `${progressPercent}%`);
-if (progressText) {
-const cityName = getCityDisplayName(currentCity);
-let total = 0, visited = 0;
-const placesData = places.find(c => c.city === cityName);
-if (placesData) {
-total += placesData.items.length;
-visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
-}
-const eatsData = eats.find(c => c.city === cityName);
-if (eatsData) {
-total += eatsData.items.length;
-visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
-}
-const spaKey = getSpaKeyForCity(currentCity);
-if (spaKey && spas[spaKey]) {
-total += spas[spaKey].length;
-visited += spas[spaKey].filter(item => visitedSpas[`spa-${currentCity}-${item.name}`]).length;
-}
-progressText.textContent = `${visited} из ${total} посещено (${progressPercent}%)`;
-}
 }
 function handleDoneClick(btn) {
 const id = btn.dataset.id;
@@ -1094,18 +984,20 @@ item.classList.remove('visited');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
-// Обновляем прогресс сразу, без переключения вкладок
+// Обновляем прогресс сразу
 updateProgress();
-updateCityProgressUI();
+// Обновляем прогресс города если он открыт
+if (currentCity) {
+const cityProgress = document.querySelector('.city-progress');
+if (cityProgress) {
+cityProgress.outerHTML = renderCityProgress(currentCity);
+}
+}
 }
 function attachEventListeners() {
-document.querySelectorAll('.section-header').forEach(header => {
-header.addEventListener('click', function() {
-this.parentElement.classList.toggle('collapsed');
-});
-});
 document.querySelectorAll('.subtab').forEach(subtab => {
 subtab.addEventListener('click', function(e) {
+e.preventDefault();
 e.stopPropagation();
 document.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
 this.classList.add('active');
@@ -1114,21 +1006,31 @@ const city = this.dataset.city;
 const container = document.getElementById('content');
 const banner = container.querySelector('.city-banner')?.outerHTML || '';
 const acc = accommodations[city] ? renderAccommodation(city) : '';
+const progress = renderCityProgress(city);
 const hasSpa = getSpaKeyForCity(city) !== null;
 const subtabs = renderSubtabs(city, hasSpa);
 let newContent = '';
-if (currentSubtab === 'places') newContent = renderCityPlaces(getCityDisplayName(city));
-else if (currentSubtab === 'eats') newContent = renderCityEats(getCityDisplayName(city));
-else if (currentSubtab === 'spas' && hasSpa) {
-newContent = `<div class="section"><div class="section-content">${renderCitySpas(city)}</div></div>`;
+if (currentSubtab === 'places') {
+const cityName = getCityDisplayName(city);
+const items = places.find(c => c.city === cityName)?.items || [];
+newContent = renderItemsList(items, 'place', city, cityName);
+} else if (currentSubtab === 'eats') {
+const cityName = getCityDisplayName(city);
+const items = eats.find(c => c.city === cityName)?.items || [];
+newContent = renderItemsList(items, 'eat', city, cityName);
+} else if (currentSubtab === 'spas' && hasSpa) {
+const cityName = getCityDisplayName(city);
+const spaKey = getSpaKeyForCity(city);
+const items = spas[spaKey] || [];
+newContent = renderItemsList(items, 'spa', city, cityName);
 }
-container.innerHTML = banner + acc + subtabs + newContent;
+container.innerHTML = banner + acc + progress + subtabs + newContent;
 attachEventListeners();
-updateCityProgressUI();
 });
 });
 document.querySelectorAll('.btn-done').forEach(btn => {
 btn.addEventListener('click', function(e) {
+e.preventDefault();
 e.stopPropagation();
 handleDoneClick(this);
 });
@@ -1136,7 +1038,8 @@ handleDoneClick(this);
 }
 // === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
-document.getElementById('routeTab').addEventListener('click', function() {
+document.getElementById('routeTab').addEventListener('click', function(e) {
+e.preventDefault();
 document.getElementById('routeTab').classList.add('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 currentCity = null;
@@ -1144,7 +1047,8 @@ document.getElementById('content').innerHTML = renderItinerary();
 updateProgress();
 });
 document.querySelectorAll('.city-tab').forEach(tab => {
-tab.addEventListener('click', function() {
+tab.addEventListener('click', function(e) {
+e.preventDefault();
 document.getElementById('routeTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 this.classList.add('active');
@@ -1153,7 +1057,6 @@ currentSubtab = 'places';
 document.getElementById('content').innerHTML = renderCityContent(currentCity, currentSubtab);
 attachEventListeners();
 updateProgress();
-updateCityProgressUI();
 });
 });
 updateProgress();
@@ -1163,7 +1066,8 @@ const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block';
 else btn.style.display = 'none';
 });
-document.getElementById('backToTop').addEventListener('click', () => {
+document.getElementById('backToTop').addEventListener('click', (e) => {
+e.preventDefault();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
