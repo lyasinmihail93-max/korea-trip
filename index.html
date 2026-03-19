@@ -292,7 +292,7 @@ position: absolute;
 top: 0;
 left: 0;
 height: 100%;
-background: var(--visited-light);
+background: linear-gradient(90deg, var(--visited-light) 0%, #81c784 50%, var(--visited-light) 100%);
 width: var(--progress-width, 0%);
 transition: width 0.5s ease;
 z-index: 0;
@@ -300,6 +300,7 @@ z-index: 0;
 .section-header .header-text {
 position: relative;
 z-index: 1;
+text-shadow: 0 0 2px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.7);
 }
 .toggle-icon {
 font-size: 0.7em;
@@ -414,7 +415,7 @@ color: #1565c0;
 background: var(--button-bg-naver);
 color: #5d4037;
 }
-/* Маршрут: карта + таблица */
+/* Маршрут: карта + таблица с прозрачным фоном */
 .route-container {
 position: relative;
 border-radius: 12px;
@@ -424,20 +425,21 @@ margin: 16px 0;
 .route-map {
 width: 100%;
 display: block;
-filter: brightness(0.7);
+filter: brightness(0.85);
 }
 .route-table-overlay {
 position: absolute;
 top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
-background: rgba(255,255,255,0.95);
+background: rgba(255,255,255,0.85);
+backdrop-filter: blur(4px);
 border-radius: 12px;
 padding: 16px;
 max-width: 95%;
 max-height: 85%;
 overflow: auto;
-box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 .calendar {
 width: 100%;
@@ -451,7 +453,7 @@ text-align: left;
 border-bottom: 1px solid var(--border);
 }
 .calendar th {
-background: #f0f5f5;
+background: rgba(240,245,245,0.8);
 font-weight: 600;
 }
 .city-progress-text {
@@ -901,6 +903,12 @@ sokcho: 'Сокчхо/Сораксан'
 };
 return map[cityKey] || cityKey;
 }
+function getSpaKeyForCity(cityKey) {
+if (cityKey === 'sokcho') return 'sokcho';
+if (cityKey === 'busan') return 'busan';
+if (cityKey === 'seoul') return 'seoul';
+return null;
+}
 function renderCityPlaces(cityName) {
 const cityData = places.find(c => c.city === cityName);
 if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Места пока не добавлены</p>';
@@ -960,7 +968,7 @@ html += '</div></div>';
 return html;
 }
 function renderCitySpas(cityKey) {
-const spaKey = cityKey === 'sokcho' ? 'sokcho' : (cityKey === 'busan' ? 'busan' : 'seoul');
+const spaKey = getSpaKeyForCity(cityKey);
 const cityData = spas[spaKey];
 if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Бани пока не добавлены</p>';
 let html = '';
@@ -982,11 +990,34 @@ html += `
 });
 return html;
 }
+function calculateCityProgress(cityKey) {
+const cityName = getCityDisplayName(cityKey);
+let total = 0, visited = 0;
+// Места
+const placesData = places.find(c => c.city === cityName);
+if (placesData) {
+total += placesData.items.length;
+visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
+}
+// Еда
+const eatsData = eats.find(c => c.city === cityName);
+if (eatsData) {
+total += eatsData.items.length;
+visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
+}
+// Бани
+const spaKey = getSpaKeyForCity(cityKey);
+if (spaKey && spas[spaKey]) {
+total += spas[spaKey].length;
+visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityKey}-${item.name}`]).length;
+}
+return total > 0 ? Math.round((visited / total) * 100) : 0;
+}
 function renderCityContent(cityKey, subtab) {
 const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
 html += renderAccommodation(cityKey);
-const hasSpa = cityKey === 'seoul' || cityKey === 'sokcho' || cityKey === 'busan';
+const hasSpa = getSpaKeyForCity(cityKey) !== null;
 html += renderSubtabs(cityKey, hasSpa);
 if (subtab === 'places') {
 html += renderCityPlaces(cityName);
@@ -1011,34 +1042,33 @@ const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
 progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount}/${totalPlaces} мест | ${visitedEatsCount}/${totalEats} ресторанов | ${visitedSpasCount}/${totalSpas} бань (${progressPercent}%)</span>`;
 }
-function updateCityProgress(cityName, type) {
-let items, visitedData, prefix;
-if (type === 'place') {
-items = places.find(c => c.city === cityName);
-visitedData = visitedPlaces;
-prefix = 'place-';
-} else if (type === 'eat') {
-items = eats.find(c => c.city === cityName);
-visitedData = visitedEats;
-prefix = 'eat-';
-} else if (type === 'spa') {
-const cityKey = Object.keys(spas).find(k => spas[k].some(s => s.name.includes(cityName) || cityName.includes('Сокчхо') && k === 'sokcho' || cityName === 'Сеул' && k === 'seoul' || cityName === 'Пусан' && k === 'busan'));
-if (cityKey) {
-items = { items: spas[cityKey] };
-visitedData = visitedSpas;
-prefix = `spa-${cityKey === 'sokcho' ? 'sokcho' : (cityKey === 'busan' ? 'busan' : 'seoul')}-`;
-}
-}
-if (!items) return;
-const totalItems = items.items.length;
-const visitedCount = items.items.filter(item => visitedData[`${prefix}${item.name}`] || visitedData[`${prefix}${getCityDisplayName(cityKey)}-${item.name}`]).length;
-const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
+function updateCityProgressUI() {
 const section = document.querySelector('.section');
-if (section) {
+if (!section) return;
 const header = section.querySelector('.section-header');
 const progressText = section.querySelector('.city-progress-text');
-if (header) header.style.setProperty('--progress-width', `${progressPercent}%`);
-if (progressText) progressText.textContent = `${visitedCount} из ${totalItems} посещено (${progressPercent}%)`;
+if (!header || !currentCity) return;
+const progressPercent = calculateCityProgress(currentCity);
+header.style.setProperty('--progress-width', `${progressPercent}%`);
+if (progressText) {
+const cityName = getCityDisplayName(currentCity);
+let total = 0, visited = 0;
+const placesData = places.find(c => c.city === cityName);
+if (placesData) {
+total += placesData.items.length;
+visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
+}
+const eatsData = eats.find(c => c.city === cityName);
+if (eatsData) {
+total += eatsData.items.length;
+visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
+}
+const spaKey = getSpaKeyForCity(currentCity);
+if (spaKey && spas[spaKey]) {
+total += spas[spaKey].length;
+visited += spas[spaKey].filter(item => visitedSpas[`spa-${currentCity}-${item.name}`]).length;
+}
+progressText.textContent = `${visited} из ${total} посещено (${progressPercent}%)`;
 }
 }
 function handleDoneClick(btn) {
@@ -1064,11 +1094,9 @@ item.classList.remove('visited');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
-if (currentCity) {
-const cityName = getCityDisplayName(currentCity);
-updateCityProgress(cityName, type);
-}
+// Обновляем прогресс сразу, без переключения вкладок
 updateProgress();
+updateCityProgressUI();
 }
 function attachEventListeners() {
 document.querySelectorAll('.section-header').forEach(header => {
@@ -1086,7 +1114,7 @@ const city = this.dataset.city;
 const container = document.getElementById('content');
 const banner = container.querySelector('.city-banner')?.outerHTML || '';
 const acc = accommodations[city] ? renderAccommodation(city) : '';
-const hasSpa = city === 'seoul' || city === 'sokcho' || city === 'busan';
+const hasSpa = getSpaKeyForCity(city) !== null;
 const subtabs = renderSubtabs(city, hasSpa);
 let newContent = '';
 if (currentSubtab === 'places') newContent = renderCityPlaces(getCityDisplayName(city));
@@ -1096,6 +1124,7 @@ newContent = `<div class="section"><div class="section-content">${renderCitySpas
 }
 container.innerHTML = banner + acc + subtabs + newContent;
 attachEventListeners();
+updateCityProgressUI();
 });
 });
 document.querySelectorAll('.btn-done').forEach(btn => {
@@ -1124,6 +1153,7 @@ currentSubtab = 'places';
 document.getElementById('content').innerHTML = renderCityContent(currentCity, currentSubtab);
 attachEventListeners();
 updateProgress();
+updateCityProgressUI();
 });
 });
 updateProgress();
