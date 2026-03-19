@@ -19,6 +19,7 @@
 --button-bg-naver: #f9fbe7;
 --button-bg-done: #e0f2f1;
 --progress-light: #e8f5e9;
+--route-btn-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -56,40 +57,6 @@ font-size: 0.95em;
 color: rgba(255,255,255,0.9);
 font-weight: 400;
 }
-.tabs {
-display: flex;
-gap: 6px;
-margin-bottom: 16px;
-flex-wrap: wrap;
-position: sticky;
-top: 0;
-background: rgba(255,255,255,0.95);
-backdrop-filter: blur(10px);
-padding: 8px 4px;
-z-index: 100;
-border-radius: 12px;
-overflow-x: auto;
-}
-.tab {
-flex: 0 0 auto;
-min-width: 70px;
-padding: 8px 10px;
-background: #f0f5f5;
-border: 1px solid var(--primary);
-border-radius: 8px;
-font-weight: 600;
-color: var(--text);
-cursor: pointer;
-min-height: 44px;
-transition: all 0.3s ease;
-font-family: 'Noto Sans', sans-serif;
-font-size: 0.85em;
-white-space: nowrap;
-}
-.tab.active {
-background: var(--primary);
-color: white;
-}
 .progress-bar {
 background: rgba(255,255,255,0.95);
 padding: 12px;
@@ -108,7 +75,7 @@ position: absolute;
 top: 0;
 left: 0;
 height: 100%;
-background: var(--visited-light);
+background: linear-gradient(90deg, var(--visited-light) 0%, #81c784 50%, var(--visited-light) 100%);
 width: var(--progress-width, 0%);
 transition: width 0.5s ease;
 z-index: 0;
@@ -116,6 +83,58 @@ z-index: 0;
 .progress-bar .progress-text {
 position: relative;
 z-index: 1;
+}
+/* Кнопка Маршрут - выделенная */
+.route-btn {
+width: 100%;
+padding: 14px;
+background: var(--route-btn-bg);
+color: white;
+border: none;
+border-radius: 12px;
+font-weight: 700;
+font-size: 1em;
+cursor: pointer;
+margin-bottom: 16px;
+transition: all 0.3s ease;
+box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+font-family: 'Noto Sans', sans-serif;
+}
+.route-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+}
+.route-btn.active {
+background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+/* Кнопки городов - две строки */
+.city-tabs {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-bottom: 16px;
+}
+.city-tab {
+flex: 1 0 calc(20% - 8px);
+min-width: 70px;
+padding: 10px 6px;
+background: #f0f5f5;
+border: 1px solid var(--primary);
+border-radius: 8px;
+font-weight: 600;
+color: var(--text);
+cursor: pointer;
+min-height: 44px;
+transition: all 0.3s ease;
+font-family: 'Noto Sans', sans-serif;
+font-size: 0.8em;
+text-align: center;
+white-space: nowrap;
+}
+.city-tab.active {
+background: var(--primary);
+color: white;
 }
 .city-banner {
 width: 100%;
@@ -162,29 +181,39 @@ display: flex;
 align-items: center;
 gap: 6px;
 }
+.accommodation-list {
+margin-top: 12px;
+}
+.accommodation-item {
+padding: 10px 0;
+border-bottom: 1px dashed var(--border);
+}
+.accommodation-item:last-child {
+border-bottom: none;
+}
 .accommodation-name {
 font-weight: 600;
 margin-bottom: 4px;
-font-size: 1.05em;
+font-size: 1em;
 }
 .accommodation-address {
-font-size: 0.9em;
+font-size: 0.85em;
 color: var(--light-text);
-margin-bottom: 8px;
+margin-bottom: 6px;
 }
 .accommodation-links {
 display: flex;
-gap: 8px;
+gap: 6px;
 }
 .accommodation-links a {
 flex: 1;
-padding: 8px;
+padding: 6px;
 text-align: center;
 border-radius: 6px;
 text-decoration: none;
-font-size: 0.85em;
+font-size: 0.8em;
 font-weight: 600;
-min-height: 40px;
+min-height: 36px;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -222,6 +251,7 @@ font-family: 'Noto Sans', sans-serif;
 .subtab.active {
 background: var(--primary);
 color: white;
+transform: scale(1.02);
 }
 .section {
 margin-bottom: 16px;
@@ -259,7 +289,6 @@ z-index: 0;
 .section-header .header-text {
 position: relative;
 z-index: 1;
-text-shadow: 0 0 3px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.6);
 }
 .toggle-icon {
 font-size: 0.7em;
@@ -424,10 +453,10 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
-.tab { min-width: 80px; padding: 10px 12px; }
+.city-tab { min-width: 80px; padding: 10px 8px; }
 }
 @media (max-width: 480px) {
-.tab { min-width: 60px; padding: 8px 6px; font-size: 0.75em; }
+.city-tab { flex: 1 0 calc(25% - 8px); min-width: 60px; padding: 8px 4px; font-size: 0.7em; }
 .section-header { font-size: 1em; padding: 12px 14px; }
 header { padding: 50px 12px; }
 h1 { font-size: 1.2em; }
@@ -442,17 +471,17 @@ h1 { font-size: 1.2em; }
 <p class="subtitle">Июль–август 2026</p>
 </header>
 <div class="progress-bar" id="progressBar"><span class="progress-text">Загрузка...</span></div>
-<div class="tabs" id="mainTabs">
-<button class="tab active" data-tab="itinerary">🗺️ Маршрут</button>
-<button class="tab" data-tab="jeju">🏙️ Чеджудо</button>
-<button class="tab" data-tab="seoul1">🏙️ Сеул (1)</button>
-<button class="tab" data-tab="jeonju">🏙️ Чонджу</button>
-<button class="tab" data-tab="jindo">🏙️ Чиндо</button>
-<button class="tab" data-tab="busan">🏙️ Пусан</button>
-<button class="tab" data-tab="gyeongju">🏙️ Кёнджу</button>
-<button class="tab" data-tab="andong">🏙️ Андон</button>
-<button class="tab" data-tab="sokcho">🏙️ Сокчхо</button>
-<button class="tab" data-tab="seoul2">🏙️ Сеул (2)</button>
+<button class="route-btn active" id="routeTab">🗺️ Общий маршрут</button>
+<div class="city-tabs">
+<button class="city-tab" data-city="jeju">🏙️ Чеджудо</button>
+<button class="city-tab" data-city="seoul">🏙️ Сеул</button>
+<button class="city-tab" data-city="jeonju">🏙️ Чонджу</button>
+<button class="city-tab" data-city="jindo">🏙️ Чиндо</button>
+<button class="city-tab" data-city="busan">🏙️ Пусан</button>
+<button class="city-tab" data-city="gyeongju">🏙️ Кёнджу</button>
+<button class="city-tab" data-city="andong">🏙️ Андон</button>
+<button class="city-tab" data-city="samcheok">🏙️ Самчхок</button>
+<button class="city-tab" data-city="sokcho">🏙️ Сокчхо</button>
 </div>
 <div id="content"></div>
 <button id="backToTop">↑</button>
@@ -496,50 +525,49 @@ const itinerary = [
 ];
 // === ЖИЛЬЁ ===
 const accommodations = {
-jeju: {
+jeju: [{
 name: "Seogwipo-si",
 address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616",
 google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77",
 naver: getNaverUrl("https://maps.app.goo.gl/F4addr6TrUVHqcd77")
-},
-seoul1: {
+}],
+seoul: [{
 name: "Toegye-ro Stay",
 address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629",
 google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58",
 naver: getNaverUrl("https://maps.app.goo.gl/vZGmRbgYLm5onJZ58")
-},
-jindo: {
-name: "Imhoe-myeon Guesthouse",
-address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840",
-google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7",
-naver: getNaverUrl("https://maps.app.goo.gl/moqvjniubSLUBzCy7")
-},
-busan: {
-name: "O'guest in Haeundae",
-address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094",
-google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69",
-naver: getNaverUrl("https://maps.app.goo.gl/HoYeo3wRjgEKbVU69")
-},
-andong: {
-name: "Haru The Guesthouse",
-address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704",
-google: "https://maps.app.goo.gl/BzbmgVBongeqmty89",
-naver: getNaverUrl("https://maps.app.goo.gl/BzbmgVBongeqmty89")
-},
-sokcho: {
-name: "Sokcho Summitbay 1807 \"Ocean View\"",
-address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808",
-google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6",
-naver: getNaverUrl("https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6")
-},
-seoul2: {
+}, {
 name: "Seoul DDJ STAY 대동장",
 address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126",
 google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8",
 naver: getNaverUrl("https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8")
-}
+}],
+jindo: [{
+name: "Imhoe-myeon Guesthouse",
+address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840",
+google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7",
+naver: getNaverUrl("https://maps.app.goo.gl/moqvjniubSLUBzCy7")
+}],
+busan: [{
+name: "O'guest in Haeundae",
+address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094",
+google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69",
+naver: getNaverUrl("https://maps.app.goo.gl/HoYeo3wRjgEKbVU69")
+}],
+andong: [{
+name: "Haru The Guesthouse",
+address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704",
+google: "https://maps.app.goo.gl/BzbmgVBongeqmty89",
+naver: getNaverUrl("https://maps.app.goo.gl/BzbmgVBongeqmty89")
+}],
+sokcho: [{
+name: "Sokcho Summitbay 1807 \"Ocean View\"",
+address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808",
+google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6",
+naver: getNaverUrl("https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6")
+}]
 };
-// === МЕСТА (47) ===
+// === МЕСТА (48 с Самчхок) ===
 const places = [
 {
 city: "Чеджудо",
@@ -743,8 +771,8 @@ sokcho: [
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
-let currentTab = 'itinerary';
-let currentCitySubtab = {};
+let currentCity = null;
+let currentSubtab = 'places';
 // === ФУНКЦИИ ===
 function renderItinerary() {
 return `
@@ -760,30 +788,61 @@ return `<div class="city-banner" style="background-image: url('${cityKey}-banner
 <div class="city-name">${cityName}</div>
 </div>`;
 }
-function renderAccommodation(key) {
-const acc = accommodations[key];
-if (!acc) return '';
-return `
-<div class="accommodation">
-<div class="accommodation-title">🏠 Жильё</div>
+function renderAccommodation(cityKey) {
+const accList = accommodations[cityKey];
+if (!accList || accList.length === 0) return '';
+let html = `<div class="accommodation">
+<div class="accommodation-title">🏠 Жильё</div>`;
+if (accList.length === 1) {
+const acc = accList[0];
+html += `
 <div class="accommodation-name">${acc.name}</div>
 <div class="accommodation-address">${acc.address}</div>
 <div class="accommodation-links">
-<a href="${acc.google}" target="_blank" class="link-google">🗺️ Google Maps</a>
-<a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver Maps</a>
+<a href="${acc.google}" target="_blank" class="link-google">🗺️ Google</a>
+<a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver</a>
+</div>`;
+} else {
+html += '<div class="accommodation-list">';
+accList.forEach((acc, idx) => {
+html += `
+<div class="accommodation-item">
+<div class="accommodation-name">${acc.name}</div>
+<div class="accommodation-address">${acc.address}</div>
+<div class="accommodation-links">
+<a href="${acc.google}" target="_blank" class="link-google">🗺️ Google</a>
+<a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver</a>
 </div>
-</div>
-`;
+</div>`;
+});
+html += '</div>';
+}
+html += '</div>';
+return html;
 }
 function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
-html += `<button class="subtab active" data-type="places" data-city="${cityKey}">🏞️ Места</button>`;
-html += `<button class="subtab" data-type="eats" data-city="${cityKey}">🍽️ Еда</button>`;
+html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">🏞️ Места</button>`;
+html += `<button class="subtab ${currentSubtab === 'eats' ? 'active' : ''}" data-type="eats" data-city="${cityKey}">🍽️ Еда</button>`;
 if (hasSpa) {
-html += `<button class="subtab" data-type="spas" data-city="${cityKey}">🧖 Бани</button>`;
+html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data-type="spas" data-city="${cityKey}">🧖 Бани</button>`;
 }
 html += `</div>`;
 return html;
+}
+function getCityDisplayName(cityKey) {
+const map = {
+jeju: 'Чеджудо',
+seoul: 'Сеул',
+jeonju: 'Чонджу',
+jindo: 'Чиндо',
+busan: 'Пусан',
+gyeongju: 'Кёнджу',
+andong: 'Андон',
+samcheok: 'Самчхок',
+sokcho: 'Сокчхо/Сораксан'
+};
+return map[cityKey] || cityKey;
 }
 function renderCityPlaces(cityName) {
 const cityData = places.find(c => c.city === cityName);
@@ -844,7 +903,8 @@ html += '</div></div>';
 return html;
 }
 function renderCitySpas(cityKey) {
-const cityData = spas[cityKey];
+const spaKey = cityKey === 'sokcho' ? 'sokcho' : 'seoul';
+const cityData = spas[spaKey];
 if (!cityData) return '<p style="padding:16px;color:var(--light-text)">Бани пока не добавлены</p>';
 let html = '';
 cityData.forEach(item => {
@@ -865,20 +925,18 @@ html += `
 });
 return html;
 }
-function renderCityContent(cityKey, cityName, subtab) {
+function renderCityContent(cityKey, subtab) {
+const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
-if (accommodations[cityKey]) {
 html += renderAccommodation(cityKey);
-}
-const hasSpa = cityKey === 'seoul1' || cityKey === 'seoul2' || cityKey === 'sokcho';
+const hasSpa = cityKey === 'seoul' || cityKey === 'sokcho';
 html += renderSubtabs(cityKey, hasSpa);
 if (subtab === 'places') {
 html += renderCityPlaces(cityName);
 } else if (subtab === 'eats') {
 html += renderCityEats(cityName);
 } else if (subtab === 'spas' && hasSpa) {
-const spaKey = cityKey === 'seoul1' || cityKey === 'seoul2' ? 'seoul' : 'sokcho';
-html += `<div class="section"><div class="section-content">${renderCitySpas(spaKey)}</div></div>`;
+html += `<div class="section"><div class="section-content">${renderCitySpas(cityKey)}</div></div>`;
 }
 return html;
 }
@@ -909,10 +967,13 @@ if (!items) return;
 const totalItems = items.items.length;
 const visitedCount = items.items.filter(item => visitedData[`${prefix}${cityName}-${item.name}`]).length;
 const progressPercent = totalItems > 0 ? Math.round((visitedCount / totalItems) * 100) : 0;
-const header = document.querySelector(`.section-header .header-text`)?.closest('.section-header');
-const progressText = document.querySelector('.city-progress-text');
+const section = document.querySelector('.section');
+if (section) {
+const header = section.querySelector('.section-header');
+const progressText = section.querySelector('.city-progress-text');
 if (header) header.style.setProperty('--progress-width', `${progressPercent}%`);
 if (progressText) progressText.textContent = `${visitedCount} из ${totalItems} посещено (${progressPercent}%)`;
+}
 }
 function handleDoneClick(btn) {
 const id = btn.dataset.id;
@@ -937,94 +998,74 @@ item.classList.remove('visited');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
+if (currentCity) {
+const cityName = getCityDisplayName(currentCity);
+updateCityProgress(cityName, type);
+}
 updateProgress();
 }
-// === ИНИЦИАЛИЗАЦИЯ ===
-document.addEventListener('DOMContentLoaded', function() {
-// Главные вкладки (города)
-document.querySelectorAll('#mainTabs .tab').forEach(tab => {
-tab.addEventListener('click', function() {
-document.querySelectorAll('#mainTabs .tab').forEach(t => t.classList.remove('active'));
-this.classList.add('active');
-currentTab = this.dataset.tab;
-let content = '';
-if (currentTab === 'itinerary') {
-content = renderItinerary();
-} else {
-const cityMap = {
-jeju: 'Чеджудо',
-seoul1: 'Сеул',
-jeonju: 'Чонджу',
-jindo: 'Чиндо',
-busan: 'Пусан',
-gyeongju: 'Кёнджу',
-andong: 'Андон',
-sokcho: 'Сокчхо/Сораксан',
-seoul2: 'Сеул'
-};
-const cityName = cityMap[currentTab];
-currentCitySubtab[currentTab] = currentCitySubtab[currentTab] || 'places';
-content = renderCityContent(currentTab, cityName, currentCitySubtab[currentTab]);
-}
-document.getElementById('content').innerHTML = content;
-// Обработчики для аккордеона
+function attachEventListeners() {
+// Аккордеон
 document.querySelectorAll('.section-header').forEach(header => {
 header.addEventListener('click', function() {
 this.parentElement.classList.toggle('collapsed');
 });
 });
-// Обработчики для подвкладок (Места/Еда/Бани)
+// Подвкладки
 document.querySelectorAll('.subtab').forEach(subtab => {
 subtab.addEventListener('click', function(e) {
 e.stopPropagation();
 document.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
 this.classList.add('active');
+currentSubtab = this.dataset.type;
 const city = this.dataset.city;
-const type = this.dataset.type;
-currentCitySubtab[city] = type;
-const cityName = {'jeju':'Чеджудо','seoul1':'Сеул','jeonju':'Чонджу','jindo':'Чиндо','busan':'Пусан','gyeongju':'Кёнджу','andong':'Андон','sokcho':'Сокчхо/Сораксан','seoul2':'Сеул'}[city];
 const container = document.getElementById('content');
 const banner = container.querySelector('.city-banner')?.outerHTML || '';
 const acc = accommodations[city] ? renderAccommodation(city) : '';
-const hasSpa = city === 'seoul1' || city === 'seoul2' || city === 'sokcho';
+const hasSpa = city === 'seoul' || city === 'sokcho';
 const subtabs = renderSubtabs(city, hasSpa);
 let newContent = '';
-if (type === 'places') newContent = renderCityPlaces(cityName);
-else if (type === 'eats') newContent = renderCityEats(cityName);
-else if (type === 'spas' && hasSpa) {
-const spaKey = city === 'seoul1' || city === 'seoul2' ? 'seoul' : 'sokcho';
-newContent = `<div class="section"><div class="section-content">${renderCitySpas(spaKey)}</div></div>`;
+if (currentSubtab === 'places') newContent = renderCityPlaces(getCityDisplayName(city));
+else if (currentSubtab === 'eats') newContent = renderCityEats(getCityDisplayName(city));
+else if (currentSubtab === 'spas' && hasSpa) {
+newContent = `<div class="section"><div class="section-content">${renderCitySpas(city)}</div></div>`;
 }
 container.innerHTML = banner + acc + subtabs + newContent;
-// Перепривязываем обработчики
-document.querySelectorAll('.section-header').forEach(h => {
-h.addEventListener('click', function() {
-this.parentElement.classList.toggle('collapsed');
+attachEventListeners();
 });
 });
-document.querySelectorAll('.subtab').forEach(s => {
-s.addEventListener('click', function(e) {
-e.stopPropagation();
-// Рекурсивный вызов не нужен, обработчик уже есть
-});
-});
+// Кнопки "Посещено"
 document.querySelectorAll('.btn-done').forEach(btn => {
 btn.addEventListener('click', function(e) {
 e.stopPropagation();
 handleDoneClick(this);
 });
 });
+}
+// === ИНИЦИАЛИЗАЦИЯ ===
+document.addEventListener('DOMContentLoaded', function() {
+// Кнопка Маршрут
+document.getElementById('routeTab').addEventListener('click', function() {
+document.getElementById('routeTab').classList.add('active');
+document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+currentCity = null;
+document.getElementById('content').innerHTML = renderItinerary();
+updateProgress();
 });
-});
-// Обработчики для кнопок "Посещено"
-document.querySelectorAll('.btn-done').forEach(btn => {
-btn.addEventListener('click', function(e) {
-e.stopPropagation();
-handleDoneClick(this);
+// Кнопки городов
+document.querySelectorAll('.city-tab').forEach(tab => {
+tab.addEventListener('click', function() {
+document.getElementById('routeTab').classList.remove('active');
+document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+this.classList.add('active');
+currentCity = this.dataset.city;
+currentSubtab = 'places';
+document.getElementById('content').innerHTML = renderCityContent(currentCity, currentSubtab);
+attachEventListeners();
+updateProgress();
 });
 });
 updateProgress();
-});
 });
 // Кнопка "Наверх"
 window.addEventListener('scroll', () => {
@@ -1034,9 +1075,6 @@ else btn.style.display = 'none';
 });
 document.getElementById('backToTop').addEventListener('click', () => {
 window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-// Загружаем маршрут по умолчанию
-document.querySelector('.tab[data-tab="itinerary"]').click();
 });
 </script>
 </body>
