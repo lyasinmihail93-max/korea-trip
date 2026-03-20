@@ -37,8 +37,8 @@ text-align: center;
 margin-bottom: 16px;
 padding: 60px 12px;
 border-bottom: 1px solid var(--border);
-background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-            url('header-bg.jpg');
+background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+url('header-bg.jpg');
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -85,7 +85,6 @@ z-index: 0;
 position: relative;
 z-index: 1;
 }
-/* Кнопка Карта маршрута - выделенная */
 .route-btn {
 width: 100%;
 padding: 14px;
@@ -109,7 +108,6 @@ box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
 background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
 box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
-/* Кнопки городов - две строки, без иконок */
 .city-tabs {
 display: flex;
 flex-wrap: wrap;
@@ -240,7 +238,6 @@ background: var(--button-bg-naver);
 color: #5d4037;
 border: 1px solid #5d4037;
 }
-/* Прогресс города - компактный */
 .city-progress {
 background: rgba(255,255,255,0.95);
 padding: 10px 16px;
@@ -294,7 +291,6 @@ background: var(--primary);
 color: white;
 transform: scale(1.02);
 }
-/* Списки без аккордеона */
 .items-list {
 background: white;
 border-radius: 12px;
@@ -391,7 +387,6 @@ color: #1565c0;
 background: var(--button-bg-naver);
 color: #5d4037;
 }
-/* Маршрут: карта + таблица с прозрачным фоном */
 .route-container {
 position: relative;
 border-radius: 12px;
@@ -484,19 +479,18 @@ h1 { font-size: 1.2em; }
 <div id="content"></div>
 <button id="backToTop">↑</button>
 <script>
-// === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ: Naver URL ===
 function getNaverUrl(googleUrl) {
 return googleUrl
 .replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
 .replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
 }
-// === НОВАЯ ФУНКЦИЯ: Генерация звёзд ===
+
 function generateStars(rating) {
 const full = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
 return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
-// === МАРШРУТ ===
+
 const itinerary = [
 { date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
 { date: "26.07", city: "Ульяновск", event: "Свадьба, второй день", time: "весь день" },
@@ -521,7 +515,7 @@ const itinerary = [
 { date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
 { date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
 ];
-// === ЖИЛЬЁ ===
+
 const accommodations = {
 jeju: [{
 name: "Seogwipo-si",
@@ -572,7 +566,7 @@ naver: getNaverUrl("https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6"),
 dates: "10–12.08"
 }]
 };
-// === МЕСТА (49 с Самчхок) ===
+
 const places = [
 {
 city: "Чеджудо",
@@ -677,7 +671,7 @@ items: [
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0))
 }
 ];
-// === ЕДА (37 с Самчхок) ===
+
 const eats = [
 {
 city: "Чеджудо",
@@ -771,7 +765,7 @@ items: [
 ].sort((a, b) => b.stars - a.stars)
 }
 ];
-// === БАНИ (4) ===
+
 const spas = {
 seoul: [
 { name: "Samho Gungjeon Sauna", google: "https://maps.app.goo.gl/YAKin24Y17vFW1Hj7", naver: getNaverUrl("https://maps.app.goo.gl/YAKin24Y17vFW1Hj7"), desc: "Самый пафосный и красивый из всех чимчильбан.", price: "22 000 ₩ (~1 540 ₽)", stars: 4.8 },
@@ -784,13 +778,13 @@ sokcho: [
 { name: "Seorak Spa Valley", google: "https://maps.app.goo.gl/SeorakSpaValley", naver: "https://map.naver.com/p/search/Seorak+Spa+Valley", desc: "Горячие источники после треккинга — идеальное завершение дня. Без ночлега.", price: "12 000 ₩ (~840 ₽)", stars: 4.6 }
 ].sort((a, b) => b.stars - a.stars)
 };
-// === СОСТОЯНИЕ ===
+
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 let currentCity = null;
 let currentSubtab = 'places';
-// === ФУНКЦИИ ===
+
 function renderItinerary() {
 return `
 <div class="route-container">
@@ -804,11 +798,13 @@ return `
 </div>
 `;
 }
+
 function renderCityBanner(cityKey, cityName) {
 return `<div class="city-banner" style="background-image: url('${cityKey}-banner.jpg')">
 <div class="city-name">${cityName}</div>
 </div>`;
 }
+
 function renderAccommodation(cityKey) {
 const accList = accommodations[cityKey];
 if (!accList || accList.length === 0) return '';
@@ -847,6 +843,7 @@ html += '</div>';
 html += '</div>';
 return html;
 }
+
 function renderCityProgress(cityKey) {
 const cityName = getCityDisplayName(cityKey);
 let total = 0, visited = 0;
@@ -862,15 +859,16 @@ if (eatsData) {
 total += eatsData.items.length;
 visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
 }
-// Бани
+// Бани — ИСПРАВЛЕНО: используем cityName вместо cityKey
 const spaKey = getSpaKeyForCity(cityKey);
 if (spaKey && spas[spaKey]) {
 total += spas[spaKey].length;
-visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityKey}-${item.name}`]).length;
+visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityName}-${item.name}`]).length;
 }
 const percent = total > 0 ? Math.round((visited / total) * 100) : 0;
 return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">✅ Посещено: ${visited} из ${total} (${percent}%)</span></div>`;
 }
+
 function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
 html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">Места</button>`;
@@ -881,6 +879,7 @@ html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data
 html += `</div>`;
 return html;
 }
+
 function getCityDisplayName(cityKey) {
 const map = {
 jeju: 'Чеджудо',
@@ -895,12 +894,14 @@ sokcho: 'Сокчхо/Сораксан'
 };
 return map[cityKey] || cityKey;
 }
+
 function getSpaKeyForCity(cityKey) {
 if (cityKey === 'sokcho') return 'sokcho';
 if (cityKey === 'busan') return 'busan';
 if (cityKey === 'seoul') return 'seoul';
 return null;
 }
+
 function renderItemsList(items, type, cityKey, cityName) {
 if (!items || items.length === 0) {
 return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
@@ -925,12 +926,12 @@ ${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avg
 }).join('')}
 </div>`;
 }
+
 function renderCityContent(cityKey, subtab) {
 const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
 const accHtml = renderAccommodation(cityKey);
 if (accHtml) html += accHtml;
-// Прогресс города ПОСЛЕ жилья, ПЕРЕД кнопками
 html += renderCityProgress(cityKey);
 const hasSpa = getSpaKeyForCity(cityKey) !== null;
 html += renderSubtabs(cityKey, hasSpa);
@@ -947,6 +948,7 @@ html += renderItemsList(items, 'spa', cityKey, cityName);
 }
 return html;
 }
+
 function updateProgress() {
 const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
 const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
@@ -961,6 +963,7 @@ const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
 progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount}/${totalPlaces} мест | ${visitedEatsCount}/${totalEats} ресторанов | ${visitedSpasCount}/${totalSpas} бань (${progressPercent}%)</span>`;
 }
+
 function handleDoneClick(btn) {
 const id = btn.dataset.id;
 const type = btn.dataset.type;
@@ -984,9 +987,7 @@ item.classList.remove('visited');
 btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
 }
 }
-// Обновляем прогресс сразу
 updateProgress();
-// Обновляем прогресс города если он открыт
 if (currentCity) {
 const cityProgress = document.querySelector('.city-progress');
 if (cityProgress) {
@@ -994,6 +995,7 @@ cityProgress.outerHTML = renderCityProgress(currentCity);
 }
 }
 }
+
 function attachEventListeners() {
 document.querySelectorAll('.subtab').forEach(subtab => {
 subtab.addEventListener('click', function(e) {
@@ -1036,7 +1038,7 @@ handleDoneClick(this);
 });
 });
 }
-// === ИНИЦИАЛИЗАЦИЯ ===
+
 document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('routeTab').addEventListener('click', function(e) {
 e.preventDefault();
@@ -1061,6 +1063,7 @@ updateProgress();
 });
 updateProgress();
 });
+
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block';
