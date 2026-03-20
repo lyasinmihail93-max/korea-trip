@@ -387,13 +387,13 @@ color: #1565c0;
 background: var(--button-bg-naver);
 color: #5d4037;
 }
-/* === ИСПРАВЛЕННЫЙ БЛОК МАРШРУТА === */
+/* === МАРШРУТ: КАРТА + ТАБЛИЦА ОДНИМ БЛОКОМ === */
 .route-container {
 position: relative;
 border-radius: 12px;
 overflow: hidden;
 margin: 16px 0;
-min-height: 400px;
+min-height: 500px;
 }
 .route-container::before {
 content: '';
@@ -410,35 +410,39 @@ filter: brightness(0.7);
 }
 .route-table-overlay {
 position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
 background: transparent;
 backdrop-filter: none;
 border-radius: 12px;
-padding: 16px;
-max-width: 95%;
-max-height: 85%;
-overflow: auto;
+padding: 20px;
 z-index: 2;
+overflow: visible;
 }
 .calendar {
 width: 100%;
 border-collapse: collapse;
-font-size: 0.85em;
+font-size: 0.8em;
 color: white;
 text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+background: rgba(0,0,0,0.3);
+border-radius: 8px;
+overflow: hidden;
 }
 .calendar th,
 .calendar td {
-padding: 8px;
+padding: 8px 10px;
 text-align: left;
-border-bottom: 1px solid rgba(255,255,255,0.3);
+border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 .calendar th {
 background: rgba(0,0,0,0.5);
 font-weight: 600;
 color: #e9c46a;
+position: sticky;
+top: 0;
 }
 .calendar tr:hover {
 background: rgba(255,255,255,0.1);
@@ -462,7 +466,6 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
 .city-tab { min-width: 80px; padding: 10px 8px; }
-.route-table-overlay { max-width: 85%; }
 }
 @media (max-width: 480px) {
 .city-tab { flex: 1 0 calc(25% - 8px); min-width: 60px; padding: 8px 4px; font-size: 0.7em; }
@@ -470,7 +473,7 @@ header { padding: 50px 12px; }
 h1 { font-size: 1.2em; }
 .city-banner { height: 160px; }
 .city-banner .city-name { font-size: 1.3em; }
-.route-table-overlay { padding: 12px; font-size: 0.8em; }
+.route-table-overlay { padding: 12px; font-size: 0.75em; }
 }
 </style>
 </head>
