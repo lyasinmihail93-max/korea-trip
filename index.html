@@ -20,6 +20,11 @@
 --button-bg-done: #e0f2f1;
 --progress-light: #e8f5e9;
 --route-btn-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Цвета событий календаря */
+--event-flight: #1565c0;
+--event-hotel: #2e7d32;
+--event-car: #ef6c00;
+--event-city: #616161;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -85,6 +90,7 @@ z-index: 0;
 position: relative;
 z-index: 1;
 }
+/* Кнопки переключения: Календарь / Карта */
 .route-btn {
 width: 100%;
 padding: 14px;
@@ -95,7 +101,7 @@ border-radius: 12px;
 font-weight: 700;
 font-size: 1em;
 cursor: pointer;
-margin-bottom: 16px;
+margin-bottom: 8px;
 transition: all 0.3s ease;
 box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 font-family: 'Noto Sans', sans-serif;
@@ -108,6 +114,7 @@ box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
 background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
 box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
+/* Кнопки городов */
 .city-tabs {
 display: flex;
 flex-wrap: wrap;
@@ -228,16 +235,9 @@ display: flex;
 align-items: center;
 justify-content: center;
 }
-.link-google {
-background: var(--button-bg-google);
-color: #1565c0;
-border: 1px solid #1565c0;
-}
-.link-naver {
-background: var(--button-bg-naver);
-color: #5d4037;
-border: 1px solid #5d4037;
-}
+.link-google { background: var(--button-bg-google); color: #1565c0; border: 1px solid #1565c0; }
+.link-naver { background: var(--button-bg-naver); color: #5d4037; border: 1px solid #5d4037; }
+.link-booking { background: #fff3e0; color: #ef6c00; border: 1px solid #ef6c00; }
 .city-progress {
 background: rgba(255,255,255,0.95);
 padding: 10px 16px;
@@ -253,214 +253,101 @@ backdrop-filter: blur(4px);
 .city-progress::before {
 content: '';
 position: absolute;
-top: 0;
-left: 0;
-height: 100%;
+top: 0; left: 0; height: 100%;
 background: linear-gradient(90deg, var(--visited-light) 0%, #81c784 50%, var(--visited-light) 100%);
 width: var(--progress-width, 0%);
 transition: width 0.5s ease;
 z-index: 0;
 }
-.city-progress .progress-text {
-position: relative;
-z-index: 1;
-font-weight: 600;
-}
-.city-subtabs {
-display: flex;
-gap: 8px;
-margin-bottom: 16px;
-flex-wrap: wrap;
-}
+.city-progress .progress-text { position: relative; z-index: 1; font-weight: 600; }
+.city-subtabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
 .subtab {
-flex: 1;
-min-width: 100px;
-padding: 10px;
-background: #f0f5f5;
-border: 1px solid var(--primary);
-border-radius: 8px;
-font-weight: 600;
-color: var(--text);
-cursor: pointer;
-min-height: 44px;
-transition: all 0.3s ease;
+flex: 1; min-width: 100px; padding: 10px;
+background: #f0f5f5; border: 1px solid var(--primary);
+border-radius: 8px; font-weight: 600; color: var(--text);
+cursor: pointer; min-height: 44px; transition: all 0.3s ease;
 font-family: 'Noto Sans', sans-serif;
 }
-.subtab.active {
-background: var(--primary);
-color: white;
-transform: scale(1.02);
-}
+.subtab.active { background: var(--primary); color: white; transform: scale(1.02); }
 .items-list {
-background: white;
-border-radius: 12px;
-overflow: hidden;
+background: white; border-radius: 12px; overflow: hidden;
 box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
 border-left: 4px solid var(--primary);
 }
 .item {
-padding: 14px 16px;
-border-bottom: 1px solid var(--border);
-position: relative;
-transition: all 0.3s ease;
+padding: 14px 16px; border-bottom: 1px solid var(--border);
+position: relative; transition: all 0.3s ease;
 }
-.item:last-child {
-border-bottom: none;
+.item:last-child { border-bottom: none; }
+.item.visited { background-color: var(--visited-bg) !important; }
+.item.visited .item-name, .item.visited .item-desc,
+.item.visited .price-info, .item.visited .avg-check {
+text-decoration: line-through !important; color: #00695c !important;
 }
-.item.visited {
-background-color: var(--visited-bg) !important;
-}
-.item.visited .item-name,
-.item.visited .item-desc,
-.item.visited .price-info,
-.item.visited .avg-check {
-text-decoration: line-through !important;
-color: #00695c !important;
-}
-.item-name {
-font-weight: 600;
-margin-bottom: 4px;
-font-size: 1.05em;
-padding-left: 20px;
-color: var(--text) !important;
-}
-.item-stars {
-font-size: 1em;
-color: #ffb300;
-padding-left: 20px;
-margin-top: 2px;
-letter-spacing: 1px;
-}
-.item-desc {
-font-size: 0.95em;
-margin: 8px 0;
-color: var(--text) !important;
-padding-left: 20px;
-}
-.price-info {
-font-size: 0.9em;
-color: #ff8f00;
-padding-left: 20px;
-margin-top: 4px;
-}
-.avg-check {
-font-size: 0.9em;
-color: var(--primary) !important;
-font-weight: 600;
-padding-left: 20px;
-margin-top: 4px;
-}
-.actions {
-display: flex;
-gap: 8px;
-margin-top: 10px;
-flex-wrap: wrap;
-padding-left: 20px;
-}
+.item-name { font-weight: 600; margin-bottom: 4px; font-size: 1.05em; padding-left: 20px; color: var(--text) !important; }
+.item-stars { font-size: 1em; color: #ffb300; padding-left: 20px; margin-top: 2px; letter-spacing: 1px; }
+.item-desc { font-size: 0.95em; margin: 8px 0; color: var(--text) !important; padding-left: 20px; }
+.price-info { font-size: 0.9em; color: #ff8f00; padding-left: 20px; margin-top: 4px; }
+.avg-check { font-size: 0.9em; color: var(--primary) !important; font-weight: 600; padding-left: 20px; margin-top: 4px; }
+.actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; padding-left: 20px; }
 button {
-flex: 1;
-min-width: 90px;
-padding: 10px;
-border: 1px solid var(--primary);
-border-radius: 6px;
-font-size: 0.85em;
-font-weight: 600;
-cursor: pointer;
-min-height: 44px;
-transition: all 0.3s ease;
+flex: 1; min-width: 90px; padding: 10px;
+border: 1px solid var(--primary); border-radius: 6px;
+font-size: 0.85em; font-weight: 600; cursor: pointer;
+min-height: 44px; transition: all 0.3s ease;
 font-family: 'Noto Sans', sans-serif;
 }
-.btn-done {
-background: var(--button-bg-done);
-color: var(--primary);
+.btn-done { background: var(--button-bg-done); color: var(--primary); }
+.btn-done.done { background: var(--button-bg-done); color: var(--primary); border-color: var(--primary); }
+.btn-google { background: var(--button-bg-google); color: #1565c0; }
+.btn-naver { background: var(--button-bg-naver); color: #5d4037; }
+/* === КАЛЕНДАРЬ СОБЫТИЙ === */
+.calendar-container {
+background: white; border-radius: 12px; padding: 16px;
+margin-bottom: 16px; box-shadow: 0 2px 6px rgba(42,157,143,0.1);
 }
-.btn-done.done {
-background: var(--button-bg-done);
-color: var(--primary);
-border-color: var(--primary);
+.calendar-table {
+width: 100%; border-collapse: collapse; font-size: 0.85em;
 }
-.btn-google {
-background: var(--button-bg-google);
-color: #1565c0;
+.calendar-table th {
+background: var(--primary); color: white; padding: 10px;
+text-align: left; font-weight: 600; position: sticky; top: 0;
 }
-.btn-naver {
-background: var(--button-bg-naver);
-color: #5d4037;
+.calendar-table td {
+padding: 10px; border-bottom: 1px solid var(--border);
+vertical-align: top;
 }
-/* === МАРШРУТ: КАРТА + ТАБЛИЦА ОДНИМ БЛОКОМ === */
+.calendar-table tr:last-child td { border-bottom: none; }
+.event-item {
+display: flex; align-items: flex-start; gap: 6px;
+margin-bottom: 6px; padding: 4px 0;
+}
+.event-item:last-child { margin-bottom: 0; }
+.event-icon {
+font-size: 1.1em; min-width: 20px; text-align: center;
+}
+.event-flight .event-icon { color: var(--event-flight); }
+.event-hotel .event-icon { color: var(--event-hotel); }
+.event-car .event-icon { color: var(--event-car); }
+.event-city .event-icon { color: var(--event-city); }
+.event-time {
+font-weight: 600; font-size: 0.9em; color: var(--light-text);
+min-width: 70px;
+}
+.event-desc { color: var(--text); }
+/* === КАРТА МАРШРУТА (только фото) === */
 .route-container {
-position: relative;
-border-radius: 12px;
-overflow: hidden;
-margin: 16px 0;
-min-height: 500px;
-}
-.route-container::before {
-content: '';
-position: absolute;
-top: 0; left: 0; right: 0; bottom: 0;
-background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
-border-radius: 12px;
-z-index: 1;
+border-radius: 12px; overflow: hidden; margin: 16px 0;
 }
 .route-map {
-width: 100%;
-display: block;
-filter: brightness(0.7);
-}
-.route-table-overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: transparent;
-backdrop-filter: none;
-border-radius: 12px;
-padding: 20px;
-z-index: 2;
-overflow: visible;
-}
-.calendar {
-width: 100%;
-border-collapse: collapse;
-font-size: 0.8em;
-color: white;
-text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-background: rgba(0,0,0,0.3);
-border-radius: 8px;
-overflow: hidden;
-}
-.calendar th,
-.calendar td {
-padding: 8px 10px;
-text-align: left;
-border-bottom: 1px solid rgba(255,255,255,0.2);
-}
-.calendar th {
-background: rgba(0,0,0,0.5);
-font-weight: 600;
-color: #e9c46a;
-position: sticky;
-top: 0;
-}
-.calendar tr:hover {
-background: rgba(255,255,255,0.1);
+width: 100%; display: block;
 }
 #backToTop {
-position: fixed;
-bottom: 20px;
-right: 20px;
-background: var(--primary);
-color: white;
-width: 44px;
-height: 44px;
-border-radius: 50%;
-border: 2px solid white;
-font-size: 18px;
-cursor: pointer;
-display: none;
-z-index: 99;
+position: fixed; bottom: 20px; right: 20px;
+background: var(--primary); color: white;
+width: 44px; height: 44px; border-radius: 50%;
+border: 2px solid white; font-size: 18px;
+cursor: pointer; display: none; z-index: 99;
 box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 @media (min-width: 768px) {
@@ -473,7 +360,7 @@ header { padding: 50px 12px; }
 h1 { font-size: 1.2em; }
 .city-banner { height: 160px; }
 .city-banner .city-name { font-size: 1.3em; }
-.route-table-overlay { padding: 12px; font-size: 0.75em; }
+.calendar-table { font-size: 0.8em; }
 }
 </style>
 </head>
@@ -483,7 +370,11 @@ h1 { font-size: 1.2em; }
 <p class="subtitle">Июль–август 2026</p>
 </header>
 <div class="progress-bar" id="progressBar"><span class="progress-text">Загрузка...</span></div>
-<button class="route-btn active" id="routeTab">Карта маршрута</button>
+
+<!-- Кнопки переключения: Календарь / Карта -->
+<button class="route-btn active" id="calendarTab">📅 Календарь событий</button>
+<button class="route-btn" id="mapTab">🗺️ Карта маршрута</button>
+
 <div class="city-tabs">
 <button class="city-tab" data-city="jeju">Чеджудо</button>
 <button class="city-tab" data-city="seoul">Сеул</button>
@@ -497,50 +388,116 @@ h1 { font-size: 1.2em; }
 </div>
 <div id="content"></div>
 <button id="backToTop">↑</button>
+
 <script>
+// === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
 function getNaverUrl(googleUrl) {
 return googleUrl
 .replace('maps.app.goo.gl/', 'map.naver.com/p/search/')
 .replace('www.google.com/maps/place/', 'map.naver.com/p/search/');
 }
-
 function generateStars(rating) {
 const full = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
 return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
 
-const itinerary = [
-{ date: "25.07", city: "Ульяновск", event: "Свадьба", time: "весь день" },
-{ date: "26.07", city: "Ульяновск", event: "Свадьба, второй день", time: "весь день" },
-{ date: "27.07", city: "Ульяновск → Москва", event: "Перелёт", time: "15:00–17:00" },
-{ date: "28.07", city: "Москва → Пекин", event: "SVO → PEK", time: "18:50–07:25+1" },
-{ date: "29.07", city: "Пекин → Чеджудо", event: "PEK → CJU", time: "14:30–17:55" },
-{ date: "30.07", city: "Чеджудо", event: "Пляжи, Hallasan", time: "" },
-{ date: "31.07", city: "Чеджудо", event: "Seongsan, Olle Trail", time: "" },
-{ date: "01.08", city: "Чеджудо → Сеул", event: "CJU → GMP", time: "16:15–17:30" },
-{ date: "02.08", city: "Сеул", event: "Gyeongbokgung, Bukchon", time: "" },
-{ date: "03.08", city: "Сеул", event: "Шопинг, подготовка к выезду", time: "" },
-{ date: "04.08", city: "Сеул → Чонджу → Чиндо", event: "Автомобиль", time: "09:00–15:00" },
-{ date: "05.08", city: "Чиндо", event: "Мост чуда", time: "" },
-{ date: "06.08", city: "Чиндо → Пусан", event: "Автомобиль", time: "09:00–13:00" },
-{ date: "07.08", city: "Пусан", event: "Хэундэ, Jagalchi", time: "" },
-{ date: "08.08", city: "Пусан", event: "Gamcheon, Гваналли", time: "" },
-{ date: "09.08", city: "Пусан → Кёнджу → Андон", event: "Автомобиль", time: "09:00–15:00" },
-{ date: "10.08", city: "Андон → Сокчхо", event: "Автомобиль", time: "09:00–13:00" },
-{ date: "11.08", city: "Сокчхо", event: "Сораксан", time: "" },
-{ date: "12.08", city: "Сокчхо", event: "Пляж, отдых", time: "" },
-{ date: "13.08", city: "Сокчхо → Сеул", event: "Автомобиль", time: "09:00–12:30" },
-{ date: "14–16.08", city: "Сеул", event: "Финальный шопинг", time: "" },
-{ date: "17.08", city: "Сеул → Шанхай → Москва", event: "ICN → PVG → SVO", time: "08:55–19:30" }
+// === КАЛЕНДАРЬ СОБЫТИЙ (начинаем с 28.07) ===
+const calendar = [
+{ date: "28.07", events: [
+{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)" },
+{ type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)" }
+]},
+{ date: "29.07", events: [
+{ type: "hotel", time: "17:55", desc: "🏨 Заселение: Seogwipo-si, Чеджудо" },
+{ type: "city", time: "вечер", desc: "🏙️ Изучение Чеджудо, отдых после перелёта" }
+]},
+{ date: "30.07", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Чеджудо: пляжи, Hallasan" }
+]},
+{ date: "31.07", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Чеджудо: Seongsan, Olle Trail" }
+]},
+{ date: "01.08", events: [
+{ type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)" },
+{ type: "hotel", time: "18:00", desc: "🏨 Заселение: Toegye-ro Stay, Сеул" },
+{ type: "city", time: "вечер", desc: "🏙️ Изучение Сеула, вечерняя прогулка" }
+]},
+{ date: "02.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сеула: Gyeongbokgung, Bukchon" }
+]},
+{ date: "03.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сеула: шопинг, подготовка к выезду" }
+]},
+{ date: "04.08", events: [
+{ type: "car", time: "09:00–11:30", desc: "🚗 Переезд: Сеул → Чонджу (~2.5 ч)" },
+{ type: "city", time: "11:30–14:00", desc: "🏙️ Изучение Чонджу: деревня ханоков, кимчи" },
+{ type: "car", time: "14:00–15:30", desc: "🚗 Переезд: Чонджу → Чиндо (~1.5 ч)" },
+{ type: "hotel", time: "16:00", desc: "🏨 Заселение: Imhoe-myeon Guesthouse, Чиндо" }
+]},
+{ date: "05.08", events: [
+{ type: "city", time: "утро", desc: "🏙️ Изучение Чиндо: мост чуда" },
+{ type: "car", time: "09:00–12:00", desc: "🚗 Переезд: Чиндо → Пусан (~3 ч)" },
+{ type: "hotel", time: "13:00", desc: "🏨 Заселение: O'guest in Haeundae, Пусан" },
+{ type: "city", time: "вечер", desc: "🏙️ Изучение Пусана: вечерняя прогулка у моря" }
+]},
+{ date: "06.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Пусана: Хэундэ, рынок Чагальчхи" }
+]},
+{ date: "07.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Пусана: Gamcheon, Гваналли" }
+]},
+{ date: "08.08", events: [
+{ type: "car", time: "09:00–10:00", desc: "🚗 Переезд: Пусан → Кёнджу (~1 ч)" },
+{ type: "city", time: "10:00–14:00", desc: "🏙️ Изучение Кёнджу: древняя столица Силла" },
+{ type: "car", time: "14:00–15:30", desc: "🚗 Переезд: Кёнджу → Андон (~1.5 ч)" },
+{ type: "hotel", time: "16:00", desc: "🏨 Заселение: Haru The Guesthouse, Андон" }
+]},
+{ date: "09.08", events: [
+{ type: "car", time: "09:00–12:00", desc: "🚗 Переезд: Андон → Сокчхо (~3 ч)" },
+{ type: "hotel", time: "12:30", desc: "🏨 Заселение: Sokcho Summitbay, Сокчхо" },
+{ type: "city", time: "вечер", desc: "🏙️ Изучение Сокчхо: вечерняя прогулка" }
+]},
+{ date: "10.08", events: [
+{ type: "car", time: "утро", desc: "🚗 Переезд: Сокчхо → Самчхок (~30 мин)" },
+{ type: "city", time: "10:00–14:00", desc: "🏙️ Изучение Самчхок: океанский веломаршрут, парк" },
+{ type: "car", time: "14:00–14:30", desc: "🚗 Возврат: Самчхок → Сокчхо" },
+{ type: "city", time: "вечер", desc: "🏙️ Изучение Сокчхо: пляж, отдых" }
+]},
+{ date: "11.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сораксан: национальный парк, треккинг" }
+]},
+{ date: "12.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сокчхо: пляж, отдых, сувениры" }
+]},
+{ date: "13.08", events: [
+{ type: "car", time: "09:00–11:30", desc: "🚗 Переезд: Сокчхо → Сеул (~2.5 ч)" },
+{ type: "hotel", time: "12:00", desc: "🏨 Заселение: Seoul DDJ STAY, Сеул" },
+{ type: "city", time: "вечер", desc: "🏙️ Изучение Сеула: финальные прогулки" }
+]},
+{ date: "14.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сеула: финальный шопинг" }
+]},
+{ date: "15.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сеула: финальный шопинг" }
+]},
+{ date: "16.08", events: [
+{ type: "city", time: "весь день", desc: "🏙️ Изучение Сеула: финальный шопинг, сборы" }
+]},
+{ date: "17.08", events: [
+{ type: "hotel", time: "утро", desc: "🏨 Выселение из отеля" },
+{ type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)" }
+]}
 ];
 
+// === ЖИЛЬЁ (добавлены ссылки на брони) ===
 const accommodations = {
 jeju: [{
 name: "Seogwipo-si",
 address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616",
 google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77",
 naver: getNaverUrl("https://maps.app.goo.gl/F4addr6TrUVHqcd77"),
+booking: "https://disk.yandex.ru/i/0GsuxjvgYNDSEA",
 dates: "29–31.07"
 }],
 seoul: [{
@@ -548,12 +505,14 @@ name: "Toegye-ro Stay",
 address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629",
 google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58",
 naver: getNaverUrl("https://maps.app.goo.gl/vZGmRbgYLm5onJZ58"),
+booking: "https://disk.yandex.ru/i/T93Cj0DQ0cE6_Q",
 dates: "01–03.08"
 }, {
 name: "Seoul DDJ STAY 대동장",
 address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126",
 google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8",
 naver: getNaverUrl("https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8"),
+booking: "https://disk.yandex.ru/i/ZbQ0_dS5BxdrHQ",
 dates: "13–16.08"
 }],
 jindo: [{
@@ -561,6 +520,7 @@ name: "Imhoe-myeon Guesthouse",
 address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840",
 google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7",
 naver: getNaverUrl("https://maps.app.goo.gl/moqvjniubSLUBzCy7"),
+booking: "https://disk.yandex.ru/i/-e9cql2H6s91rw",
 dates: "04–05.08"
 }],
 busan: [{
@@ -568,6 +528,7 @@ name: "O'guest in Haeundae",
 address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094",
 google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69",
 naver: getNaverUrl("https://maps.app.goo.gl/HoYeo3wRjgEKbVU69"),
+booking: "https://disk.yandex.ru/i/APVixs_bzb6NrA",
 dates: "06–08.08"
 }],
 andong: [{
@@ -575,6 +536,7 @@ name: "Haru The Guesthouse",
 address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704",
 google: "https://maps.app.goo.gl/BzbmgVBongeqmty89",
 naver: getNaverUrl("https://maps.app.goo.gl/BzbmgVBongeqmty89"),
+booking: "https://disk.yandex.ru/i/KLjr3sFZ1Ps1ew",
 dates: "09.08"
 }],
 sokcho: [{
@@ -582,25 +544,20 @@ name: "Sokcho Summitbay 1807 \"Ocean View\"",
 address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808",
 google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6",
 naver: getNaverUrl("https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6"),
+booking: "https://disk.yandex.ru/i/e5UOxri5_U151A",
 dates: "10–12.08"
 }]
 };
 
+// === МЕСТА, ЕДА, БАНИ (без изменений) ===
 const places = [
-{
-city: "Чеджудо",
-dates: "29–31.07",
-items: [
+{ city: "Чеджудо", dates: "29–31.07", items: [
 { name: "Hallasan", google: "https://maps.app.goo.gl/VJHXBTd1ya6mcASS9", naver: getNaverUrl("https://maps.app.goo.gl/VJHXBTd1ya6mcASS9"), desc: "Потухший вулкан с самой высокой вершиной в Южной Корее. Прогулки только днём.", stars: 5, price: null },
 { name: "Manjanggul Lava Tube", google: "https://maps.app.goo.gl/o2rre6nCiMuu9bta6", naver: getNaverUrl("https://maps.app.goo.gl/o2rre6nCiMuu9bta6"), desc: "Длинная лавовая трубка: уникальные сталактиты и сталагмиты, летучие мыши и насекомые.", stars: 5, price: "2 000 ₩ (~140 ₽)" },
 { name: "Cheonjeyeon Waterfall", google: "https://maps.app.goo.gl/SYALg4ejWNE7kyyg7", naver: getNaverUrl("https://maps.app.goo.gl/SYALg4ejWNE7kyyg7"), desc: "Водопад.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
 { name: "Hamdeok Beach", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: getNaverUrl("https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7"), desc: "Пляж.", stars: 4, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Сеул",
-dates: "01–03.08 / 13–16.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Сеул", dates: "01–03.08 / 13–16.08", items: [
 { name: "Everland", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: getNaverUrl("https://maps.app.goo.gl/MFSPBRxuYLR51QgY8"), desc: "Популярный загородный парк развлечений с аттракционами, представлениями, магазинами, ресторанами и зоопарком.", stars: 5, price: "64 000 ₩ (~4 480 ₽)" },
 { name: "Lotte World", google: "https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6", naver: getNaverUrl("https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6"), desc: "Семейный парк развлечений с аттракционами, водными горками и выставками морских животных.", stars: 5, price: "59 000 ₩ (~4 130 ₽)" },
 { name: "N Seoul Tower", google: "https://maps.app.goo.gl/GtR1ecNoH3p4yyou5", naver: getNaverUrl("https://maps.app.goo.gl/GtR1ecNoH3p4yyou5"), desc: "Всемирно известная башня 1980 года с панорамным видом на город и вращающимся рестораном.", stars: 5, price: "12 500 ₩ (~875 ₽)" },
@@ -617,30 +574,18 @@ items: [
 { name: "Gangnam Station Area", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: getNaverUrl("https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8"), desc: "Локация 'Gangnam Style'. Памятник Psycho, стильные бары и лофты Пхунтхондона.", stars: 4, price: null },
 { name: "Каннамгу", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: getNaverUrl("https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8"), desc: "Современный район с небоскрёбами, дизайнерскими магазинами, ночными клубами, элитными ресторанами и храмом Понынса VIII века.", stars: 4, price: null },
 { name: "Ewha Womans University", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: getNaverUrl("https://maps.app.goo.gl/6aP5YLshpF1RBFez6"), desc: "Негосударственный женский университет в центре Сеула.", stars: 3, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Чонджу",
-dates: "04.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Чонджу", dates: "04.08", items: [
 { name: "Jeonju Hanok Village", google: "https://maps.app.goo.gl/povG1N1i8TUQuYsy5", naver: getNaverUrl("https://maps.app.goo.gl/povG1N1i8TUQuYsy5"), desc: "Самая большая деревня ханоков в Корее (800+ традиционных домов). Идеально для фото в ханбоке.", stars: 5, price: null },
 { name: "Jeonju Kimchi Museum", google: "https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A", naver: getNaverUrl("https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A"), desc: "Музей кимчи — история главного корейского блюда и дегустация разных видов.", stars: 4, price: "3 000 ₩ (~210 ₽)" },
 { name: "Jeonju-si (общая)", google: "https://maps.app.goo.gl/k6GTZwhr2y89W8E9A", naver: getNaverUrl("https://maps.app.goo.gl/k6GTZwhr2y89W8E9A"), desc: "Гастрономическая столица Кореи. Также стоит посетить галерею каллиграфии.", stars: 4, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Чиндо",
-dates: "04–05.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Чиндо", dates: "04–05.08", items: [
 { name: "Ностальгия 1", google: "https://maps.app.goo.gl/4SxqYtpkzoSG3oTY7", naver: getNaverUrl("https://maps.app.goo.gl/4SxqYtpkzoSG3oTY7"), desc: "Поселок. Место, где жил и работал 2 месяца в 2019 году.", stars: 5, price: null },
 { name: "Ностальгия 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: getNaverUrl("https://maps.app.goo.gl/oWkExLckP84Aoec57"), desc: "Пристань. Место, где жил и работал 2 месяца в 2019 году. Выходил отсюда в море.", stars: 5, price: null },
 { name: "Ностальгия 3", google: "https://maps.app.goo.gl/8FnignXcCoL7sZD9A", naver: getNaverUrl("https://maps.app.goo.gl/8FnignXcCoL7sZD9A"), desc: "Место, куда я ходил купаться после работы или в выходные дни в 2019 году.", stars: 5, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Пусан",
-dates: "06–08.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Пусан", dates: "06–08.08", items: [
 { name: "Haedong Yonggungsa Temple", google: "https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7", naver: getNaverUrl("https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7"), desc: "Храм на побережье Восточного моря среди скал. Считается, что здесь исполняются желания.", stars: 5, price: null },
 { name: "Jagalchi Market (Рынок Чагальчхи)", google: "https://maps.app.goo.gl/hzqzbADXyNq1w54U9", naver: getNaverUrl("https://maps.app.goo.gl/hzqzbADXyNq1w54U9"), desc: "Крупнейший рыбный рынок в Азии. Свежие морепродукты: морские огурцы, живые осьминоги, морские ушки.", stars: 5, price: null },
 { name: "Gamcheon Culture Village", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: getNaverUrl("https://maps.app.goo.gl/th2ccHaMFK3GyTHA9"), desc: "Живописная деревня с разноцветными домами, настенными росписями, магазинами и кафе.", stars: 4, price: "5 000 ₩ (~350 ₽)" },
@@ -649,64 +594,40 @@ items: [
 { name: "Haeundae Blueline Park - Cheongsapo", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: getNaverUrl("https://maps.app.goo.gl/nqqFpzfLmDCg22N39"), desc: "Парк протяжённостью 4,8 км вдоль скалистого побережья. Двухуровневый маршрут: внизу Beach Train, сверху Sky Capsule — разноцветные кабинки.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" },
 { name: "Ahopsan Forest", google: "https://maps.app.goo.gl/GcdrV3QAfdac3GJ88", naver: getNaverUrl("https://maps.app.goo.gl/GcdrV3QAfdac3GJ88"), desc: "Королевский бамбуковый лес. Давным-давно сюда привезли бамбуковые ростки из Китая для императорской знати. Атмосфера как в дорамах.", stars: 4, price: null },
 { name: "Dadaepo Beach", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: getNaverUrl("https://maps.app.goo.gl/tLteQedVF2u6487XA"), desc: "Морской пляж. Мелкий.", stars: 3, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Кёнджу",
-dates: "09.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Кёнджу", dates: "09.08", items: [
 { name: "Bulguksa Temple", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: getNaverUrl("https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6"), desc: "Шедевр буддийской архитектуры VIII века, объект ЮНЕСКО. Каменные пагоды Сеокгап и Дабоп.", stars: 5, price: "6 000 ₩ (~420 ₽)" },
 { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: getNaverUrl("https://maps.app.goo.gl/ioybbGuoWnpKxVDU6"), desc: "Древнейшая обсерватория в Восточной Азии (VII век). Построена во времена королевы Сондок.", stars: 5, price: null },
 { name: "Grand Tumuli Park / King Namwon Tomb", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: getNaverUrl("https://maps.app.goo.gl/yqiDSL2VajFBNrTf7"), desc: "Парк с королевскими курганами эпохи Силла. Золотые короны и сокровища.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
 { name: "Woljeongsa Park", google: "https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7", naver: getNaverUrl("https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7"), desc: "Парк с курганами среди листопада. Живописное место с древними гробницами и прудом.", stars: 4, price: null },
 { name: "Gyeongju-si (общая)", google: "https://maps.app.goo.gl/nd5b6durVxFGzUVD8", naver: getNaverUrl("https://maps.app.goo.gl/nd5b6durVxFGzUVD8"), desc: "Древняя столица Силла. Музей под открытым небом с тысячелетней историей.", stars: 4, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Андон",
-dates: "09.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Андон", dates: "09.08", items: [
 { name: "Hahoe Folk Village", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: getNaverUrl("https://maps.app.goo.gl/F751rGBbkpVj7MhP6"), desc: "Традиционная деревня ханоков, объект ЮНЕСКО. Родовое поместье клана Рю с 600-летней историей.", stars: 5, price: "5 000 ₩ (~350 ₽)" },
 { name: "Andong-si (общая)", google: "https://maps.app.goo.gl/9ZziEa6FFSQTNmqT7", naver: getNaverUrl("https://maps.app.goo.gl/9ZziEa6FFSQTNmqT7"), desc: "Центр конфуцианства. Стоит попробовать андонский чонгаджи — рыба, приготовленная особым способом.", stars: 4, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Самчхок",
-dates: "10.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Самчхок", dates: "10.08", items: [
 { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: getNaverUrl("https://maps.app.goo.gl/98DJqVfivdeHAmWt9"), desc: "Единственный в стране маршрут для катания на велосипеде по побережью Восточного моря. Длина 5,4 км, туннель со световыми шоу, сосны Gomsol.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" },
 { name: "Haesindang Park", google: "https://maps.app.goo.gl/27gyJFhHv6CiuDSz6", naver: getNaverUrl("https://maps.app.goo.gl/27gyJFhHv6CiuDSz6"), desc: "Уникальный парк с деревянными скульптурами на тему плодородия. Известен как 'парк пенисов'. Живописное место на побережье.", stars: 4, price: "3 000 ₩ (~210 ₽)" }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-},
-{
-city: "Сокчхо/Сораксан",
-dates: "10–12.08",
-items: [
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) },
+{ city: "Сокчхо/Сораксан", dates: "10–12.08", items: [
 { name: "Seoraksan NP Entrance (Seorak-dong)", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: getNaverUrl("https://maps.app.goo.gl/SL7yfUmvvSqQceR8A"), desc: "Главный вход в национальный парк. Начало основных маршрутов.", stars: 5, price: null },
 { name: "Ulsanbawi Peak", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: getNaverUrl("https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6"), desc: "Восхождение на знаменитую скалу с 800 ступенями. Потрясающие виды на горы и море.", stars: 5, price: null },
 { name: "Seoraksan Cable Car", google: "https://maps.app.goo.gl/4Pnke77DDcjMynSq8", naver: getNaverUrl("https://maps.app.goo.gl/4Pnke77DDcjMynSq8"), desc: "Канатная дорога с панорамными видами. Поднимает на высоту 700 метров.", stars: 4, price: "12 500 ₩ (~875 ₽)" },
 { name: "Sinheungsa Temple", google: "https://maps.app.goo.gl/4eUe1KpCvvLRNebB6", naver: getNaverUrl("https://maps.app.goo.gl/4eUe1KpCvvLRNebB6"), desc: "Древний буддийский храм с подвесным мостом. Одна из старейших обителей в парке.", stars: 4, price: null },
 { name: "Cheonjin Beach Entrance", google: "https://maps.app.goo.gl/6KptXjrCJmS8jQYM6", naver: getNaverUrl("https://maps.app.goo.gl/6KptXjrCJmS8jQYM6"), desc: "Пляж.", stars: 4, price: null }
-].sort((a, b) => (b.stars || 0) - (a.stars || 0))
-}
+].sort((a, b) => (b.stars || 0) - (a.stars || 0)) }
 ];
 
 const eats = [
-{
-city: "Чеджудо",
-dates: "29–31.07",
-items: [
+{ city: "Чеджудо", dates: "29–31.07", items: [
 { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: getNaverUrl("https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9"), desc: "Традиционное блюдо Чеджу. Свинину подают на деревянной доске.", dish: "Чёрная свинина, домбегоги", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.7 },
 { name: "Yeondong Doldam Black Pork", google: "https://maps.app.goo.gl/noyXi6zwUnWkjYjS6", naver: getNaverUrl("https://maps.app.goo.gl/noyXi6zwUnWkjYjS6"), desc: "Фирменное блюдо острова! Нежнейшая свинина, приготовленная на гриле.", dish: "Чёрная свинина Чеджу", avgCheck: "22 000 ₩ (1 540 ₽)", stars: 4.6 },
 { name: "Hamdeok Beach Seafood Restaurants", google: "https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26", naver: getNaverUrl("https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26"), desc: "Рестораны у пляжа Хамдок. Свежие морепродукты от хэнё.", dish: "Уни, чонбок", avgCheck: "30 000 ₩ (2 100 ₽)", stars: 4.5 },
 { name: "Gozip Dol Wooluck", google: "https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A", naver: getNaverUrl("https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A"), desc: "Свежие морепродукты с видом на море. Популярное место с двумя локациями.", dish: "Морепродукты в каменном горшке", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
 { name: "Samseonghyeol Seafood Hot Pot", google: "https://maps.app.goo.gl/XbrfPUPWLo8t5RPu5", naver: getNaverUrl("https://maps.app.goo.gl/XbrfPUPWLo8t5RPu5"), desc: "Насыщенный суп со свежей рыбой, моллюсками и овощами. Местный фаворит.", dish: "Хэмультан", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.4 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Сеул",
-dates: "01–03.08 / 13–16.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Сеул", dates: "01–03.08 / 13–16.08", items: [
 { name: "N Grill", google: "https://maps.app.goo.gl/XXXLPP5eafu27RJN7", naver: getNaverUrl("https://maps.app.goo.gl/XXXLPP5eafu27RJN7"), desc: "Ресторан с панорамным видом 360° на вращающейся площадке. Для особых случаев.", dish: "Fine dining с корейско-европейской кухней", avgCheck: "80 000 ₩ (5 600 ₽)", stars: 4.7 },
 { name: "Bukchon Traditional Tea House", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: getNaverUrl("https://maps.app.goo.gl/eypKWbH6RA5QVhzA6"), desc: "Уютное место в традиционном доме в деревне Пукчхон. Атмосфера старой Кореи.", dish: "Традиционный корейский чай, хангва", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
 { name: "Myeongdong Kyoja", google: "https://maps.app.goo.gl/9GfXED4rtdFxmP1M8", naver: getNaverUrl("https://maps.app.goo.gl/9GfXED4rtdFxmP1M8"), desc: "Легендарный ресторан в Мёндоне с 50-летней историей. Очереди всегда, но оно того стоит.", dish: "Кальгуксу, манду", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.6 },
@@ -717,72 +638,43 @@ items: [
 { name: "Wangbijip Myeongdong", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: getNaverUrl("https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9"), desc: "Популярная сеть для корейского барбекю. Отличное соотношение цены и качества.", dish: "Самгёпсаль, хану", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.4 },
 { name: "Hongdae Dakgalbi", google: "https://maps.app.goo.gl/wE1f5ytm673pCKv88", naver: getNaverUrl("https://maps.app.goo.gl/wE1f5ytm673pCKv88"), desc: "Молодёжное место в Хондэ с яркой атмосферой. Идеально для групп.", dish: "Чжончхон даккальби", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.3 },
 { name: "Hongdae Street Food", google: "https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6", naver: getNaverUrl("https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6"), desc: "Уличная еда на Hongik University Street. Яркие вывески, молодёжная тусовка.", dish: "Ттокпокки, одэн, корн-доги", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.2 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Чонджу",
-dates: "04.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Чонджу", dates: "04.08", items: [
 { name: "Hankook Jib", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: getNaverUrl("https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6"), desc: "Старейший ресторан пибимбапа (с 1952 года!). Три поколения семьи хранят рецепт.", dish: "Пибибмап в долсоте", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
 { name: "Gogung Suragan", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: getNaverUrl("https://maps.app.goo.gl/drdaeYG6DioZEne7A"), desc: "Один из лучших ресторанов пибимбапа! Подают в традиционном доме в деревне ханоков.", dish: "Чонджу пибимпап", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.6 },
 { name: "Jeonju Hanok Village Food Stalls", google: "https://maps.app.goo.gl/US8YxCkGmuHN1rhH9", naver: getNaverUrl("https://maps.app.goo.gl/US8YxCkGmuHN1rhH9"), desc: "Уличные закуски в деревне ханоков. Попробуйте традиционные корейские сладости.", dish: "Чхонгваджа, юкчон", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.4 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Чиндо",
-dates: "04–05.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Чиндо", dates: "04–05.08", items: [
 { name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5", naver: getNaverUrl("https://maps.app.goo.gl/uREFpsm6b4dGT8qu5"), desc: "Уютный семейный ресторан с домашней корейской кухней. Идеален после работы на море.", dish: "Местный суп с морепродуктами, свежая рыба", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.0 },
 { name: "용성식당", google: "https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7", naver: getNaverUrl("https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7"), desc: "Традиционный ресторан с блюдами из морепродуктов. Рекомендуется свежая рыба на гриле.", dish: "Свежая рыба на гриле, морской салат", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.0 },
 { name: "이화식당", google: "https://maps.app.goo.gl/5aZCPqAsvGN5DVf57", naver: getNaverUrl("https://maps.app.goo.gl/5aZCPqAsvGN5DVf57"), desc: "Семейный ресторан с уютной атмосферой. Попробуйте местный суп с морепродуктами.", dish: "Суп с морепродуктами, рис с морской капустой", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.0 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Пусан",
-dates: "06–08.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Пусан", dates: "06–08.08", items: [
 { name: "Haeundae Amsogalbijip", google: "https://maps.app.goo.gl/2yogqxPPFTmLFmTc7", naver: getNaverUrl("https://maps.app.goo.gl/2yogqxPPFTmLFmTc7"), desc: "Одно из лучших BBQ мест в Пусане. Премиум говядина хану.", dish: "Хану кальби", avgCheck: "45 000 ₩ (3 150 ₽)", stars: 4.7 },
 { name: "Millac Live Fish Sashimi Market", google: "https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA", naver: getNaverUrl("https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA"), desc: "Центр сырой рыбы с десятками ресторанов. Выбираете рыбу — вам её готовят.", dish: "Сашими из свежей рыбы", avgCheck: "40 000 ₩ (2 800 ₽)", stars: 4.5 },
 { name: "Gwangalli Beach Restaurants", google: "https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9", naver: getNaverUrl("https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9"), desc: "Рестораны у пляжа Кваналли с видом на освещённый мост. Идеально для вечера.", dish: "Морепродукты, пиво с видом на мост", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.5 },
 { name: "총각상회 (Chong Gak Jagalchi Market)", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: getNaverUrl("https://maps.app.goo.gl/3jDzgSmUaCsXaYg47"), desc: "Ешьте прямо на рынке! Свежайшие морепродукты, которые выбрали сами.", dish: "Сашими, живые осьминоги", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.5 },
 { name: "Gaemi-jip Seomyeon", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: getNaverUrl("https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7"), desc: "Популярный ресторан с отличным соотношением цены и качества.", dish: "Чорихэ, морепродукты", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.4 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Кёнджу",
-dates: "09.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Кёнджу", dates: "09.08", items: [
 { name: "Hwangnamppang Original Store", google: "https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7", naver: getNaverUrl("https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7"), desc: "Легендарная выпечка Кёнджу! Печётся с 1939 года. Must-try перекус.", dish: "Хваннамппан", avgCheck: "2 000 ₩ (140 ₽)", stars: 4.8 },
 { name: "Starbucks Hanok", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: getNaverUrl("https://maps.app.goo.gl/h3NGUnbd2rxir1A49"), desc: "Старбакс в корейском здании ханока.", dish: "Кофе, десерты", avgCheck: "6 000 ₩ (420 ₽)", stars: 4.5 },
 { name: "Gyori Gimbap", google: "https://maps.app.goo.gl/vShDCxT34ueAPT7RA", naver: getNaverUrl("https://maps.app.goo.gl/vShDCxT34ueAPT7RA"), desc: "Известный ресторан с традиционным кимбапом. Работает десятилетиями.", dish: "Кимбап, традиционная корейская еда", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.5 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Андон",
-dates: "09.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Андон", dates: "09.08", items: [
 { name: "Andong Jjimdak Alley Restaurants", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: getNaverUrl("https://maps.app.goo.gl/NsMA9HFNURKJeVtk6"), desc: "Улица с десятками ресторанов ччимтака! Курица с овощами и лапшой в соевом соусе.", dish: "Андон ччимтак", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.5 },
 { name: "Okya Restaurant", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: getNaverUrl("https://maps.app.goo.gl/CDx49fwiHDUNHobB9"), desc: "Ресторан с традиционной кухней Андона. Попробуйте местную лапшу из гороховой муки.", dish: "Андон кукси, традиционные блюда", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.4 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Самчхок",
-dates: "10.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Самчхок", dates: "10.08", items: [
 { name: "하운각 홍콩중식 (Хаункак)", google: "https://maps.app.goo.gl/dwXQxbQMdqDAKgxW8", naver: getNaverUrl("https://maps.app.goo.gl/dwXQxbQMdqDAKgxW8"), desc: "Аутентичная гонконгская кухня в Самчхоке. Димсамы, утка, лапша вок.", dish: "Димсамы, утка по-кантонски", avgCheck: "22 000 ₩ (~1 540 ₽)", stars: 4.3 },
 { name: "ARAKS", google: "https://maps.app.goo.gl/mmy3uktTzx8WHjBp8", naver: getNaverUrl("https://maps.app.goo.gl/mmy3uktTzx8WHjBp8"), desc: "Современное кафе с видом на море. Кофе, десерты, лёгкие закуски. Идеально для фото.", dish: "Кофе, чизкейк, тосты", avgCheck: "12 000 ₩ (~840 ₽)", stars: 4.4 }
-].sort((a, b) => b.stars - a.stars)
-},
-{
-city: "Сокчхо/Сораксан",
-dates: "10–12.08",
-items: [
+].sort((a, b) => b.stars - a.stars) },
+{ city: "Сокчхо/Сораксан", dates: "10–12.08", items: [
 { name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: getNaverUrl("https://maps.app.goo.gl/74maPUUkfnqdR5hb9"), desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами. Недалеко от Сораксана.", dish: "Морепродукты от хэнё, абалон", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.9 },
 { name: "황가네찜 (Hwanggane Jjim)", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: getNaverUrl("https://maps.app.goo.gl/k6fScSGt8j5HoEaL8"), desc: "Ресторан с традиционной корейской рыбой на пару. Нежно и полезно. Местные жители и туристы высоко оценивают.", dish: "생선찜 (рыба на пару), 매운탕 (острый рыбный суп)", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
 { name: "Sokcho Tourist Fish Market", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: getNaverUrl("https://maps.app.goo.gl/BvnGzoeeSCZVLRV76"), desc: "Рынок с фудкортом. Попробуйте всё: от жареной рыбы до морских блинчиков.", dish: "Уличная еда, жареные морепродукты", avgCheck: "10 000 ₩ (700 ₽)", stars: 4.3 },
 { name: "Cheongchosu Mulheo", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: getNaverUrl("https://maps.app.goo.gl/6JSvSoz41R6qxZbT7"), desc: "Легендарный ресторан с фирменным холодным супом из свежей рыбы. Освежающе!", dish: "Мульхо", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.2 }
-].sort((a, b) => b.stars - a.stars)
-}
+].sort((a, b) => b.stars - a.stars) }
 ];
 
 const spas = {
@@ -798,24 +690,37 @@ sokcho: [
 ].sort((a, b) => b.stars - a.stars)
 };
 
+// === СОСТОЯНИЕ ===
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
 let currentCity = null;
 let currentSubtab = 'places';
+let currentView = 'calendar'; // 'calendar' | 'map'
 
-function renderItinerary() {
-return `
-<div class="route-container">
-<img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
-<div class="route-table-overlay">
-<table class="calendar">
-<thead><tr><th>Дата</th><th>Город</th><th>Событие</th><th>Время</th></tr></thead>
-<tbody>${itinerary.map(i => `<tr><td>${i.date}</td><td>${i.city}</td><td>${i.event}</td><td>${i.time}</td></tr>`).join('')}</tbody>
+// === ФУНКЦИИ РЕНДЕРИНГА ===
+function renderCalendar() {
+return `<div class="calendar-container">
+<table class="calendar-table">
+<thead><tr><th>Дата</th><th style="width:100%">События</th></tr></thead>
+<tbody>${calendar.map(day => `
+<tr>
+<td><strong>${day.date}</strong></td>
+<td>${day.events.map(ev => `
+<div class="event-item event-${ev.type}">
+<span class="event-icon">${ev.type === 'flight' ? '✈️' : ev.type === 'hotel' ? '🏨' : ev.type === 'car' ? '🚗' : '🏙️'}</span>
+<span class="event-time">${ev.time}</span>
+<span class="event-desc">${ev.desc}</span>
+</div>`).join('')}</td>
+</tr>`).join('')}</tbody>
 </table>
-</div>
-</div>
-`;
+</div>`;
+}
+
+function renderMap() {
+return `<div class="route-container">
+<img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
+</div>`;
 }
 
 function renderCityBanner(cityKey, cityName) {
@@ -827,33 +732,26 @@ return `<div class="city-banner" style="background-image: url('${cityKey}-banner
 function renderAccommodation(cityKey) {
 const accList = accommodations[cityKey];
 if (!accList || accList.length === 0) return '';
-let html = `<div class="accommodation">
-<div class="accommodation-title">🏠 Жильё</div>`;
+let html = `<div class="accommodation"><div class="accommodation-title">🏠 Жильё</div>`;
 if (accList.length === 1) {
 const acc = accList[0];
-html += `
-<div class="accommodation-name">
-${acc.name}
-<span class="booking-dates">${acc.dates}</span>
-</div>
+html += `<div class="accommodation-name">${acc.name}<span class="booking-dates">${acc.dates}</span></div>
 <div class="accommodation-address">${acc.address}</div>
 <div class="accommodation-links">
 <a href="${acc.google}" target="_blank" class="link-google">🗺️ Google</a>
 <a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver</a>
+${acc.booking ? `<a href="${acc.booking}" target="_blank" class="link-booking">📄 Бронь</a>` : ''}
 </div>`;
 } else {
 html += '<div class="accommodation-list">';
-accList.forEach((acc) => {
-html += `
-<div class="accommodation-item">
-<div class="accommodation-name">
-${acc.name}
-<span class="booking-dates">${acc.dates}</span>
-</div>
+accList.forEach(acc => {
+html += `<div class="accommodation-item">
+<div class="accommodation-name">${acc.name}<span class="booking-dates">${acc.dates}</span></div>
 <div class="accommodation-address">${acc.address}</div>
 <div class="accommodation-links">
 <a href="${acc.google}" target="_blank" class="link-google">🗺️ Google</a>
 <a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver</a>
+${acc.booking ? `<a href="${acc.booking}" target="_blank" class="link-booking">📄 Бронь</a>` : ''}
 </div>
 </div>`;
 });
@@ -867,20 +765,11 @@ function renderCityProgress(cityKey) {
 const cityName = getCityDisplayName(cityKey);
 let total = 0, visited = 0;
 const placesData = places.find(c => c.city === cityName);
-if (placesData) {
-total += placesData.items.length;
-visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
-}
+if (placesData) { total += placesData.items.length; visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length; }
 const eatsData = eats.find(c => c.city === cityName);
-if (eatsData) {
-total += eatsData.items.length;
-visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
-}
+if (eatsData) { total += eatsData.items.length; visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length; }
 const spaKey = getSpaKeyForCity(cityKey);
-if (spaKey && spas[spaKey]) {
-total += spas[spaKey].length;
-visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityName}-${item.name}`]).length;
-}
+if (spaKey && spas[spaKey]) { total += spas[spaKey].length; visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityName}-${item.name}`]).length; }
 const percent = total > 0 ? Math.round((visited / total) * 100) : 0;
 return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">✅ Посещено: ${visited} из ${total} (${percent}%)</span></div>`;
 }
@@ -889,47 +778,26 @@ function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
 html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">Места</button>`;
 html += `<button class="subtab ${currentSubtab === 'eats' ? 'active' : ''}" data-type="eats" data-city="${cityKey}">Еда</button>`;
-if (hasSpa) {
-html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data-type="spas" data-city="${cityKey}">Бани</button>`;
-}
+if (hasSpa) html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data-type="spas" data-city="${cityKey}">Бани</button>`;
 html += `</div>`;
 return html;
 }
 
 function getCityDisplayName(cityKey) {
-const map = {
-jeju: 'Чеджудо',
-seoul: 'Сеул',
-jeonju: 'Чонджу',
-jindo: 'Чиндо',
-busan: 'Пусан',
-gyeongju: 'Кёнджу',
-andong: 'Андон',
-samcheok: 'Самчхок',
-sokcho: 'Сокчхо/Сораксан'
-};
+const map = { jeju: 'Чеджудо', seoul: 'Сеул', jeonju: 'Чонджу', jindo: 'Чиндо', busan: 'Пусан', gyeongju: 'Кёнджу', andong: 'Андон', samcheok: 'Самчхок', sokcho: 'Сокчхо/Сораксан' };
 return map[cityKey] || cityKey;
 }
-
 function getSpaKeyForCity(cityKey) {
-if (cityKey === 'sokcho') return 'sokcho';
-if (cityKey === 'busan') return 'busan';
-if (cityKey === 'seoul') return 'seoul';
-return null;
+if (cityKey === 'sokcho') return 'sokcho'; if (cityKey === 'busan') return 'busan'; if (cityKey === 'seoul') return 'seoul'; return null;
 }
 
 function renderItemsList(items, type, cityKey, cityName) {
-if (!items || items.length === 0) {
-return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
-}
-return `<div class="items-list">
-${items.map(item => {
+if (!items || items.length === 0) return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
+return `<div class="items-list">${items.map(item => {
 const id = `${type}-${cityName}-${item.name}`;
 const isVisited = type === 'place' ? visitedPlaces[id] : (type === 'eat' ? visitedEats[id] : visitedSpas[id]);
-return `
-<div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
-<div class="item-name">${item.name}</div>
-<div class="item-stars">${generateStars(item.stars)}</div>
+return `<div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
+<div class="item-name">${item.name}</div><div class="item-stars">${generateStars(item.stars)}</div>
 <div class="item-desc">${item.desc}</div>
 ${item.price ? `<div class="price-info">💰 ${type === 'place' ? 'Вход: ' : ''}${item.price}</div>` : ''}
 ${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>` : ''}
@@ -937,31 +805,20 @@ ${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avg
 <button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="${type}">${isVisited ? (type === 'eat' ? '✅ Попробовано' : '✅ Посещено') : '☑️ Отметить'}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
 <button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
-</div>
-</div>`;
-}).join('')}
-</div>`;
+</div></div>`;
+}).join('')}</div>`;
 }
 
 function renderCityContent(cityKey, subtab) {
 const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
-const accHtml = renderAccommodation(cityKey);
-if (accHtml) html += accHtml;
+const accHtml = renderAccommodation(cityKey); if (accHtml) html += accHtml;
 html += renderCityProgress(cityKey);
 const hasSpa = getSpaKeyForCity(cityKey) !== null;
 html += renderSubtabs(cityKey, hasSpa);
-if (subtab === 'places') {
-const items = places.find(c => c.city === cityName)?.items || [];
-html += renderItemsList(items, 'place', cityKey, cityName);
-} else if (subtab === 'eats') {
-const items = eats.find(c => c.city === cityName)?.items || [];
-html += renderItemsList(items, 'eat', cityKey, cityName);
-} else if (subtab === 'spas' && hasSpa) {
-const spaKey = getSpaKeyForCity(cityKey);
-const items = spas[spaKey] || [];
-html += renderItemsList(items, 'spa', cityKey, cityName);
-}
+if (subtab === 'places') { const items = places.find(c => c.city === cityName)?.items || []; html += renderItemsList(items, 'place', cityKey, cityName); }
+else if (subtab === 'eats') { const items = eats.find(c => c.city === cityName)?.items || []; html += renderItemsList(items, 'eat', cityKey, cityName); }
+else if (subtab === 'spas' && hasSpa) { const spaKey = getSpaKeyForCity(cityKey); const items = spas[spaKey] || []; html += renderItemsList(items, 'spa', cityKey, cityName); }
 return html;
 }
 
@@ -981,114 +838,80 @@ progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${vis
 }
 
 function handleDoneClick(btn) {
-const id = btn.dataset.id;
-const type = btn.dataset.type;
-if (type === 'place') {
-visitedPlaces[id] = !visitedPlaces[id];
-localStorage.setItem('visitedPlaces_korea2026', JSON.stringify(visitedPlaces));
-} else if (type === 'eat') {
-visitedEats[id] = !visitedEats[id];
-localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats));
-} else if (type === 'spa') {
-visitedSpas[id] = !visitedSpas[id];
-localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas));
-}
+const id = btn.dataset.id, type = btn.dataset.type;
+if (type === 'place') { visitedPlaces[id] = !visitedPlaces[id]; localStorage.setItem('visitedPlaces_korea2026', JSON.stringify(visitedPlaces)); }
+else if (type === 'eat') { visitedEats[id] = !visitedEats[id]; localStorage.setItem('visitedEats_korea2026', JSON.stringify(visitedEats)); }
+else if (type === 'spa') { visitedSpas[id] = !visitedSpas[id]; localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas)); }
 const item = btn.closest('.item');
 if (item) {
-if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) {
-item.classList.add('visited');
-btn.textContent = type === 'eat' ? '✅ Попробовано' : '✅ Посещено';
-} else {
-item.classList.remove('visited');
-btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить';
-}
+if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) { item.classList.add('visited'); btn.textContent = type === 'eat' ? '✅ Попробовано' : '✅ Посещено'; }
+else { item.classList.remove('visited'); btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить'; }
 }
 updateProgress();
-if (currentCity) {
-const cityProgress = document.querySelector('.city-progress');
-if (cityProgress) {
-cityProgress.outerHTML = renderCityProgress(currentCity);
-}
-}
+if (currentCity) { const cp = document.querySelector('.city-progress'); if (cp) cp.outerHTML = renderCityProgress(currentCity); }
 }
 
 function attachEventListeners() {
 document.querySelectorAll('.subtab').forEach(subtab => {
 subtab.addEventListener('click', function(e) {
-e.preventDefault();
-e.stopPropagation();
+e.preventDefault(); e.stopPropagation();
 document.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
-this.classList.add('active');
-currentSubtab = this.dataset.type;
-const city = this.dataset.city;
-const container = document.getElementById('content');
+this.classList.add('active'); currentSubtab = this.dataset.type;
+const city = this.dataset.city, container = document.getElementById('content');
 const banner = container.querySelector('.city-banner')?.outerHTML || '';
 const acc = accommodations[city] ? renderAccommodation(city) : '';
-const progress = renderCityProgress(city);
-const hasSpa = getSpaKeyForCity(city) !== null;
-const subtabs = renderSubtabs(city, hasSpa);
-let newContent = '';
-if (currentSubtab === 'places') {
-const cityName = getCityDisplayName(city);
-const items = places.find(c => c.city === cityName)?.items || [];
-newContent = renderItemsList(items, 'place', city, cityName);
-} else if (currentSubtab === 'eats') {
-const cityName = getCityDisplayName(city);
-const items = eats.find(c => c.city === cityName)?.items || [];
-newContent = renderItemsList(items, 'eat', city, cityName);
-} else if (currentSubtab === 'spas' && hasSpa) {
-const cityName = getCityDisplayName(city);
-const spaKey = getSpaKeyForCity(city);
-const items = spas[spaKey] || [];
-newContent = renderItemsList(items, 'spa', city, cityName);
-}
-container.innerHTML = banner + acc + progress + subtabs + newContent;
-attachEventListeners();
+const progress = renderCityProgress(city), hasSpa = getSpaKeyForCity(city) !== null;
+const subtabs = renderSubtabs(city, hasSpa); let newContent = '';
+if (currentSubtab === 'places') { const cityName = getCityDisplayName(city); const items = places.find(c => c.city === cityName)?.items || []; newContent = renderItemsList(items, 'place', city, cityName); }
+else if (currentSubtab === 'eats') { const cityName = getCityDisplayName(city); const items = eats.find(c => c.city === cityName)?.items || []; newContent = renderItemsList(items, 'eat', city, cityName); }
+else if (currentSubtab === 'spas' && hasSpa) { const cityName = getCityDisplayName(city); const spaKey = getSpaKeyForCity(city); const items = spas[spaKey] || []; newContent = renderItemsList(items, 'spa', city, cityName); }
+container.innerHTML = banner + acc + progress + subtabs + newContent; attachEventListeners();
 });
 });
-document.querySelectorAll('.btn-done').forEach(btn => {
-btn.addEventListener('click', function(e) {
-e.preventDefault();
-e.stopPropagation();
-handleDoneClick(this);
-});
-});
+document.querySelectorAll('.btn-done').forEach(btn => { btn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); handleDoneClick(this); }); });
 }
 
+// === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
-document.getElementById('routeTab').addEventListener('click', function(e) {
+// Переключение: Календарь / Карта
+document.getElementById('calendarTab').addEventListener('click', function(e) {
 e.preventDefault();
-document.getElementById('routeTab').classList.add('active');
+document.getElementById('calendarTab').classList.add('active');
+document.getElementById('mapTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
-currentCity = null;
-document.getElementById('content').innerHTML = renderItinerary();
-updateProgress();
+currentCity = null; currentView = 'calendar';
+document.getElementById('content').innerHTML = renderCalendar(); updateProgress();
 });
+document.getElementById('mapTab').addEventListener('click', function(e) {
+e.preventDefault();
+document.getElementById('mapTab').classList.add('active');
+document.getElementById('calendarTab').classList.remove('active');
+document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+currentCity = null; currentView = 'map';
+document.getElementById('content').innerHTML = renderMap(); updateProgress();
+});
+// Переключение городов
 document.querySelectorAll('.city-tab').forEach(tab => {
 tab.addEventListener('click', function(e) {
 e.preventDefault();
-document.getElementById('routeTab').classList.remove('active');
+document.getElementById('calendarTab').classList.remove('active');
+document.getElementById('mapTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
-this.classList.add('active');
-currentCity = this.dataset.city;
-currentSubtab = 'places';
+this.classList.add('active'); currentCity = this.dataset.city; currentSubtab = 'places';
 document.getElementById('content').innerHTML = renderCityContent(currentCity, currentSubtab);
-attachEventListeners();
-updateProgress();
+attachEventListeners(); updateProgress();
 });
 });
+// По умолчанию: календарь
+document.getElementById('content').innerHTML = renderCalendar();
 updateProgress();
 });
 
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
-if (window.scrollY > 300) btn.style.display = 'block';
-else btn.style.display = 'none';
+if (window.scrollY > 300) btn.style.display = 'block'; else btn.style.display = 'none';
 });
-document.getElementById('backToTop').addEventListener('click', (e) => {
-e.preventDefault();
-window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+document.getElementById('backToTop').addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 </script>
 </body>
 </html>
