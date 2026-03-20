@@ -387,45 +387,61 @@ color: #1565c0;
 background: var(--button-bg-naver);
 color: #5d4037;
 }
+/* === ИСПРАВЛЕННЫЙ БЛОК МАРШРУТА === */
 .route-container {
 position: relative;
 border-radius: 12px;
 overflow: hidden;
 margin: 16px 0;
+min-height: 400px;
+}
+.route-container::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+border-radius: 12px;
+z-index: 1;
 }
 .route-map {
 width: 100%;
 display: block;
-filter: brightness(0.85);
+filter: brightness(0.7);
 }
 .route-table-overlay {
 position: absolute;
 top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
-background: rgba(255,255,255,0.85);
-backdrop-filter: blur(4px);
+background: transparent;
+backdrop-filter: none;
 border-radius: 12px;
 padding: 16px;
 max-width: 95%;
 max-height: 85%;
 overflow: auto;
-box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+z-index: 2;
 }
 .calendar {
 width: 100%;
 border-collapse: collapse;
 font-size: 0.85em;
+color: white;
+text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 .calendar th,
 .calendar td {
-padding: 6px;
+padding: 8px;
 text-align: left;
-border-bottom: 1px solid var(--border);
+border-bottom: 1px solid rgba(255,255,255,0.3);
 }
 .calendar th {
-background: rgba(240,245,245,0.8);
+background: rgba(0,0,0,0.5);
 font-weight: 600;
+color: #e9c46a;
+}
+.calendar tr:hover {
+background: rgba(255,255,255,0.1);
 }
 #backToTop {
 position: fixed;
@@ -847,19 +863,16 @@ return html;
 function renderCityProgress(cityKey) {
 const cityName = getCityDisplayName(cityKey);
 let total = 0, visited = 0;
-// Места
 const placesData = places.find(c => c.city === cityName);
 if (placesData) {
 total += placesData.items.length;
 visited += placesData.items.filter(item => visitedPlaces[`place-${cityName}-${item.name}`]).length;
 }
-// Еда
 const eatsData = eats.find(c => c.city === cityName);
 if (eatsData) {
 total += eatsData.items.length;
 visited += eatsData.items.filter(item => visitedEats[`eat-${cityName}-${item.name}`]).length;
 }
-// Бани — ИСПРАВЛЕНО: используем cityName вместо cityKey
 const spaKey = getSpaKeyForCity(cityKey);
 if (spaKey && spas[spaKey]) {
 total += spas[spaKey].length;
