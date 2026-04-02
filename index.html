@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>🇰 Южная Корея — Наше свадебное путешествие</title>
+<title>🇰🇷 Южная Корея — Наше свадебное путешествие</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -35,6 +35,7 @@ color: var(--text);
 padding: 12px;
 line-height: 1.6;
 scroll-behavior: smooth;
+padding-bottom: 60px; /* Отступ под кнопку сброса */
 }
 header {
 text-align: center;
@@ -272,6 +273,30 @@ border: 2px solid white; font-size: 18px;
 cursor: pointer; display: none; z-index: 99;
 box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+/* === СТИЛИ КНОПКИ СБРОСА === */
+.reset-container {
+text-align: center;
+margin-top: 40px;
+margin-bottom: 20px;
+padding-top: 20px;
+border-top: 1px dashed #ccc;
+}
+.reset-btn {
+background-color: #e74c3c;
+color: white;
+border: none;
+padding: 12px 24px;
+border-radius: 8px;
+font-size: 0.9em;
+cursor: pointer;
+opacity: 0.6;
+transition: opacity 0.3s;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.reset-btn:hover {
+opacity: 1;
+background-color: #c0392b;
+}
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
 .city-tab { min-width: 80px; padding: 10px 8px; }
@@ -307,6 +332,12 @@ h1 { font-size: 1.2em; }
 </div>
 <div id="content"></div>
 <button id="backToTop">↑</button>
+
+<!-- КНОПКА СБРОСА ПРОГРЕССА -->
+<div class="reset-container">
+  <button id="resetBtn" class="reset-btn">🔄 Сбросить прогресс</button>
+</div>
+
 <script>
 // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
 function generateStars(rating) {
@@ -403,14 +434,14 @@ const calendar = [
 ]}
 ];
 
-// === ЖИЛЬЁ (обновлены ссылки на PDF) ===
+// === ЖИЛЬЁ (обновлены ссылки на PDF с двойным расширением, как в GitHub) ===
 const accommodations = {
 jeju: [{
 name: "Seogwipo-si",
 address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616",
 google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77",
 naver: "https://naver.me/5OQ7cmRT",
-booking: "bookings/jeju-seogwipo.pdf",
+booking: "bookings/jeju-seogwipo.pdf.pdf",
 dates: "29–31.07"
 }],
 seoul: [{
@@ -418,14 +449,14 @@ name: "Toegye-ro Stay",
 address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629",
 google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58",
 naver: "https://naver.me/GWW7dyTD",
-booking: "bookings/seoul-toegye.pdf",
+booking: "bookings/seoul-toegye.pdf.pdf",
 dates: "01–03.08"
 }, {
 name: "Seoul DDJ STAY 대동장",
 address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126",
 google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8",
 naver: "https://naver.me/G1pdAO26",
-booking: "bookings/seoul-ddj.pdf",
+booking: "bookings/seoul-ddj.pdf.pdf",
 dates: "13–16.08"
 }],
 jindo: [{
@@ -433,7 +464,7 @@ name: "Imhoe-myeon Guesthouse",
 address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840",
 google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7",
 naver: "https://naver.me/5tf0dPe2",
-booking: "bookings/jindo-guesthouse.pdf",
+booking: "bookings/jindo-guesthouse.pdf.pdf",
 dates: "04–05.08"
 }],
 busan: [{
@@ -441,7 +472,7 @@ name: "O'guest in Haeundae",
 address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094",
 google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69",
 naver: "https://naver.me/5l7vswOR",
-booking: "bookings/busan-oguest.pdf",
+booking: "bookings/busan-oguest.pdf.pdf",
 dates: "06–08.08"
 }],
 andong: [{
@@ -449,7 +480,7 @@ name: "Haru The Guesthouse",
 address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704",
 google: "https://maps.app.goo.gl/A3Zrmp6AsuX5wmoz8",
 naver: "https://map.naver.com/p/entry/place/1785290845?placePath=%2Fhome",
-booking: "bookings/andong-haru.pdf",
+booking: "bookings/andong-haru.pdf.pdf",
 dates: "09.08"
 }],
 sokcho: [{
@@ -457,7 +488,7 @@ name: "Sokcho Summitbay 1807 \"Ocean View\"",
 address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808",
 google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6",
 naver: "https://naver.me/GhwvpTAx",
-booking: "bookings/sokcho-summitbay.pdf",
+booking: "bookings/sokcho-summitbay.pdf.pdf",
 dates: "10–12.08"
 }]
 };
@@ -777,6 +808,16 @@ document.querySelectorAll('.btn-done').forEach(btn => { btn.addEventListener('cl
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
+// Слушатель кнопки сброса
+document.getElementById('resetBtn').addEventListener('click', function() {
+  if (confirm('Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.')) {
+    localStorage.removeItem('visitedPlaces_korea2026');
+    localStorage.removeItem('visitedEats_korea2026');
+    localStorage.removeItem('visitedSpas_korea2026');
+    location.reload(); // Перезагружаем страницу
+  }
+});
+
 document.getElementById('calendarTab').addEventListener('click', function(e) {
 e.preventDefault();
 document.getElementById('calendarTab').classList.add('active');
