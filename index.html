@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>🇰🇷 Южная Корея — Наше свадебное путешествие</title>
+<title>🇰 Южная Корея — Наше свадебное путешествие</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -35,7 +35,7 @@ color: var(--text);
 padding: 12px;
 line-height: 1.6;
 scroll-behavior: smooth;
-padding-bottom: 60px; /* Отступ под кнопку сброса */
+padding-bottom: 60px;
 }
 header {
 text-align: center;
@@ -263,6 +263,26 @@ margin-bottom: 6px; padding: 4px 0;
 .event-city .event-icon { color: var(--event-city); }
 .event-time { font-weight: 600; font-size: 0.9em; color: var(--light-text); min-width: 70px; }
 .event-desc { color: var(--text); }
+.event-ticket-btn {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+margin-left: 8px;
+padding: 2px 8px;
+background: #fff3e0;
+color: #ef6c00;
+border: 1px solid #ef6c00;
+border-radius: 4px;
+text-decoration: none;
+font-size: 0.85em;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.event-ticket-btn:hover {
+background: #ffe0b2;
+transform: translateY(-1px);
+}
 .route-container { border-radius: 12px; overflow: hidden; margin: 16px 0; }
 .route-map { width: 100%; display: block; }
 #backToTop {
@@ -346,11 +366,11 @@ const hasHalf = rating % 1 >= 0.5;
 return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
 
-// === КАЛЕНДАРЬ СОБЫТИЙ ===
+// === КАЛЕНДАРЬ СОБЫТИЙ (добавлены билеты) ===
 const calendar = [
 { date: "28.07", events: [
-{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)" },
-{ type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)" }
+{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)", ticket: "bookingsfly/Moskwa-Jeju.pdf" },
+{ type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)", ticket: "bookingsfly/Moskwa-Jeju.pdf" }
 ]},
 { date: "29.07", events: [
 { type: "hotel", time: "17:55", desc: "🏨 Заселение: Seogwipo-si, Чеджудо" },
@@ -363,7 +383,7 @@ const calendar = [
 { type: "city", time: "весь день", desc: "🏙️ Изучение Чеджудо: Seongsan, Olle Trail" }
 ]},
 { date: "01.08", events: [
-{ type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)" },
+{ type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)", ticket: "bookingsfly/Jeju-Seul.pdf" },
 { type: "hotel", time: "18:00", desc: "🏨 Заселение: Toegye-ro Stay, Сеул" },
 { type: "city", time: "вечер", desc: "🏙️ Изучение Сеула, вечерняя прогулка" }
 ]},
@@ -430,7 +450,7 @@ const calendar = [
 ]},
 { date: "17.08", events: [
 { type: "hotel", time: "утро", desc: "🏨 Выселение из отеля" },
-{ type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)" }
+{ type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)", ticket: "bookingsfly/Seul-Moskwa.pdf" }
 ]}
 ];
 
@@ -652,12 +672,18 @@ return `<div class="calendar-container">
 <tbody>${calendar.map(day => `
 <tr>
 <td><strong>${day.date}</strong></td>
-<td>${day.events.map(ev => `
+<td>${day.events.map(ev => {
+let ticketBtn = '';
+if (ev.type === 'flight' && ev.ticket) {
+ticketBtn = `<a href="${ev.ticket}" target="_blank" class="event-ticket-btn">🎫 Билет</a>`;
+}
+return `
 <div class="event-item event-${ev.type}">
 <span class="event-icon">${ev.type === 'flight' ? '✈️' : ev.type === 'hotel' ? '🏨' : ev.type === 'car' ? '🚗' : '🏙️'}</span>
 <span class="event-time">${ev.time}</span>
-<span class="event-desc">${ev.desc}</span>
-</div>`).join('')}</td>
+<span class="event-desc">${ev.desc}${ticketBtn}</span>
+</div>`;
+}).join('')}</td>
 </tr>`).join('')}</tbody>
 </table>
 </div>`;
