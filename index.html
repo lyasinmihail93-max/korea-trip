@@ -352,6 +352,15 @@ font-size: 0.9em;
 color: var(--light-text);
 line-height: 1.6;
 }
+.cities-intro {
+background: white;
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 16px;
+text-align: center;
+color: var(--light-text);
+box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
+}
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
 .city-tab { min-width: 80px; padding: 10px 8px; }
@@ -375,7 +384,8 @@ h1 { font-size: 1.2em; }
 <button class="route-btn" id="documentsTab">📄 Документы</button>
 <button class="route-btn active" id="calendarTab">📅 Календарь событий</button>
 <button class="route-btn" id="mapTab">🗺️ Карта маршрута</button>
-<div class="city-tabs">
+<button class="route-btn" id="citiesTab">🏙️ Города</button>
+<div class="city-tabs" id="cityTabs" style="display: none;">
 <button class="city-tab" data-city="jeju">Чеджудо</button>
 <button class="city-tab" data-city="seoul">Сеул</button>
 <button class="city-tab" data-city="jeonju">Чонджу</button>
@@ -802,6 +812,15 @@ return `<div class="route-container">
 </div>`;
 }
 
+function renderCitiesIntro() {
+return `
+<div class="cities-intro">
+<h2 style="color: var(--primary); margin-bottom: 12px;">🏙️ Выберите город</h2>
+<p>Нажмите на город выше, чтобы посмотреть места, рестораны и бани</p>
+</div>
+`;
+}
+
 function renderCityBanner(cityKey, cityName) {
 return `<div class="city-banner" style="background-image: url('${cityKey}-banner.jpg')">
 <div class="city-name">${cityName}</div>
@@ -966,7 +985,8 @@ e.preventDefault();
 document.getElementById('documentsTab').classList.add('active');
 document.getElementById('calendarTab').classList.remove('active');
 document.getElementById('mapTab').classList.remove('active');
-document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+document.getElementById('citiesTab').classList.remove('active');
+document.getElementById('cityTabs').style.display = 'none';
 currentCity = null;
 currentView = 'documents';
 document.getElementById('content').innerHTML = renderDocuments();
@@ -978,7 +998,8 @@ e.preventDefault();
 document.getElementById('calendarTab').classList.add('active');
 document.getElementById('documentsTab').classList.remove('active');
 document.getElementById('mapTab').classList.remove('active');
-document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+document.getElementById('citiesTab').classList.remove('active');
+document.getElementById('cityTabs').style.display = 'none';
 currentCity = null; currentView = 'calendar';
 document.getElementById('content').innerHTML = renderCalendar(); updateProgress();
 });
@@ -988,14 +1009,29 @@ e.preventDefault();
 document.getElementById('mapTab').classList.add('active');
 document.getElementById('documentsTab').classList.remove('active');
 document.getElementById('calendarTab').classList.remove('active');
-document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+document.getElementById('citiesTab').classList.remove('active');
+document.getElementById('cityTabs').style.display = 'none';
 currentCity = null; currentView = 'map';
 document.getElementById('content').innerHTML = renderMap(); updateProgress();
+});
+
+document.getElementById('citiesTab').addEventListener('click', function(e) {
+e.preventDefault();
+document.getElementById('citiesTab').classList.add('active');
+document.getElementById('documentsTab').classList.remove('active');
+document.getElementById('calendarTab').classList.remove('active');
+document.getElementById('mapTab').classList.remove('active');
+document.getElementById('cityTabs').style.display = 'flex';
+document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+currentCity = null; currentView = 'cities';
+document.getElementById('content').innerHTML = renderCitiesIntro();
+updateProgress();
 });
 
 document.querySelectorAll('.city-tab').forEach(tab => {
 tab.addEventListener('click', function(e) {
 e.preventDefault();
+document.getElementById('citiesTab').classList.add('active');
 document.getElementById('calendarTab').classList.remove('active');
 document.getElementById('documentsTab').classList.remove('active');
 document.getElementById('mapTab').classList.remove('active');
