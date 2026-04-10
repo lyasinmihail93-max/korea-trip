@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>🇰 Южная Корея — Наше свадебное путешествие</title>
+<title>🇰🇷 Южная Корея — Наше свадебное путешествие</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -317,6 +317,62 @@ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 opacity: 1;
 background-color: #c0392b;
 }
+/* === СТИЛИ ДЛЯ ДОКУМЕНТОВ === */
+.document-link {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 16px;
+background: var(--button-bg-google);
+border: 2px solid var(--primary);
+border-radius: 8px;
+text-decoration: none;
+color: var(--text);
+transition: all 0.3s ease;
+}
+.document-link:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(42, 157, 143, 0.2);
+}
+.documents-container {
+background: white;
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 16px;
+box-shadow: 0 2px 6px rgba(42, 157, 143, 0.1);
+}
+.documents-container h2 {
+color: var(--primary);
+margin-bottom: 20px;
+font-size: 1.3em;
+}
+.documents-container h3 {
+color: var(--text);
+margin-bottom: 12px;
+font-size: 1.1em;
+}
+.documents-grid {
+display: grid;
+gap: 12px;
+margin-bottom: 24px;
+}
+.documents-info {
+margin-top: 24px;
+padding: 16px;
+background: var(--progress-light);
+border-radius: 8px;
+border-left: 4px solid var(--primary);
+}
+.documents-info-title {
+font-weight: 600;
+color: var(--primary);
+margin-bottom: 8px;
+}
+.documents-info-text {
+font-size: 0.9em;
+color: var(--light-text);
+line-height: 1.6;
+}
 @media (min-width: 768px) {
 body { max-width: 800px; margin: 0 auto; }
 .city-tab { min-width: 80px; padding: 10px 8px; }
@@ -333,10 +389,11 @@ h1 { font-size: 1.2em; }
 </head>
 <body>
 <header>
-<h1>Южная Корея — наше свадебное путешествие</h1>
+<h1>🇰🇷 Южная Корея — наше свадебное путешествие</h1>
 <p class="subtitle">Июль–август 2026</p>
 </header>
 <div class="progress-bar" id="progressBar"><span class="progress-text">Загрузка...</span></div>
+<button class="route-btn" id="documentsTab">📄 Документы</button>
 <button class="route-btn active" id="calendarTab">📅 Календарь событий</button>
 <button class="route-btn" id="mapTab">🗺️ Карта маршрута</button>
 <div class="city-tabs">
@@ -688,6 +745,57 @@ return `
 </table>
 </div>`;
 }
+
+function renderDocuments() {
+return `
+<div class="documents-container">
+<h2>📋 Необходимые документы для поездки</h2>
+
+<div style="margin-bottom: 24px;">
+<h3>✈️ Разрешения на въезд (K-ETA)</h3>
+<div class="documents-grid">
+<a href="documents/entry_permit_Kolesnikova.pdf" target="_blank" class="document-link">
+<span style="font-size: 1.5em;">👤</span>
+<div style="flex: 1;">
+<div style="font-weight: 600; margin-bottom: 4px;">Kolesnikova</div>
+<div style="font-size: 0.85em; color: var(--light-text);">Разрешение на въезд в РК</div>
+</div>
+<span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
+</a>
+
+<a href="documents/entry_permit_Liasin.pdf" target="_blank" class="document-link">
+<span style="font-size: 1.5em;">👤</span>
+<div style="flex: 1;">
+<div style="font-weight: 600; margin-bottom: 4px;">Liasin</div>
+<div style="font-size: 0.85em; color: var(--light-text);">Разрешение на въезд в РК</div>
+</div>
+<span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
+</a>
+</div>
+</div>
+
+<div>
+<h3>🏥 Страховые полиса</h3>
+<a href="documents/polis.pdf" target="_blank" class="document-link">
+<span style="font-size: 1.5em;">🏥</span>
+<div style="flex: 1;">
+<div style="font-weight: 600; margin-bottom: 4px;">Медицинская страховка</div>
+<div style="font-size: 0.85em; color: var(--light-text);">Полис на время поездки</div>
+</div>
+<span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
+</a>
+</div>
+
+<div class="documents-info">
+<div class="documents-info-title">💡 Важно:</div>
+<div class="documents-info-text">
+Распечатайте эти документы или сохраните их на телефоне. Разрешения K-ETA могут потребоваться при регистрации на рейс и при прохождении паспортного контроля в Южной Корее.
+</div>
+</div>
+</div>
+`;
+}
+
 function renderMap() {
 return `<div class="route-container">
 <img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
@@ -836,17 +944,30 @@ document.querySelectorAll('.btn-done').forEach(btn => { btn.addEventListener('cl
 document.addEventListener('DOMContentLoaded', function() {
 // Слушатель кнопки сброса
 document.getElementById('resetBtn').addEventListener('click', function() {
-  if (confirm('Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.')) {
-    localStorage.removeItem('visitedPlaces_korea2026');
-    localStorage.removeItem('visitedEats_korea2026');
-    localStorage.removeItem('visitedSpas_korea2026');
-    location.reload(); // Перезагружаем страницу
-  }
+if (confirm('Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.')) {
+localStorage.removeItem('visitedPlaces_korea2026');
+localStorage.removeItem('visitedEats_korea2026');
+localStorage.removeItem('visitedSpas_korea2026');
+location.reload(); // Перезагружаем страницу
+}
+});
+
+document.getElementById('documentsTab').addEventListener('click', function(e) {
+e.preventDefault();
+document.getElementById('documentsTab').classList.add('active');
+document.getElementById('calendarTab').classList.remove('active');
+document.getElementById('mapTab').classList.remove('active');
+document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+currentCity = null;
+currentView = 'documents';
+document.getElementById('content').innerHTML = renderDocuments();
+updateProgress();
 });
 
 document.getElementById('calendarTab').addEventListener('click', function(e) {
 e.preventDefault();
 document.getElementById('calendarTab').classList.add('active');
+document.getElementById('documentsTab').classList.remove('active');
 document.getElementById('mapTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 currentCity = null; currentView = 'calendar';
@@ -855,6 +976,7 @@ document.getElementById('content').innerHTML = renderCalendar(); updateProgress(
 document.getElementById('mapTab').addEventListener('click', function(e) {
 e.preventDefault();
 document.getElementById('mapTab').classList.add('active');
+document.getElementById('documentsTab').classList.remove('active');
 document.getElementById('calendarTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 currentCity = null; currentView = 'map';
@@ -864,6 +986,7 @@ document.querySelectorAll('.city-tab').forEach(tab => {
 tab.addEventListener('click', function(e) {
 e.preventDefault();
 document.getElementById('calendarTab').classList.remove('active');
+document.getElementById('documentsTab').classList.remove('active');
 document.getElementById('mapTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 this.classList.add('active'); currentCity = this.dataset.city; currentSubtab = 'places';
