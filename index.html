@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -263,26 +264,6 @@ margin-bottom: 6px; padding: 4px 0;
 .event-city .event-icon { color: var(--event-city); }
 .event-time { font-weight: 600; font-size: 0.9em; color: var(--light-text); min-width: 70px; }
 .event-desc { color: var(--text); }
-.event-ticket-btn {
-display: inline-flex;
-align-items: center;
-gap: 4px;
-margin-left: 8px;
-padding: 2px 8px;
-background: #fff3e0;
-color: #ef6c00;
-border: 1px solid #ef6c00;
-border-radius: 4px;
-text-decoration: none;
-font-size: 0.85em;
-font-weight: 600;
-cursor: pointer;
-transition: all 0.2s ease;
-}
-.event-ticket-btn:hover {
-background: #ffe0b2;
-transform: translateY(-1px);
-}
 .route-container { border-radius: 12px; overflow: hidden; margin: 16px 0; }
 .route-map { width: 100%; display: block; }
 #backToTop {
@@ -293,7 +274,6 @@ border: 2px solid white; font-size: 18px;
 cursor: pointer; display: none; z-index: 99;
 box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
-/* === СТИЛИ КНОПКИ СБРОСА === */
 .reset-container {
 text-align: center;
 margin-top: 40px;
@@ -317,7 +297,6 @@ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 opacity: 1;
 background-color: #c0392b;
 }
-/* === СТИЛИ ДЛЯ ДОКУМЕНТОВ === */
 .document-link {
 display: flex;
 align-items: center;
@@ -410,24 +389,21 @@ h1 { font-size: 1.2em; }
 <div id="content"></div>
 <button id="backToTop">↑</button>
 
-<!-- КНОПКА СБРОСА ПРОГРЕССА -->
 <div class="reset-container">
   <button id="resetBtn" class="reset-btn">🔄 Сбросить прогресс</button>
 </div>
 
 <script>
-// === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
 function generateStars(rating) {
 const full = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
 return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
 
-// === КАЛЕНДАРЬ СОБЫТИЙ (добавлены билеты) ===
 const calendar = [
 { date: "28.07", events: [
-{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)", ticket: "bookingsfly/Moskwa-Jeju.pdf" },
-{ type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)", ticket: "bookingsfly/Moskwa-Jeju.pdf" }
+{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)" },
+{ type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)" }
 ]},
 { date: "29.07", events: [
 { type: "hotel", time: "17:55", desc: "🏨 Заселение: Seogwipo-si, Чеджудо" },
@@ -440,7 +416,7 @@ const calendar = [
 { type: "city", time: "весь день", desc: "🏙️ Изучение Чеджудо: Seongsan, Olle Trail" }
 ]},
 { date: "01.08", events: [
-{ type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)", ticket: "bookingsfly/Jeju-Seul.pdf" },
+{ type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)" },
 { type: "hotel", time: "18:00", desc: "🏨 Заселение: Toegye-ro Stay, Сеул" },
 { type: "city", time: "вечер", desc: "🏙️ Изучение Сеула, вечерняя прогулка" }
 ]},
@@ -507,11 +483,31 @@ const calendar = [
 ]},
 { date: "17.08", events: [
 { type: "hotel", time: "утро", desc: "🏨 Выселение из отеля" },
-{ type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)", ticket: "bookingsfly/Seul-Moskwa.pdf" }
+{ type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)" }
 ]}
 ];
 
-// === ЖИЛЬЁ (ссылки исправлены на одно .pdf) ===
+const flightTickets = [
+{
+  name: "Москва → Чеджудо (через Пекин)",
+  date: "28.07.2026",
+  passengers: "Kolesnikova, Liasin",
+  file: "bookingsfly/Moskwa-Jeju.pdf"
+},
+{
+  name: "Чеджудо → Сеул",
+  date: "01.08.2026",
+  passengers: "Kolesnikova, Liasin",
+  file: "bookingsfly/Jeju-Seul.pdf"
+},
+{
+  name: "Сеул → Москва (через Шанхай)",
+  date: "17.08.2026",
+  passengers: "Kolesnikova, Liasin",
+  file: "bookingsfly/Seul-Moskwa.pdf"
+}
+];
+
 const accommodations = {
 jeju: [{
 name: "Seogwipo-si",
@@ -570,7 +566,6 @@ dates: "10–12.08"
 }]
 };
 
-// === МЕСТА (обновлены все ссылки) ===
 const places = [
 { city: "Чеджудо", dates: "29–31.07", items: [
 { name: "Hallasan", google: "https://maps.app.goo.gl/2g4Z3SQXXxvkGqpt6", naver: "https://naver.me/x1VEjedN", desc: "Потухший вулкан с самой высокой вершиной в Южной Корее. Прогулки только днём.", stars: 5, price: null },
@@ -640,7 +635,6 @@ const places = [
 ].sort((a, b) => (b.stars || 0) - (a.stars || 0)) }
 ];
 
-// === ЕДА (обновлены все ссылки) ===
 const eats = [
 { city: "Чеджудо", dates: "29–31.07", items: [
 { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: "https://naver.me/FwGwn3PL", desc: "Традиционное блюдо Чеджу. Свинину подают на деревянной доске.", dish: "Чёрная свинина, домбегоги", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.7 },
@@ -699,7 +693,6 @@ const eats = [
 ].sort((a, b) => b.stars - a.stars) }
 ];
 
-// === БАНИ (обновлены все ссылки + добавлена пропущенная) ===
 const spas = {
 seoul: [
 { name: "Samho Gungjeon Sauna", google: "https://maps.app.goo.gl/YAKin24Y17vFW1Hj7", naver: "https://naver.me/F058GGLT", desc: "Самый пафосный и красивый из всех чимчильбан.", price: "22 000 ₩ (~1 540 ₽)", stars: 4.8 },
@@ -713,7 +706,6 @@ sokcho: [
 ].sort((a, b) => b.stars - a.stars)
 };
 
-// === СОСТОЯНИЕ ===
 let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
 let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
 let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
@@ -721,7 +713,6 @@ let currentCity = null;
 let currentSubtab = 'places';
 let currentView = 'calendar';
 
-// === ФУНКЦИИ РЕНДЕРИНГА ===
 function renderCalendar() {
 return `<div class="calendar-container">
 <table class="calendar-table">
@@ -729,18 +720,12 @@ return `<div class="calendar-container">
 <tbody>${calendar.map(day => `
 <tr>
 <td><strong>${day.date}</strong></td>
-<td>${day.events.map(ev => {
-let ticketBtn = '';
-if (ev.type === 'flight' && ev.ticket) {
-ticketBtn = `<a href="${ev.ticket}" target="_blank" class="event-ticket-btn">🎫 Билет</a>`;
-}
-return `
+<td>${day.events.map(ev => `
 <div class="event-item event-${ev.type}">
 <span class="event-icon">${ev.type === 'flight' ? '✈️' : ev.type === 'hotel' ? '🏨' : ev.type === 'car' ? '🚗' : '🏙️'}</span>
 <span class="event-time">${ev.time}</span>
-<span class="event-desc">${ev.desc}${ticketBtn}</span>
-</div>`;
-}).join('')}</td>
+<span class="event-desc">${ev.desc}</span>
+</div>`).join('')}</td>
 </tr>`).join('')}</tbody>
 </table>
 </div>`;
@@ -752,7 +737,23 @@ return `
 <h2>📋 Необходимые документы для поездки</h2>
 
 <div style="margin-bottom: 24px;">
-<h3>✈️ Разрешения на въезд (K-ETA)</h3>
+<h3>✈️ Авиабилеты</h3>
+<div class="documents-grid">
+${flightTickets.map(ticket => `
+<a href="${ticket.file}" target="_blank" class="document-link">
+<span style="font-size: 1.5em;">✈️</span>
+<div style="flex: 1;">
+<div style="font-weight: 600; margin-bottom: 4px;">${ticket.name}</div>
+<div style="font-size: 0.85em; color: var(--light-text);">${ticket.date} | ${ticket.passengers}</div>
+</div>
+<span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
+</a>
+`).join('')}
+</div>
+</div>
+
+<div style="margin-bottom: 24px;">
+<h3>🛂 Разрешения на въезд (K-ETA)</h3>
 <div class="documents-grid">
 <a href="documents/entry_permit_Kolesnikova.pdf" target="_blank" class="document-link">
 <span style="font-size: 1.5em;">👤</span>
@@ -762,7 +763,6 @@ return `
 </div>
 <span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
 </a>
-
 <a href="documents/entry_permit_Liasin.pdf" target="_blank" class="document-link">
 <span style="font-size: 1.5em;">👤</span>
 <div style="flex: 1;">
@@ -789,7 +789,7 @@ return `
 <div class="documents-info">
 <div class="documents-info-title">💡 Важно:</div>
 <div class="documents-info-text">
-Распечатайте эти документы или сохраните их на телефоне. Разрешения K-ETA могут потребоваться при регистрации на рейс и при прохождении паспортного контроля в Южной Корее.
+Распечатайте эти документы или сохраните их на телефоне. Разрешения K-ETA и авиабилеты могут потребоваться при регистрации на рейс и при прохождении паспортного контроля в Южной Корее.
 </div>
 </div>
 </div>
@@ -801,11 +801,13 @@ return `<div class="route-container">
 <img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
 </div>`;
 }
+
 function renderCityBanner(cityKey, cityName) {
 return `<div class="city-banner" style="background-image: url('${cityKey}-banner.jpg')">
 <div class="city-name">${cityName}</div>
 </div>`;
 }
+
 function renderAccommodation(cityKey) {
 const accList = accommodations[cityKey];
 if (!accList || accList.length === 0) return '';
@@ -837,6 +839,7 @@ html += '</div>';
 html += '</div>';
 return html;
 }
+
 function renderCityProgress(cityKey) {
 const cityName = getCityDisplayName(cityKey);
 let total = 0, visited = 0;
@@ -849,6 +852,7 @@ if (spaKey && spas[spaKey]) { total += spas[spaKey].length; visited += spas[spaK
 const percent = total > 0 ? Math.round((visited / total) * 100) : 0;
 return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">✅ Посещено: ${visited} из ${total} (${percent}%)</span></div>`;
 }
+
 function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
 html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">Места</button>`;
@@ -857,13 +861,16 @@ if (hasSpa) html += `<button class="subtab ${currentSubtab === 'spas' ? 'active'
 html += `</div>`;
 return html;
 }
+
 function getCityDisplayName(cityKey) {
 const map = { jeju: 'Чеджудо', seoul: 'Сеул', jeonju: 'Чонджу', jindo: 'Чиндо', busan: 'Пусан', gyeongju: 'Кёнджу', andong: 'Андон', samcheok: 'Самчхок', sokcho: 'Сокчхо/Сораксан' };
 return map[cityKey] || cityKey;
 }
+
 function getSpaKeyForCity(cityKey) {
 if (cityKey === 'sokcho') return 'sokcho'; if (cityKey === 'busan') return 'busan'; if (cityKey === 'seoul') return 'seoul'; return null;
 }
+
 function renderItemsList(items, type, cityKey, cityName) {
 if (!items || items.length === 0) return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
 return `<div class="items-list">${items.map(item => {
@@ -881,6 +888,7 @@ ${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avg
 </div></div>`;
 }).join('')}</div>`;
 }
+
 function renderCityContent(cityKey, subtab) {
 const cityName = getCityDisplayName(cityKey);
 let html = renderCityBanner(cityKey, cityName);
@@ -893,6 +901,7 @@ else if (subtab === 'eats') { const items = eats.find(c => c.city === cityName)?
 else if (subtab === 'spas' && hasSpa) { const spaKey = getSpaKeyForCity(cityKey); const items = spas[spaKey] || []; html += renderItemsList(items, 'spa', cityKey, cityName); }
 return html;
 }
+
 function updateProgress() {
 const totalPlaces = places.reduce((sum, c) => sum + c.items.length, 0);
 const visitedCount = Object.values(visitedPlaces).filter(v => v).length;
@@ -907,6 +916,7 @@ const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
 progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount}/${totalPlaces} мест | ${visitedEatsCount}/${totalEats} ресторанов | ${visitedSpasCount}/${totalSpas} бань (${progressPercent}%)</span>`;
 }
+
 function handleDoneClick(btn) {
 const id = btn.dataset.id, type = btn.dataset.type;
 if (type === 'place') { visitedPlaces[id] = !visitedPlaces[id]; localStorage.setItem('visitedPlaces_korea2026', JSON.stringify(visitedPlaces)); }
@@ -920,6 +930,7 @@ else { item.classList.remove('visited'); btn.textContent = type === 'eat' ? '☑
 updateProgress();
 if (currentCity) { const cp = document.querySelector('.city-progress'); if (cp) cp.outerHTML = renderCityProgress(currentCity); }
 }
+
 function attachEventListeners() {
 document.querySelectorAll('.subtab').forEach(subtab => {
 subtab.addEventListener('click', function(e) {
@@ -940,15 +951,13 @@ container.innerHTML = banner + acc + progress + subtabs + newContent; attachEven
 document.querySelectorAll('.btn-done').forEach(btn => { btn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); handleDoneClick(this); }); });
 }
 
-// === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('DOMContentLoaded', function() {
-// Слушатель кнопки сброса
 document.getElementById('resetBtn').addEventListener('click', function() {
 if (confirm('Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.')) {
 localStorage.removeItem('visitedPlaces_korea2026');
 localStorage.removeItem('visitedEats_korea2026');
 localStorage.removeItem('visitedSpas_korea2026');
-location.reload(); // Перезагружаем страницу
+location.reload();
 }
 });
 
@@ -973,6 +982,7 @@ document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active')
 currentCity = null; currentView = 'calendar';
 document.getElementById('content').innerHTML = renderCalendar(); updateProgress();
 });
+
 document.getElementById('mapTab').addEventListener('click', function(e) {
 e.preventDefault();
 document.getElementById('mapTab').classList.add('active');
@@ -982,6 +992,7 @@ document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active')
 currentCity = null; currentView = 'map';
 document.getElementById('content').innerHTML = renderMap(); updateProgress();
 });
+
 document.querySelectorAll('.city-tab').forEach(tab => {
 tab.addEventListener('click', function(e) {
 e.preventDefault();
@@ -994,9 +1005,11 @@ document.getElementById('content').innerHTML = renderCityContent(currentCity, cu
 attachEventListeners(); updateProgress();
 });
 });
+
 document.getElementById('content').innerHTML = renderCalendar();
 updateProgress();
 });
+
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block'; else btn.style.display = 'none';
@@ -1005,3 +1018,4 @@ document.getElementById('backToTop').addEventListener('click', (e) => { e.preven
 </script>
 </body>
 </html>
+```
