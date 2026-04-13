@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>🇰 Honeymoon Trip</title>
+<title>🇰🇷 Honeymoon Trip</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -223,7 +223,7 @@ header { padding: 50px 12px; } h1 { font-size: 1.2em; }
 </div>
 
 <header>
-<h1 data-i18n="header_title">🇰 Южная Корея — наше свадебное путешествие</h1>
+<h1 data-i18n="header_title">🇰🇷 Южная Корея — наше свадебное путешествие</h1>
 <p class="subtitle" data-i18n="header_subtitle">Июль–август 2026</p>
 </header>
 
@@ -254,754 +254,1017 @@ header { padding: 50px 12px; } h1 { font-size: 1.2em; }
 </div>
 
 <script>
-// ==================== ПОЛНЫЕ ПЕРЕВОДЫ ИНТЕРФЕЙСА ====================
-const uiTranslations = {
-ru: {
-header_title: "🇰 Южная Корея — наше свадебное путешествие",
-header_subtitle: "Июль–август 2026",
-progress_loading: "Загрузка...",
-tab_documents: "📄 Документы",
-tab_calendar: "📅 Календарь событий",
-tab_map: "🗺️ Карта маршрута",
-tab_cities: "🏙️ Города",
-reset_button: "🔄 Сбросить прогресс",
-reset_confirm: "Вы уверены, что хотите сбросить весь прогресс?",
-city_jeju: "Чеджудо", city_seoul: "Сеул", city_jeonju: "Чонджу",
-city_jindo: "Чиндо", city_busan: "Пусан", city_gyeongju: "Кёнджу",
-city_andong: "Андон", city_samcheok: "Самчхок", city_sokcho: "Сокчхо",
-subtab_places: "Места", subtab_eats: "Еда", subtab_spas: "Бани",
-accommodation_title: "🏠 Жильё", booking_link: "📄 Бронь",
-google_maps: "🗺️ Google", naver_maps: "🚗 Naver",
-progress_visited: "✅ Посещено: {visited} из {total} ({percent}%)",
-progress_full: "✅ Посещено: {placesVisited}/{placesTotal} мест | {eatsVisited}/{eatsTotal} ресторанов | {spasVisited}/{spasTotal} бань ({percent}%)",
-btn_mark: "☑️ Отметить", btn_visited: "✅ Посещено", btn_tried: "✅ Попробовано",
-entry_fee: "Вход: ", avg_check: "💰 Средний чек: ", price_label: "💰 ",
-not_added: "Пока не добавлено",
-cities_intro_title: "🏙️ Выберите город",
-cities_intro_text: "Нажмите на город, чтобы посмотреть места и рестораны",
-docs_title: "📋 Необходимые документы", docs_flights: "✈️ Авиабилеты",
-docs_entry: "🛂 Разрешения на въезд (K-ETA)", docs_insurance: "🏥 Страховка",
-docs_entry_desc: "Разрешение на въезд", docs_insurance_desc: "Медицинская страховка",
-docs_important_title: "💡 Важно:",
-docs_important_text: "Распечатайте или сохраните документы. K-ETA и билеты могут потребоваться при регистрации и паспортном контроле.",
-calendar_date: "Дата", calendar_events: "События"
-},
-en: {
-header_title: "🇰 South Korea — Our Honeymoon",
-header_subtitle: "July–August 2026",
-progress_loading: "Loading...",
-tab_documents: "📄 Documents", tab_calendar: "📅 Event Calendar",
-tab_map: "🗺️ Route Map", tab_cities: "🏙️ Cities",
-reset_button: "🔄 Reset Progress",
-reset_confirm: "Are you sure you want to reset all progress?",
-city_jeju: "Jeju", city_seoul: "Seoul", city_jeonju: "Jeonju",
-city_jindo: "Jindo", city_busan: "Busan", city_gyeongju: "Gyeongju",
-city_andong: "Andong", city_samcheok: "Samcheok", city_sokcho: "Sokcho",
-subtab_places: "Places", subtab_eats: "Food", subtab_spas: "Spas",
-accommodation_title: "🏠 Accommodation", booking_link: "📄 Booking",
-google_maps: "🗺️ Google", naver_maps: "🚗 Naver",
-progress_visited: "✅ Visited: {visited} of {total} ({percent}%)",
-progress_full: "✅ Visited: {placesVisited}/{placesTotal} places | {eatsVisited}/{eatsTotal} restaurants | {spasVisited}/{spasTotal} spas ({percent}%)",
-btn_mark: "☑️ Mark", btn_visited: "✅ Visited", btn_tried: "✅ Tried",
-entry_fee: "Entry: ", avg_check: "💰 Avg. check: ", price_label: "💰 ",
-not_added: "Nothing added yet",
-cities_intro_title: "🏙️ Select a City",
-cities_intro_text: "Click on a city to see places and restaurants",
-docs_title: "📋 Required Documents", docs_flights: "✈️ Flight Tickets",
-docs_entry: "🛂 Entry Permits (K-ETA)", docs_insurance: "🏥 Insurance",
-docs_entry_desc: "Entry permit", docs_insurance_desc: "Travel insurance",
-docs_important_title: "💡 Important:",
-docs_important_text: "Print or save these documents. K-ETA and tickets may be required at check-in and passport control.",
-calendar_date: "Date", calendar_events: "Events"
-},
-de: {
-header_title: "🇰🇷 Südkorea — Unsere Hochzeitsreise",
-header_subtitle: "Juli–August 2026",
-progress_loading: "Wird geladen...",
-tab_documents: "📄 Dokumente", tab_calendar: "📅 Ereigniskalender",
-tab_map: "🗺️ Routenkarte", tab_cities: "🏙️ Städte",
-reset_button: "🔄 Fortschritt zurücksetzen",
-reset_confirm: "Sind Sie sicher, dass Sie den Fortschritt zurücksetzen möchten?",
-city_jeju: "Jeju", city_seoul: "Seoul", city_jeonju: "Jeonju",
-city_jindo: "Jindo", city_busan: "Busan", city_gyeongju: "Gyeongju",
-city_andong: "Andong", city_samcheok: "Samcheok", city_sokcho: "Sokcho",
-subtab_places: "Orte", subtab_eats: "Essen", subtab_spas: "Bäder",
-accommodation_title: "🏠 Unterkunft", booking_link: "📄 Buchung",
-google_maps: "🗺️ Google", naver_maps: "🚗 Naver",
-progress_visited: "✅ Besucht: {visited} von {total} ({percent}%)",
-progress_full: "✅ Besucht: {placesVisited}/{placesTotal} Orte | {eatsVisited}/{eatsTotal} Restaurants | {spasVisited}/{spasTotal} Bäder ({percent}%)",
-btn_mark: "☑️ Markieren", btn_visited: "✅ Besucht", btn_tried: "✅ Probiert",
-entry_fee: "Eintritt: ", avg_check: "💰 Ø Rechnung: ", price_label: "💰 ",
-not_added: "Noch nichts hinzugefügt",
-cities_intro_title: "🏙️ Stadt auswählen",
-cities_intro_text: "Klicken Sie auf eine Stadt, um Orte und Restaurants zu sehen",
-docs_title: "📋 Erforderliche Dokumente", docs_flights: "✈️ Flugtickets",
-docs_entry: "🛂 Einreisegenehmigungen (K-ETA)", docs_insurance: "🏥 Versicherung",
-docs_entry_desc: "Einreisegenehmigung", docs_insurance_desc: "Reiseversicherung",
-docs_important_title: "💡 Wichtig:",
-docs_important_text: "Drucken oder speichern Sie diese Dokumente. K-ETA und Tickets können beim Check-in erforderlich sein.",
-calendar_date: "Datum", calendar_events: "Ereignisse"
-},
-ko: {
-header_title: "🇰 대한민국 — 신혼여행",
-header_subtitle: "2026 년 7 월–8 월",
-progress_loading: "로딩 중...",
-tab_documents: "📄 서류", tab_calendar: "📅 일정 캘린더",
-tab_map: "🗺️ 여행 경로", tab_cities: "🏙️ 도시",
-reset_button: "🔄 초기화", reset_confirm: "정말 초기화하시겠습니까?",
-city_jeju: "제주도", city_seoul: "서울", city_jeonju: "전주",
-city_jindo: "진도", city_busan: "부산", city_gyeongju: "경주",
-city_andong: "안동", city_samcheok: "삼척", city_sokcho: "속초",
-subtab_places: "명소", subtab_eats: "음식점", subtab_spas: "찜질방",
-accommodation_title: "🏠 숙소", booking_link: "📄 예약서",
-google_maps: "🗺️ 구글맵", naver_maps: "🚗 네이버맵",
-progress_visited: "✅ 방문: {total} 중 {visited} ({percent}%)",
-progress_full: "✅ 방문: 명소 {placesTotal} 중 {placesVisited} | 식당 {eatsTotal} 중 {eatsVisited} | 찜질방 {spasTotal} 중 {spasVisited} ({percent}%)",
-btn_mark: "☑️ 체크", btn_visited: "✅ 방문함", btn_tried: "✅ 맛봄",
-entry_fee: "입장료: ", avg_check: "💰 평균금액: ", price_label: "💰 ",
-not_added: "아직 없음",
-cities_intro_title: "🏙️ 도시 선택",
-cities_intro_text: "도시를 클릭하여 명소와 음식점을 확인하세요",
-docs_title: "📋 필수 서류", docs_flights: "✈️ 항공권",
-docs_entry: "🛂 입국허가서 (K-ETA)", docs_insurance: "🏥 보험",
-docs_entry_desc: "입국 허가서", docs_insurance_desc: "여행자 보험",
-docs_important_title: "💡 중요:",
-docs_important_text: "서류를 인쇄하거나 저장하세요. K-ETA 와 항공권은 체크인과 입국심사 시 필요할 수 있습니다.",
-calendar_date: "날짜", calendar_events: "일정"
-}
-};
-
-// ==================== ПЕРЕВОДЫ КОНТЕНТА ====================
-const contentTranslations = {
-ru: {
-calendar: [
-{ date: "28.07", events: [
-{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)" },
-{ type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)" }
-]},
-{ date: "29.07", events: [
-{ type: "hotel", time: "17:55", desc: "🏨 Заселение: Seogwipo-si, Чеджудо" },
-{ type: "city", time: "вечер", desc: "🏙️ Изучение Чеджудо, отдых после перелёта" }
-]},
-{ date: "30.07", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Чеджудо: пляжи, гора Халласан" }
-]},
-{ date: "31.07", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Чеджудо: Сонгсан, тропа Olle" }
-]},
-{ date: "01.08", events: [
-{ type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)" },
-{ type: "hotel", time: "18:00", desc: "🏨 Заселение: Toegye-ro Stay, Сеул" },
-{ type: "city", time: "вечер", desc: "🏙️ Вечерняя прогулка по Сеулу" }
-]},
-{ date: "02.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сеул: Кёнбоккун, деревня Пукчхон" }
-]},
-{ date: "03.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сеул: шопинг, подготовка к выезду" }
-]},
-{ date: "04.08", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 Переезд: Сеул → Чонджу (~2.5 ч)" },
-{ type: "city", time: "11:30–14:00", desc: "🏙️ Чонджу: деревня ханоков, кимчи" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 Переезд: Чонджу → Чиндо (~1.5 ч)" },
-{ type: "hotel", time: "16:00", desc: "🏨 Заселение: Imhoe-myeon Guesthouse, Чиндо" }
-]},
-{ date: "05.08", events: [
-{ type: "city", time: "утро", desc: "🏙️ Чиндо: чудо-мост" },
-{ type: "car", time: "09:00–12:00", desc: "🚗 Переезд: Чиндо → Пусан (~3 ч)" },
-{ type: "hotel", time: "13:00", desc: "🏨 Заселение: O'guest in Haeundae, Пусан" },
-{ type: "city", time: "вечер", desc: "🏙️ Вечерняя прогулка у моря" }
-]},
-{ date: "06.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Пусан: Хэундэ, рынок Чагальчхи" }
-]},
-{ date: "07.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Пусан: деревня Камчхон, пляж Кваналли" }
-]},
-{ date: "08.08", events: [
-{ type: "car", time: "09:00–10:00", desc: "🚗 Переезд: Пусан → Кёнджу (~1 ч)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ Кёнджу: древняя столица Силла" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 Переезд: Кёнджу → Андон (~1.5 ч)" },
-{ type: "hotel", time: "16:00", desc: "🏨 Заселение: Haru The Guesthouse, Андон" }
-]},
-{ date: "09.08", events: [
-{ type: "car", time: "09:00–12:00", desc: "🚗 Переезд: Андон → Сокчхо (~3 ч)" },
-{ type: "hotel", time: "12:30", desc: "🏨 Заселение: Sokcho Summitbay, Сокчхо" },
-{ type: "city", time: "вечер", desc: "🏙️ Вечерняя прогулка по Сокчхо" }
-]},
-{ date: "10.08", events: [
-{ type: "car", time: "утро", desc: "🚗 Переезд: Сокчхо → Самчхок (~30 мин)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ Самчхок: океанский веломаршрут, парк" },
-{ type: "car", time: "14:00–14:30", desc: "🚗 Возврат: Самчхок → Сокчхо" },
-{ type: "city", time: "вечер", desc: "🏙️ Пляж, отдых" }
-]},
-{ date: "11.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сораксан: национальный парк, треккинг" }
-]},
-{ date: "12.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сокчхо: пляж, отдых, сувениры" }
-]},
-{ date: "13.08", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 Переезд: Сокчхо → Сеул (~2.5 ч)" },
-{ type: "hotel", time: "12:00", desc: "🏨 Заселение: Seoul DDJ STAY, Сеул" },
-{ type: "city", time: "вечер", desc: "🏙️ Финальные прогулки по Сеулу" }
-]},
-{ date: "14.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сеул: финальный шопинг" }
-]},
-{ date: "15.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сеул: финальный шопинг" }
-]},
-{ date: "16.08", events: [
-{ type: "city", time: "весь день", desc: "🏙️ Сеул: сборы" }
-]},
-{ date: "17.08", events: [
-{ type: "hotel", time: "утро", desc: "🏨 Выселение из отеля" },
-{ type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)" }
-]}
-],
-places: {
-"Чеджудо": [
-{ name: "Hallasan (한라산)", desc: "Потухший вулкан с самой высокой вершиной в Южной Корее (1950м). Прогулки только днём.", stars: 5, price: null },
-{ name: "Manjanggul Lava Tube", desc: "Длинная лавовая трубка: уникальные сталактиты и сталагмиты, летучие мыши", stars: 5, price: "2 000 ₩" },
-{ name: "Cheonjeyeon Waterfall", desc: "Трёхуровневый водопад с мостом Семонгё", stars: 4, price: "2 000 ₩" },
-{ name: "Hamdeok Beach", desc: "Пляж с белым песком и бирюзовой водой", stars: 4, price: null }
-],
-"Сеул": [
-{ name: "Everland", desc: "Популярный парк развлечений с аттракционами и зоопарком", stars: 5, price: "64 000 ₩" },
-{ name: "Lotte World", desc: "Семейный парк развлечений с водными горками", stars: 5, price: "59 000 ₩" },
-{ name: "N Seoul Tower", desc: "Башня 1980 года с панорамным видом на город", stars: 5, price: "12 500 ₩" },
-{ name: "Bukchon Hanok Village", desc: "Деревня с традиционными корейскими домами XIV века", stars: 5, price: null },
-{ name: "COEX Starfield Library", desc: "Самая красивая библиотека в Азии с 60 000 книг", stars: 5, price: null }
-],
-"Чонджу": [
-{ name: "Jeonju Hanok Village", desc: "Самая большая деревня ханоков в Корее (800+ домов)", stars: 5, price: null },
-{ name: "Jeonju Kimchi Museum", desc: "Музей кимчи с дегустацией", stars: 4, price: "3 000 ₩" }
-],
-"Чиндо": [
-{ name: "Ностальгия 1", desc: "Поселок, где жил и работал в 2019", stars: 5, price: null },
-{ name: "Ностальгия 2", desc: "Пристань, выходил в море", stars: 5, price: null }
-],
-"Пусан": [
-{ name: "Haedong Yonggungsa Temple", desc: "Храм на побережье среди скал", stars: 5, price: null },
-{ name: "Jagalchi Market", desc: "Крупнейший рыбный рынок в Азии", stars: 5, price: null },
-{ name: "Gamcheon Culture Village", desc: "Живописная деревня с разноцветными домами", stars: 4, price: "5 000 ₩" },
-{ name: "Haeundae Beach", desc: "Главный пляж Пусана", stars: 4, price: null }
-],
-"Кёнджу": [
-{ name: "Bulguksa Temple", desc: "Шедевр буддийской архитектуры VIII века, ЮНЕСКО", stars: 5, price: "6 000 ₩" },
-{ name: "Cheomseongdae", desc: "Древнейшая обсерватория в Восточной Азии (VII век)", stars: 5, price: null }
-],
-"Андон": [
-{ name: "Hahoe Folk Village", desc: "Традиционная деревня ханоков, ЮНЕСКО", stars: 5, price: "5 000 ₩" }
-],
-"Самчхок": [
-{ name: "Samcheok Ocean Rail Bike", desc: "Веломаршрут по побережью 5.4 км", stars: 4, price: "15 000 ₩" }
-],
-"Сокчхо": [
-{ name: "Seoraksan NP", desc: "Национальный парк Сораксан", stars: 5, price: null },
-{ name: "Ulsanbawi Peak", desc: "Скала с 800 ступенями, потрясающие виды", stars: 5, price: null }
-]
-},
-eats: {
-"Чеджудо": [
-{ name: "Jeju Podo Won Black Pig", desc: "Традиционная чёрная свинина Чеджу", avgCheck: "25 000 ₩", stars: 4.7 },
-{ name: "Yeondong Doldam Black Pork", desc: "Свинина на гриле", avgCheck: "22 000 ₩", stars: 4.6 }
-],
-"Сеул": [
-{ name: "Myeongdong Kyoja", desc: "Кальгуксу и манду с 50-летней историей", avgCheck: "12 000 ₩", stars: 4.6 },
-{ name: "Gwangjang Market", desc: "Уличные закуски от местных бабушек", avgCheck: "8 000 ₩", stars: 4.5 }
-],
-"Чонджу": [
-{ name: "Hankook Jib", desc: "Старейший ресторан пибимбапа (с 1952)", avgCheck: "12 000 ₩", stars: 4.7 }
-],
-"Пусан": [
-{ name: "Jagalchi Market", desc: "Свежие морепродукты", avgCheck: "35 000 ₩", stars: 4.5 }
-],
-"Кёнджу": [
-{ name: "Hwangnamppang", desc: "Легендарная выпечка с 1939 года", avgCheck: "2 000 ₩", stars: 4.8 }
-],
-"Андон": [
-{ name: "Andong Jjimdak", desc: "Курица с овощами и лапшой", avgCheck: "18 000 ₩", stars: 4.5 }
-],
-"Сокчхо": [
-{ name: "Cheonghodong Abai Village", desc: "Морепродукты от женщин-ныряльщиц", avgCheck: "35 000 ₩", stars: 4.9 }
-]
-}
-},
-en: {
-calendar: [
-{ date: "07.28", events: [
-{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Moscow (SVO) → Beijing (PEK)" },
-{ type: "flight", time: "07:25–14:30", desc: "✈️ Beijing (PEK) → Jeju (CJU)" }
-]},
-{ date: "07.29", events: [
-{ type: "hotel", time: "17:55", desc: "🏨 Check-in: Seogwipo-si, Jeju" },
-{ type: "city", time: "evening", desc: "🏙️ Exploring Jeju, rest after flight" }
-]},
-{ date: "07.30", events: [
-{ type: "city", time: "all day", desc: "🏙️ Jeju: beaches, Hallasan Mountain" }
-]},
-{ date: "07.31", events: [
-{ type: "city", time: "all day", desc: "🏙️ Jeju: Seongsan, Olle Trail" }
-]},
-{ date: "08.01", events: [
-{ type: "flight", time: "16:15–17:30", desc: "✈️ Jeju (CJU) → Seoul (GMP)" },
-{ type: "hotel", time: "18:00", desc: "🏨 Check-in: Toegye-ro Stay, Seoul" },
-{ type: "city", time: "evening", desc: "🏙️ Evening walk in Seoul" }
-]},
-{ date: "08.02", events: [
-{ type: "city", time: "all day", desc: "🏙️ Seoul: Gyeongbokgung, Bukchon" }
-]},
-{ date: "08.03", events: [
-{ type: "city", time: "all day", desc: "🏙️ Seoul: shopping, preparation" }
-]},
-{ date: "08.04", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Seoul → Jeonju (~2.5h)" },
-{ type: "city", time: "11:30–14:00", desc: "🏙️ Jeonju: Hanok Village, kimchi" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Jeonju → Jindo (~1.5h)" },
-{ type: "hotel", time: "16:00", desc: "🏨 Check-in: Imhoe-myeon Guesthouse, Jindo" }
-]},
-{ date: "08.05", events: [
-{ type: "city", time: "morning", desc: "🏙️ Jindo: Miracle Sea Road" },
-{ type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Jindo → Busan (~3h)" },
-{ type: "hotel", time: "13:00", desc: "🏨 Check-in: O'guest in Haeundae, Busan" },
-{ type: "city", time: "evening", desc: "🏙️ Evening walk by the sea" }
-]},
-{ date: "08.06", events: [
-{ type: "city", time: "all day", desc: "🏙️ Busan: Haeundae, Jagalchi Market" }
-]},
-{ date: "08.07", events: [
-{ type: "city", time: "all day", desc: "🏙️ Busan: Gamcheon, Gwangalli Beach" }
-]},
-{ date: "08.08", events: [
-{ type: "car", time: "09:00–10:00", desc: "🚗 Transfer: Busan → Gyeongju (~1h)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ Gyeongju: ancient Silla capital" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Gyeongju → Andong (~1.5h)" },
-{ type: "hotel", time: "16:00", desc: "🏨 Check-in: Haru The Guesthouse, Andong" }
-]},
-{ date: "08.09", events: [
-{ type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Andong → Sokcho (~3h)" },
-{ type: "hotel", time: "12:30", desc: "🏨 Check-in: Sokcho Summitbay, Sokcho" },
-{ type: "city", time: "evening", desc: "🏙️ Evening walk in Sokcho" }
-]},
-{ date: "08.10", events: [
-{ type: "car", time: "morning", desc: "🚗 Transfer: Sokcho → Samcheok (~30min)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ Samcheok: ocean rail bike, park" },
-{ type: "car", time: "14:00–14:30", desc: "🚗 Return: Samcheok → Sokcho" },
-{ type: "city", time: "evening", desc: "🏙️ Beach, rest" }
-]},
-{ date: "08.11", events: [
-{ type: "city", time: "all day", desc: "🏙️ Seoraksan: National Park, trekking" }
-]},
-{ date: "08.12", events: [
-{ type: "city", time: "all day", desc: "🏙️ Sokcho: beach, rest, souvenirs" }
-]},
-{ date: "08.13", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Sokcho → Seoul (~2.5h)" },
-{ type: "hotel", time: "12:00", desc: "🏨 Check-in: Seoul DDJ STAY, Seoul" },
-{ type: "city", time: "evening", desc: "🏙️ Final walks in Seoul" }
-]},
-{ date: "08.14", events: [
-{ type: "city", time: "all day", desc: "🏙️ Seoul: final shopping" }
-]},
-{ date: "08.15", events: [
-{ type: "city", time: "all day", desc: "🏙️ Seoul: final shopping" }
-]},
-{ date: "08.16", events: [
-{ type: "city", time: "all day", desc: "🏙️ Seoul: packing" }
-]},
-{ date: "08.17", events: [
-{ type: "hotel", time: "morning", desc: "🏨 Hotel check-out" },
-{ type: "flight", time: "08:55–19:30", desc: "✈️ Seoul (ICN) → Shanghai (PVG) → Moscow (SVO)" }
-]}
-],
-places: {
-"Jeju": [
-{ name: "Hallasan (한라산)", desc: "Dormant volcano with highest peak in South Korea (1950m). Daytime walks only.", stars: 5, price: null },
-{ name: "Manjanggul Lava Tube", desc: "Long lava tube: unique stalactites and stalagmites, bats", stars: 5, price: "2,000 ₩" },
-{ name: "Cheonjeyeon Waterfall", desc: "Three-tier waterfall with Seonimgyo Bridge", stars: 4, price: "2,000 ₩" },
-{ name: "Hamdeok Beach", desc: "Beach with white sand and turquoise water", stars: 4, price: null }
-],
-"Seoul": [
-{ name: "Everland", desc: "Popular amusement park with rides and zoo", stars: 5, price: "64,000 ₩" },
-{ name: "Lotte World", desc: "Family amusement park with water slides", stars: 5, price: "59,000 ₩" },
-{ name: "N Seoul Tower", desc: "1980 tower with panoramic city views", stars: 5, price: "12,500 ₩" },
-{ name: "Bukchon Hanok Village", desc: "Village with traditional Korean houses from 14th century", stars: 5, price: null },
-{ name: "COEX Starfield Library", desc: "Most beautiful library in Asia with 60,000 books", stars: 5, price: null }
-],
-"Jeonju": [
-{ name: "Jeonju Hanok Village", desc: "Largest hanok village in Korea (800+ houses)", stars: 5, price: null },
-{ name: "Jeonju Kimchi Museum", desc: "Kimchi museum with tasting", stars: 4, price: "3,000 ₩" }
-],
-"Jindo": [
-{ name: "Nostalgia 1", desc: "Village where lived and worked in 2019", stars: 5, price: null },
-{ name: "Nostalgia 2", desc: "Pier, went out to sea from here", stars: 5, price: null }
-],
-"Busan": [
-{ name: "Haedong Yonggungsa Temple", desc: "Temple on the coast among cliffs", stars: 5, price: null },
-{ name: "Jagalchi Market", desc: "Largest fish market in Asia", stars: 5, price: null },
-{ name: "Gamcheon Culture Village", desc: "Picturesque village with colorful houses", stars: 4, price: "5,000 ₩" },
-{ name: "Haeundae Beach", desc: "Main beach of Busan", stars: 4, price: null }
-],
-"Gyeongju": [
-{ name: "Bulguksa Temple", desc: "Masterpiece of 8th century Buddhist architecture, UNESCO", stars: 5, price: "6,000 ₩" },
-{ name: "Cheomseongdae", desc: "Oldest observatory in East Asia (7th century)", stars: 5, price: null }
-],
-"Andong": [
-{ name: "Hahoe Folk Village", desc: "Traditional hanok village, UNESCO", stars: 5, price: "5,000 ₩" }
-],
-"Samcheok": [
-{ name: "Samcheok Ocean Rail Bike", desc: "Bike route along the coast 5.4km", stars: 4, price: "15,000 ₩" }
-],
-"Sokcho": [
-{ name: "Seoraksan NP", desc: "Seoraksan National Park", stars: 5, price: null },
-{ name: "Ulsanbawi Peak", desc: "Rock with 800 steps, stunning views", stars: 5, price: null }
-]
-},
-eats: {
-"Jeju": [
-{ name: "Jeju Podo Won Black Pig", desc: "Traditional Jeju black pork", avgCheck: "25,000 ₩", stars: 4.7 },
-{ name: "Yeondong Doldam Black Pork", desc: "Grilled pork", avgCheck: "22,000 ₩", stars: 4.6 }
-],
-"Seoul": [
-{ name: "Myeongdong Kyoja", desc: "Kalgusu and mandu with 50-year history", avgCheck: "12,000 ₩", stars: 4.6 },
-{ name: "Gwangjang Market", desc: "Street food from local grandmas", avgCheck: "8,000 ₩", stars: 4.5 }
-],
-"Jeonju": [
-{ name: "Hankook Jib", desc: "Oldest bibimbap restaurant (since 1952)", avgCheck: "12,000 ₩", stars: 4.7 }
-],
-"Busan": [
-{ name: "Jagalchi Market", desc: "Fresh seafood", avgCheck: "35,000 ₩", stars: 4.5 }
-],
-"Gyeongju": [
-{ name: "Hwangnamppang", desc: "Legendary pastry since 1939", avgCheck: "2,000 ₩", stars: 4.8 }
-],
-"Andong": [
-{ name: "Andong Jjimdak", desc: "Chicken with vegetables and noodles", avgCheck: "18,000 ₩", stars: 4.5 }
-],
-"Sokcho": [
-{ name: "Cheonghodong Abai Village", desc: "Seafood from female divers", avgCheck: "35,000 ₩", stars: 4.9 }
-]
-}
-},
-de: {
-calendar: [
-{ date: "28.07", events: [
-{ type: "flight", time: "18:50–07:25+1", desc: "✈️ Moskau (SVO) → Peking (PEK)" },
-{ type: "flight", time: "07:25–14:30", desc: "✈️ Peking (PEK) → Jeju (CJU)" }
-]},
-{ date: "29.07", events: [
-{ type: "hotel", time: "17:55", desc: "🏨 Check-in: Seogwipo-si, Jeju" },
-{ type: "city", time: "Abend", desc: "🏙️ Jeju erkunden, Erholung nach dem Flug" }
-]},
-{ date: "30.07", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Jeju: Strände, Hallasan Berg" }
-]},
-{ date: "31.07", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Jeju: Seongsan, Olle Wanderweg" }
-]},
-{ date: "01.08", events: [
-{ type: "flight", time: "16:15–17:30", desc: "✈️ Jeju (CJU) → Seoul (GMP)" },
-{ type: "hotel", time: "18:00", desc: "🏨 Check-in: Toegye-ro Stay, Seoul" },
-{ type: "city", time: "Abend", desc: "🏙️ Abendspaziergang in Seoul" }
-]},
-{ date: "02.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: Gyeongbokgung, Bukchon" }
-]},
-{ date: "03.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: Shopping, Vorbereitung" }
-]},
-{ date: "04.08", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Seoul → Jeonju (~2.5h)" },
-{ type: "city", time: "11:30–14:00", desc: "🏙️ Jeonju: Hanok Dorf, Kimchi" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Jeonju → Jindo (~1.5h)" },
-{ type: "hotel", time: "16:00", desc: "🏨 Check-in: Imhoe-myeon Guesthouse, Jindo" }
-]},
-{ date: "05.08", events: [
-{ type: "city", time: "Morgen", desc: "🏙️ Jindo: Wunder-Meer-Straße" },
-{ type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Jindo → Busan (~3h)" },
-{ type: "hotel", time: "13:00", desc: "🏨 Check-in: O'guest in Haeundae, Busan" },
-{ type: "city", time: "Abend", desc: "🏙️ Abendspaziergang am Meer" }
-]},
-{ date: "06.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Busan: Haeundae, Jagalchi Markt" }
-]},
-{ date: "07.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Busan: Gamcheon, Gwangalli Strand" }
-]},
-{ date: "08.08", events: [
-{ type: "car", time: "09:00–10:00", desc: "🚗 Transfer: Busan → Gyeongju (~1h)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ Gyeongju: alte Silla Hauptstadt" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Gyeongju → Andong (~1.5h)" },
-{ type: "hotel", time: "16:00", desc: "🏨 Check-in: Haru The Guesthouse, Andong" }
-]},
-{ date: "09.08", events: [
-{ type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Andong → Sokcho (~3h)" },
-{ type: "hotel", time: "12:30", desc: "🏨 Check-in: Sokcho Summitbay, Sokcho" },
-{ type: "city", time: "Abend", desc: "🏙️ Abendspaziergang in Sokcho" }
-]},
-{ date: "10.08", events: [
-{ type: "car", time: "Morgen", desc: "🚗 Transfer: Sokcho → Samcheok (~30min)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ Samcheok: Ocean Rail Bike, Park" },
-{ type: "car", time: "14:00–14:30", desc: "🚗 Rückkehr: Samcheok → Sokcho" },
-{ type: "city", time: "Abend", desc: "🏙️ Strand, Erholung" }
-]},
-{ date: "11.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Seoraksan: Nationalpark, Trekking" }
-]},
-{ date: "12.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Sokcho: Strand, Erholung, Souvenirs" }
-]},
-{ date: "13.08", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Sokcho → Seoul (~2.5h)" },
-{ type: "hotel", time: "12:00", desc: "🏨 Check-in: Seoul DDJ STAY, Seoul" },
-{ type: "city", time: "Abend", desc: "🏙️ Letzte Spaziergänge in Seoul" }
-]},
-{ date: "14.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: letztes Shopping" }
-]},
-{ date: "15.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: letztes Shopping" }
-]},
-{ date: "16.08", events: [
-{ type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: Packen" }
-]},
-{ date: "17.08", events: [
-{ type: "hotel", time: "Morgen", desc: "🏨 Hotel Check-out" },
-{ type: "flight", time: "08:55–19:30", desc: "✈️ Seoul (ICN) → Shanghai (PVG) → Moskau (SVO)" }
-]}
-],
-places: {
-"Jeju": [
-{ name: "Hallasan (한라산)", desc: "Erlischener Vulkan mit höchstem Gipfel Südkoreas (1950m). Nur tagsüber Wanderungen.", stars: 5, price: null },
-{ name: "Manjanggul Lava Tube", desc: "Lange Lavaröhre: einzigartige Stalaktiten und Stalagmiten, Fledermäuse", stars: 5, price: "2.000 ₩" },
-{ name: "Cheonjeyeon Wasserfall", desc: "Dreistufiger Wasserfall mit Seonimgyo Brücke", stars: 4, price: "2.000 ₩" },
-{ name: "Hamdeok Beach", desc: "Strand mit weißem Sand und türkisem Wasser", stars: 4, price: null }
-],
-"Seoul": [
-{ name: "Everland", desc: "Beliebter Freizeitpark mit Fahrgeschäften und Zoo", stars: 5, price: "64.000 ₩" },
-{ name: "Lotte World", desc: "Familien-Freizeitpark mit Wasserrutschen", stars: 5, price: "59.000 ₩" },
-{ name: "N Seoul Tower", desc: "Turm von 1980 mit Panoramablick auf die Stadt", stars: 5, price: "12.500 ₩" },
-{ name: "Bukchon Hanok Village", desc: "Dorf mit traditionellen koreanischen Häusern aus dem 14. Jahrhundert", stars: 5, price: null },
-{ name: "COEX Starfield Library", desc: "Schönste Bibliothek Asiens mit 60.000 Büchern", stars: 5, price: null }
-],
-"Jeonju": [
-{ name: "Jeonju Hanok Village", desc: "Größtes Hanok-Dorf Koreas (800+ Häuser)", stars: 5, price: null },
-{ name: "Jeonju Kimchi Museum", desc: "Kimchi Museum mit Verkostung", stars: 4, price: "3.000 ₩" }
-],
-"Jindo": [
-{ name: "Nostalgie 1", desc: "Dorf, wo 2019 gelebt und gearbeitet", stars: 5, price: null },
-{ name: "Nostalgie 2", desc: "Pier, von hier aufs Meer hinaus", stars: 5, price: null }
-],
-"Busan": [
-{ name: "Haedong Yonggungsa Temple", desc: "Tempel an der Küste zwischen Klippen", stars: 5, price: null },
-{ name: "Jagalchi Market", desc: "Größter Fischmarkt Asiens", stars: 5, price: null },
-{ name: "Gamcheon Culture Village", desc: "Malerisches Dorf mit bunten Häusern", stars: 4, price: "5.000 ₩" },
-{ name: "Haeundae Beach", desc: "Hauptstrand von Busan", stars: 4, price: null }
-],
-"Gyeongju": [
-{ name: "Bulguksa Temple", desc: "Meisterwerk buddhistischer Architektur des 8. Jahrhunderts, UNESCO", stars: 5, price: "6.000 ₩" },
-{ name: "Cheomseongdae", desc: "Ältestes Observatorium Ostasiens (7. Jahrhundert)", stars: 5, price: null }
-],
-"Andong": [
-{ name: "Hahoe Folk Village", desc: "Traditionelles Hanok-Dorf, UNESCO", stars: 5, price: "5.000 ₩" }
-],
-"Samcheok": [
-{ name: "Samcheok Ocean Rail Bike", desc: "Fahrradroute entlang der Küste 5.4km", stars: 4, price: "15.000 ₩" }
-],
-"Sokcho": [
-{ name: "Seoraksan NP", desc: "Seoraksan Nationalpark", stars: 5, price: null },
-{ name: "Ulsanbawi Peak", desc: "Fels mit 800 Stufen, atemberaubende Ausblicke", stars: 5, price: null }
-]
-},
-eats: {
-"Jeju": [
-{ name: "Jeju Podo Won Black Pig", desc: "Traditionelles Jeju Schwarzschwein", avgCheck: "25.000 ₩", stars: 4.7 },
-{ name: "Yeondong Doldam Black Pork", desc: "Gegrilltes Schweinefleisch", avgCheck: "22.000 ₩", stars: 4.6 }
-],
-"Seoul": [
-{ name: "Myeongdong Kyoja", desc: "Kalgusu und Mandu mit 50-jähriger Geschichte", avgCheck: "12.000 ₩", stars: 4.6 },
-{ name: "Gwangjang Market", desc: "Straßenimbiss von lokalen Großmüttern", avgCheck: "8.000 ₩", stars: 4.5 }
-],
-"Jeonju": [
-{ name: "Hankook Jib", desc: "Ältestes Bibimbap Restaurant (seit 1952)", avgCheck: "12.000 ₩", stars: 4.7 }
-],
-"Busan": [
-{ name: "Jagalchi Market", desc: "Frische Meeresfrüchte", avgCheck: "35.000 ₩", stars: 4.5 }
-],
-"Gyeongju": [
-{ name: "Hwangnamppang", desc: "Legendäres Gebäck seit 1939", avgCheck: "2.000 ₩", stars: 4.8 }
-],
-"Andong": [
-{ name: "Andong Jjimdak", desc: "Huhn mit Gemüse und Nudeln", avgCheck: "18.000 ₩", stars: 4.5 }
-],
-"Sokcho": [
-{ name: "Cheonghodong Abai Village", desc: "Meeresfrüchte von Taucherinnen", avgCheck: "35.000 ₩", stars: 4.9 }
-]
-}
-},
-ko: {
-calendar: [
-{ date: "7 월 28 일", events: [
-{ type: "flight", time: "18:50–07:25+1", desc: "✈️ 모스크바 (SVO) → 베이징 (PEK)" },
-{ type: "flight", time: "07:25–14:30", desc: "✈️ 베이징 (PEK) → 제주도 (CJU)" }
-]},
-{ date: "7 월 29 일", events: [
-{ type: "hotel", time: "17:55", desc: "🏨 체크인: 서귀포시, 제주도" },
-{ type: "city", time: "저녁", desc: "🏙️ 제주도 탐방, 비행 후 휴식" }
-]},
-{ date: "7 월 30 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 제주도: 해변, 한라산" }
-]},
-{ date: "7 월 31 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 제주도: 성산, 올레길" }
-]},
-{ date: "8 월 1 일", events: [
-{ type: "flight", time: "16:15–17:30", desc: "✈️ 제주도 (CJU) → 서울 (GMP)" },
-{ type: "hotel", time: "18:00", desc: "🏨 체크인: 퇴계로 스테이, 서울" },
-{ type: "city", time: "저녁", desc: "🏙️ 서울 저녁 산책" }
-]},
-{ date: "8 월 2 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 서울: 경복궁, 북촌" }
-]},
-{ date: "8 월 3 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 서울: 쇼핑, 준비" }
-]},
-{ date: "8 월 4 일", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 이동: 서울 → 전주 (~2.5 시간)" },
-{ type: "city", time: "11:30–14:00", desc: "🏙️ 전주: 한옥마을, 김치" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 이동: 전주 → 진도 (~1.5 시간)" },
-{ type: "hotel", time: "16:00", desc: "🏨 체크인: 임회면 게스트하우스, 진도" }
-]},
-{ date: "8 월 5 일", events: [
-{ type: "city", time: "오전", desc: "🏙️ 진도: 신비의 바닷길" },
-{ type: "car", time: "09:00–12:00", desc: "🚗 이동: 진도 → 부산 (~3 시간)" },
-{ type: "hotel", time: "13:00", desc: "🏨 체크인: 해운대 O'guest, 부산" },
-{ type: "city", time: "저녁", desc: "🏙️ 바닷가 저녁 산책" }
-]},
-{ date: "8 월 6 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 부산: 해운대, 자갈치시장" }
-]},
-{ date: "8 월 7 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 부산: 감천문화마을, 광안리" }
-]},
-{ date: "8 월 8 일", events: [
-{ type: "car", time: "09:00–10:00", desc: "🚗 이동: 부산 → 경주 (~1 시간)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ 경주: 신라 고도" },
-{ type: "car", time: "14:00–15:30", desc: "🚗 이동: 경주 → 안동 (~1.5 시간)" },
-{ type: "hotel", time: "16:00", desc: "🏨 체크인: 하루 게스트하우스, 안동" }
-]},
-{ date: "8 월 9 일", events: [
-{ type: "car", time: "09:00–12:00", desc: "🚗 이동: 안동 → 속초 (~3 시간)" },
-{ type: "hotel", time: "12:30", desc: "🏨 체크인: 속초 섬밋베이, 속초" },
-{ type: "city", time: "저녁", desc: "🏙️ 속초 저녁 산책" }
-]},
-{ date: "8 월 10 일", events: [
-{ type: "car", time: "오전", desc: "🚗 이동: 속초 → 삼척 (~30 분)" },
-{ type: "city", time: "10:00–14:00", desc: "🏙️ 삼척: 해양레일바이크, 공원" },
-{ type: "car", time: "14:00–14:30", desc: "🚗 복귀: 삼척 → 속초" },
-{ type: "city", time: "저녁", desc: "🏙️ 해변, 휴식" }
-]},
-{ date: "8 월 11 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 설악산: 국립공원, 트레킹" }
-]},
-{ date: "8 월 12 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 속초: 해변, 휴식, 기념품" }
-]},
-{ date: "8 월 13 일", events: [
-{ type: "car", time: "09:00–11:30", desc: "🚗 이동: 속초 → 서울 (~2.5 시간)" },
-{ type: "hotel", time: "12:00", desc: "🏨 체크인: 서울 DDJ 스테이, 서울" },
-{ type: "city", time: "저녁", desc: "🏙️ 서울 마지막 산책" }
-]},
-{ date: "8 월 14 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 서울: 마지막 쇼핑" }
-]},
-{ date: "8 월 15 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 서울: 마지막 쇼핑" }
-]},
-{ date: "8 월 16 일", events: [
-{ type: "city", time: "종일", desc: "🏙️ 서울: 짐싸기" }
-]},
-{ date: "8 월 17 일", events: [
-{ type: "hotel", time: "오전", desc: "🏨 호텔 체크아웃" },
-{ type: "flight", time: "08:55–19:30", desc: "✈️ 서울 (ICN) → 상하이 (PVG) → 모스크바 (SVO)" }
-]}
-],
-places: {
-"제주도": [
-{ name: "한라산", desc: "한국 최고봉 (1950m) 의 휴화산. 낮에만 등반 가능", stars: 5, price: null },
-{ name: "만장굴", desc: "긴 용암동굴: 독특한 종유석과 석순, 박쥐", stars: 5, price: "2,000 원" },
-{ name: "천제연 폭포", desc: "선임교가 있는 3 단 폭포", stars: 4, price: "2,000 원" },
-{ name: "함덕해수욕장", desc: "흰 모래와 에메랄드빛 바다의 해변", stars: 4, price: null }
-],
-"서울": [
-{ name: "에버랜드", desc: "놀이기구와 동물원이 있는 인기 놀이공원", stars: 5, price: "64,000 원" },
-{ name: "롯데월드", desc: "워터슬라이드가 있는 패밀리 놀이공원", stars: 5, price: "59,000 원" },
-{ name: "N 서울타워", desc: "파노라마 시티뷰의 1980 년 타워", stars: 5, price: "12,500 원" },
-{ name: "북촌한옥마을", desc: "14 세기 전통 한옥이 있는 마을", stars: 5, price: null },
-{ name: "코엑스 스타필드도서관", desc: "6 만권의 책이 있는 아시아에서 가장 아름다운 도서관", stars: 5, price: null }
-],
-"전주": [
-{ name: "전주한옥마을", desc: "한국에서 가장 큰 한옥마을 (800+ 채)", stars: 5, price: null },
-{ name: "전주김치박물관", desc: "시식이 있는 김치박물관", stars: 4, price: "3,000 원" }
-],
-"진도": [
-{ name: "추억 1", desc: "2019 년에 살고 일했던 마을", stars: 5, price: null },
-{ name: "추억 2", desc: "부두, 여기서 바다로 나갔음", stars: 5, price: null }
-],
-"부산": [
-{ name: "해동용궁사", desc: "절벽 사이의 해변 사찰", stars: 5, price: null },
-{ name: "자갈치시장", desc: "아시아 최대 수산물시장", stars: 5, price: null },
-{ name: "감천문화마을", desc: "알록달록한 집들이 있는 그림같은 마을", stars: 4, price: "5,000 원" },
-{ name: "해운대해수욕장", desc: "부산의 대표 해변", stars: 4, price: null }
-],
-"경주": [
-{ name: "불국사", desc: "8 세기 불교건축의 걸작, 유네스코", stars: 5, price: "6,000 원" },
-{ name: "첨성대", desc: "동아시아에서 가장 오래된 천문대 (7 세기)", stars: 5, price: null }
-],
-"안동": [
-{ name: "하회마을", desc: "전통 한옥마을, 유네스코", stars: 5, price: "5,000 원" }
-],
-"삼척": [
-{ name: "삼척해양레일바이크", desc: "해안가 자전거코스 5.4km", stars: 4, price: "15,000 원" }
-],
-"속초": [
-{ name: "설악산국립공원", desc: "설악산국립공원", stars: 5, price: null },
-{ name: "울산바위", desc: "800 개 계단이 있는 바위, 멋진 전망", stars: 5, price: null }
-]
-},
-eats: {
-"제주도": [
-{ name: "제주포도원흑돼지", desc: "전통 제주흑돼지", avgCheck: "25,000 원", stars: 4.7 },
-{ name: "연동돌담흑돼지", desc: "구운 돼지고기", avgCheck: "22,000 원", stars: 4.6 }
-],
-"서울": [
-{ name: "명동교자", desc: "50 년 전통의 칼국수와 만두", avgCheck: "12,000 원", stars: 4.6 },
-{ name: "광장시장", desc: "지역 할머니들의 길거리음식", avgCheck: "8,000 원", stars: 4.5 }
-],
-"전주": [
-{ name: "한국집", desc: "1952 년부터의 가장 오래된 비빔밥집", avgCheck: "12,000 원", stars: 4.7 }
-],
-"부산": [
-{ name: "자갈치시장", desc: "신선한 해산물", avgCheck: "35,000 원", stars: 4.5 }
-],
-"경주": [
-{ name: "황남빵", desc: "1939 년부터의 전설적인 빵", avgCheck: "2,000 원", stars: 4.8 }
-],
-"안동": [
-{ name: "안동찜닭", desc: "야채와 당면이 있는 닭요리", avgCheck: "18,000 원", stars: 4.5 }
-],
-"속초": [
-{ name: "청호동아바이마을", desc: "해녀들이 잡은 해산물", avgCheck: "35,000 원", stars: 4.9 }
-]
-}
-}
+// ==================== ПОЛНЫЕ ДАННЫЕ И ПЕРЕВОДЫ ====================
+const DB = {
+  ru: {
+    ui: {
+      header_title: "🇰🇷 Южная Корея — наше свадебное путешествие",
+      header_subtitle: "Июль–август 2026",
+      progress_loading: "Загрузка...",
+      tab_documents: "📄 Документы",
+      tab_calendar: "📅 Календарь событий",
+      tab_map: "🗺️ Карта маршрута",
+      tab_cities: "🏙️ Города",
+      reset_button: "🔄 Сбросить прогресс",
+      reset_confirm: "Вы уверены, что хотите сбросить весь прогресс?",
+      city_jeju: "Чеджудо", city_seoul: "Сеул", city_jeonju: "Чонджу",
+      city_jindo: "Чиндо", city_busan: "Пусан", city_gyeongju: "Кёнджу",
+      city_andong: "Андон", city_samcheok: "Самчхок", city_sokcho: "Сокчхо",
+      subtab_places: "Места", subtab_eats: "Еда", subtab_spas: "Бани",
+      accommodation_title: "🏠 Жильё", booking_link: "📄 Бронь",
+      google_maps: "🗺️ Google", naver_maps: "🚗 Naver",
+      progress_visited: "✅ Посещено: {visited} из {total} ({percent}%)",
+      progress_full: "✅ Посещено: {placesVisited}/{placesTotal} мест | {eatsVisited}/{eatsTotal} ресторанов | {spasVisited}/{spasTotal} бань ({percent}%)",
+      btn_mark: "☑️ Отметить", btn_visited: "✅ Посещено", btn_tried: "✅ Попробовано",
+      entry_fee: "Вход: ", avg_check: "💰 Средний чек: ", price_label: "💰 ",
+      not_added: "Пока не добавлено",
+      cities_intro_title: "🏙️ Выберите город",
+      cities_intro_text: "Нажмите на город, чтобы посмотреть места и рестораны",
+      docs_title: "📋 Необходимые документы",
+      docs_flights: "✈️ Авиабилеты",
+      docs_entry: "🛂 Разрешения на въезд (K-ETA)",
+      docs_insurance: "🏥 Страховка",
+      docs_entry_desc: "Разрешение на въезд",
+      docs_insurance_desc: "Медицинская страховка",
+      docs_important_title: "💡 Важно:",
+      docs_important_text: "Распечатайте или сохраните документы. K-ETA и билеты могут потребоваться при регистрации и паспортном контроле.",
+      calendar_date: "Дата", calendar_events: "События"
+    },
+    calendar: [
+      { date: "28.07", events: [
+        { type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)" },
+        { type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)" }
+      ]},
+      { date: "29.07", events: [
+        { type: "hotel", time: "17:55", desc: "🏨 Заселение: Seogwipo-si, Чеджудо" },
+        { type: "city", time: "вечер", desc: "🏙️ Изучение Чеджудо, отдых после перелёта" }
+      ]},
+      { date: "30.07", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Чеджудо: пляжи, Hallasan" }
+      ]},
+      { date: "31.07", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Чеджудо: Seongsan, Olle Trail" }
+      ]},
+      { date: "01.08", events: [
+        { type: "flight", time: "16:15–17:30", desc: "✈️ Чеджудо (CJU) → Сеул (GMP)" },
+        { type: "hotel", time: "18:00", desc: "🏨 Заселение: Toegye-ro Stay, Сеул" },
+        { type: "city", time: "вечер", desc: "🏙️ Вечерняя прогулка по Сеулу" }
+      ]},
+      { date: "02.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сеул: Gyeongbokgung, Bukchon" }
+      ]},
+      { date: "03.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сеул: шопинг, подготовка к выезду" }
+      ]},
+      { date: "04.08", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 Переезд: Сеул → Чонджу (~2.5 ч)" },
+        { type: "city", time: "11:30–14:00", desc: "🏙️ Чонджу: деревня ханоков, кимчи" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 Переезд: Чонджу → Чиндо (~1.5 ч)" },
+        { type: "hotel", time: "16:00", desc: "🏨 Заселение: Imhoe-myeon Guesthouse, Чиндо" }
+      ]},
+      { date: "05.08", events: [
+        { type: "city", time: "утро", desc: "🏙️ Чиндо: мост чуда" },
+        { type: "car", time: "09:00–12:00", desc: "🚗 Переезд: Чиндо → Пусан (~3 ч)" },
+        { type: "hotel", time: "13:00", desc: "🏨 Заселение: O'guest in Haeundae, Пусан" },
+        { type: "city", time: "вечер", desc: "🏙️ Вечерняя прогулка у моря" }
+      ]},
+      { date: "06.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Пусан: Хэундэ, рынок Чагальчхи" }
+      ]},
+      { date: "07.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Пусан: Gamcheon, Гваналли" }
+      ]},
+      { date: "08.08", events: [
+        { type: "car", time: "09:00–10:00", desc: "🚗 Переезд: Пусан → Кёнджу (~1 ч)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ Кёнджу: древняя столица Силла" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 Переезд: Кёнджу → Андон (~1.5 ч)" },
+        { type: "hotel", time: "16:00", desc: "🏨 Заселение: Haru The Guesthouse, Андон" }
+      ]},
+      { date: "09.08", events: [
+        { type: "car", time: "09:00–12:00", desc: "🚗 Переезд: Андон → Сокчхо (~3 ч)" },
+        { type: "hotel", time: "12:30", desc: "🏨 Заселение: Sokcho Summitbay, Сокчхо" },
+        { type: "city", time: "вечер", desc: "🏙️ Вечерняя прогулка по Сокчхо" }
+      ]},
+      { date: "10.08", events: [
+        { type: "car", time: "утро", desc: "🚗 Переезд: Сокчхо → Самчхок (~30 мин)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ Самчхок: океанский веломаршрут, парк" },
+        { type: "car", time: "14:00–14:30", desc: "🚗 Возврат: Самчхок → Сокчхо" },
+        { type: "city", time: "вечер", desc: "🏙️ Пляж, отдых" }
+      ]},
+      { date: "11.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сораксан: национальный парк, треккинг" }
+      ]},
+      { date: "12.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сокчхо: пляж, отдых, сувениры" }
+      ]},
+      { date: "13.08", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 Переезд: Сокчхо → Сеул (~2.5 ч)" },
+        { type: "hotel", time: "12:00", desc: "🏨 Заселение: Seoul DDJ STAY, Сеул" },
+        { type: "city", time: "вечер", desc: "🏙️ Финальные прогулки по Сеулу" }
+      ]},
+      { date: "14.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сеул: финальный шопинг" }
+      ]},
+      { date: "15.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сеул: финальный шопинг" }
+      ]},
+      { date: "16.08", events: [
+        { type: "city", time: "весь день", desc: "🏙️ Сеул: сборы" }
+      ]},
+      { date: "17.08", events: [
+        { type: "hotel", time: "утро", desc: "🏨 Выселение из отеля" },
+        { type: "flight", time: "08:55–19:30", desc: "✈️ Сеул (ICN) → Шанхай (PVG) → Москва (SVO)" }
+      ]}
+    ],
+    places: {
+      "Чеджудо": [
+        { name: "Hallasan", google: "https://maps.app.goo.gl/2g4Z3SQXXxvkGqpt6", naver: "https://naver.me/x1VEjedN", desc: "Потухший вулкан с самой высокой вершиной в Южной Корее. Прогулки только днём.", stars: 5, price: null },
+        { name: "Manjanggul Lava Tube", google: "https://maps.app.goo.gl/o2rre6nCiMuu9bta6", naver: "https://naver.me/5hoZPHcQ", desc: "Длинная лавовая трубка: уникальные сталактиты и сталагмиты, летучие мыши и насекомые.", stars: 5, price: "2 000 ₩ (~140 ₽)" },
+        { name: "Cheonjeyeon Waterfall", google: "https://maps.app.goo.gl/SYALg4ejWNE7kyyg7", naver: "https://naver.me/GlRYEkz9", desc: "Водопад.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
+        { name: "Hamdeok Beach", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: "https://naver.me/xoGtMsWM", desc: "Пляж.", stars: 4, price: null }
+      ],
+      "Сеул": [
+        { name: "Everland", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: "https://naver.me/xll3weKa", desc: "Популярный загородный парк развлечений с аттракционами, представлениями, магазинами, ресторанами и зоопарком.", stars: 5, price: "64 000 ₩ (~4 480 ₽)" },
+        { name: "Lotte World", google: "https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6", naver: "https://naver.me/xsZ4dzKC", desc: "Семейный парк развлечений с аттракционами, водными горками и выставками морских животных.", stars: 5, price: "59 000 ₩ (~4 130 ₽)" },
+        { name: "N Seoul Tower", google: "https://maps.app.goo.gl/GtR1ecNoH3p4yyou5", naver: "https://naver.me/xJcvx9hE", desc: "Всемирно известная башня 1980 года с панорамным видом на город и вращающимся рестораном.", stars: 5, price: "12 500 ₩ (~875 ₽)" },
+        { name: "Bukchon Hanok Village", google: "https://maps.app.goo.gl/uRax1hojgvW4fZMk9", naver: "https://naver.me/xUZo27qo", desc: "Деревня с узкими улицами и отреставрированными домами в традиционном корейском стиле, построенная в XIV веке.", stars: 5, price: null },
+        { name: "COEX Mall & Starfield Library", google: "https://maps.app.goo.gl/hjVu7uvYHjMue8z96", naver: "https://naver.me/FgEz3XAz", desc: "Самая красивая библиотека в Азии — двухэтажный зал с 60 000 книг. Эффект 'Интерстеллар'. Вход свободный.", stars: 5, price: null },
+        { name: "Gwangjang Market", google: "https://maps.app.goo.gl/RWtgP9ievju5Y2w66", naver: "https://naver.me/GvWrQ6Y3", desc: "Оживлённый торговый район с широким выбором традиционных продуктов питания, одежды и сувениров.", stars: 4, price: null },
+        { name: "Торговый квартал Мёндон", google: "https://maps.app.goo.gl/wHsZoFKPSbwLhS1K6", naver: "https://naver.me/5AuFlzLZ", desc: "Центральная торговая улица Сеула. Магазины средней и высокой ценовой категории, международные и корейские косметические бренды.", stars: 4, price: null },
+        { name: "Набережная Чхонгечхон", google: "https://maps.app.goo.gl/Kw4HkgcjmcDXCw9R9", naver: "https://naver.me/GArNt9nn", desc: "Ручей, протекающий по центру города. После реконструкции 2005 года — общественное пространство для отдыха и прогулок.", stars: 4, price: null },
+        { name: "Myeongdong Cathedral", google: "https://maps.app.goo.gl/x8ML1EEn6abLbs1r5", naver: "https://naver.me/5p0OX1vZ", desc: "Кирпичный католический собор XIX века в готическом стиле с 45-метровой колокольней.", stars: 4, price: null },
+        { name: "Hongdae Street", google: "https://maps.app.goo.gl/71yXZLrTD7XWW3fM7", naver: "https://naver.me/GdTbGq8i", desc: "Яркие вывески, стрит-фуд, Wall of Love, 3D Trick Art Museum — популярные фото-зоны.", stars: 4, price: null },
+        { name: "Ikseon-dong Hanok Village", google: "https://maps.app.goo.gl/K88C9Y7tbjpGkh6a8", naver: "https://naver.me/F6Q4uabg", desc: "Деревня традиционных корейских домов в столичном округе Чонногу.", stars: 4, price: null },
+        { name: "Dongdaemun Design Plaza (DDP)", google: "https://maps.app.goo.gl/2Nmqfgk5k6stmNh48", naver: "https://naver.me/GahQJuwF", desc: "Футуристический архитектурный комплекс с рынком дизайнерских изделий и еды.", stars: 4, price: null },
+        { name: "Banpo Bridge Moonlight Rainbow Fountain", google: "https://maps.app.goo.gl/c2hBBuqvvoUy1m42A", naver: "https://naver.me/xpjDITcq", desc: "Мост с вечерним световым шоу-радугой. Фонтан работает с апреля по октябрь, шоу 20 минут.", stars: 4, price: null },
+        { name: "Gangnam Station Area", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: "https://naver.me/xqbGFAkK", desc: "Локация 'Gangnam Style'. Памятник Psycho, стильные бары и лофты Пхунтхондона.", stars: 4, price: null },
+        { name: "Каннамгу", google: "https://maps.app.goo.gl/FaedjLeqr14VVUdh9", naver: "https://naver.me/Ge78tAeG", desc: "Современный район с небоскрёбами, дизайнерскими магазинами, ночными клубами, элитными ресторанами и храмом Понынса VIII века.", stars: 4, price: null },
+        { name: "Ewha Womans University", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: "https://naver.me/FM9hSiAo", desc: "Негосударственный женский университет в центре Сеула.", stars: 3, price: null }
+      ],
+      "Чонджу": [
+        { name: "Jeonju Hanok Village", google: "https://maps.app.goo.gl/povG1N1i8TUQuYsy5", naver: "https://naver.me/GfrZEa2e", desc: "Самая большая деревня ханоков в Корее (800+ традиционных домов). Идеально для фото в ханбоке.", stars: 5, price: null },
+        { name: "Jeonju Kimchi Museum", google: "https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A", naver: "https://naver.me/GmpaAFlf", desc: "Музей кимчи — история главного корейского блюда и дегустация разных видов.", stars: 4, price: "3 000 ₩ (~210 ₽)" },
+        { name: "Jeonju-si (общая)", google: "https://maps.app.goo.gl/k6GTZwhr2y89W8E9A", naver: "https://naver.me/Fns6FnNi", desc: "Гастрономическая столица Кореи. Также стоит посетить галерею каллиграфии.", stars: 4, price: null }
+      ],
+      "Чиндо": [
+        { name: "Ностальгия 1", google: "https://maps.app.goo.gl/vY8APxRjHjM1cLu86", naver: "https://naver.me/5mveAhuB", desc: "Поселок. Место, где жил и работал 2 месяца в 2019 году.", stars: 5, price: null },
+        { name: "Ностальгия 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: "https://naver.me/GrgAEjCJ", desc: "Пристань. Место, где жил и работал 2 месяца в 2019 году. Выходил отсюда в море.", stars: 5, price: null },
+        { name: "Ностальгия 3", google: "https://maps.app.goo.gl/8FnignXcCoL7sZD9A", naver: "https://naver.me/FvTeBHmH", desc: "Место, куда я ходил купаться после работы или в выходные дни в 2019 году.", stars: 5, price: null }
+      ],
+      "Пусан": [
+        { name: "Haedong Yonggungsa Temple", google: "https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7", naver: "https://naver.me/Gi0UPzKo", desc: "Храм на побережье Восточного моря среди скал. Считается, что здесь исполняются желания.", stars: 5, price: null },
+        { name: "Jagalchi Market (Рынок Чагальчхи)", google: "https://maps.app.goo.gl/hzqzbADXyNq1w54U9", naver: "https://naver.me/xaTswx6K", desc: "Крупнейший рыбный рынок в Азии. Свежие морепродукты: морские огурцы, живые осьминоги, морские ушки.", stars: 5, price: null },
+        { name: "Gamcheon Culture Village", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: "https://naver.me/FwGwzrmu", desc: "Живописная деревня с разноцветными домами, настенными росписями, магазинами и кафе.", stars: 4, price: "5 000 ₩ (~350 ₽)" },
+        { name: "Haeundae Beach", google: "https://maps.app.goo.gl/oHpFrAyibsCshKCr8", naver: "https://naver.me/xy72cIw2", desc: "Главный пляж Пусана. Прогулки, фото, уличный стритфуд и вечерняя атмосфера с музыкой.", stars: 4, price: null },
+        { name: "Gwangalli Beach", google: "https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9", naver: "https://naver.me/xwo2SViv", desc: "Популярный изогнутый пляж с золотистым песком, соломенными зонтиками и видом на мост Кванан.", stars: 4, price: null },
+        { name: "Haeundae Blueline Park - Cheongsapo", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: "https://naver.me/xG0nM60D", desc: "Парк протяжённостью 4,8 км вдоль скалистого побережья. Двухуровневый маршрут: внизу Beach Train, сверху Sky Capsule — разноцветные кабинки.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" },
+        { name: "Ahopsan Forest", google: "https://maps.app.goo.gl/GcdrV3QAfdac3GJ88", naver: "https://naver.me/GRDv75wV", desc: "Королевский бамбуковый лес. Давным-давно сюда привезли бамбуковые ростки из Китая для императорской знати. Атмосфера как в дорамах.", stars: 4, price: null },
+        { name: "Dadaepo Beach", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: "https://naver.me/xEXgzP4q", desc: "Морской пляж. Мелкий.", stars: 3, price: null }
+      ],
+      "Кёнджу": [
+        { name: "Bulguksa Temple", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: "https://naver.me/IFEwRXi9", desc: "Шедевр буддийской архитектуры VIII века, объект ЮНЕСКО. Каменные пагоды Сеокгап и Дабоп.", stars: 5, price: "6 000 ₩ (~420 ₽)" },
+        { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: "https://naver.me/xhPsNLNy", desc: "Древнейшая обсерватория в Восточной Азии (VII век). Построена во времена королевы Сондок.", stars: 5, price: null },
+        { name: "Grand Tumuli Park / King Namwon Tomb", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: "https://naver.me/xTy7kMTD", desc: "Парк с королевскими курганами эпохи Силла. Золотые короны и сокровища.", stars: 4, price: "2 000 ₩ (~140 ₽)" },
+        { name: "Woljeongsa Park", google: "https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7", naver: "https://naver.me/GKImFaY4", desc: "Парк с курганами среди листопада. Живописное место с древними гробницами и прудом.", stars: 4, price: null },
+        { name: "Gyeongju-si (общая)", google: "https://maps.app.goo.gl/nd5b6durVxFGzUVD8", naver: "https://naver.me/FFqw0uRe", desc: "Древняя столица Силла. Музей под открытым небом с тысячелетней историей.", stars: 4, price: null }
+      ],
+      "Андон": [
+        { name: "Hahoe Folk Village", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: "https://naver.me/58qh7AY3", desc: "Традиционная деревня ханоков, объект ЮНЕСКО. Родовое поместье клана Рю с 600-летней историей.", stars: 5, price: "5 000 ₩ (~350 ₽)" },
+        { name: "Andong-si (общая)", google: "https://maps.app.goo.gl/9ZziEa6FFSQTNmqT7", naver: "https://naver.me/xF4QJRQ9", desc: "Центр конфуцианства. Стоит попробовать андонский чонгаджи — рыба, приготовленная особым способом.", stars: 4, price: null }
+      ],
+      "Самчхок": [
+        { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: "https://naver.me/FJOBtxc0", desc: "Единственный в стране маршрут для катания на велосипеде по побережью Восточного моря. Длина 5,4 км, туннель со световыми шоу, сосны Gomsol.", stars: 4, price: "15 000 ₩ (~1 050 ₽)" },
+        { name: "Haesindang Park", google: "https://maps.app.goo.gl/27gyJFhHv6CiuDSz6", naver: "https://naver.me/5YoneVdm", desc: "Уникальный парк с деревянными скульптурами на тему плодородия. Известен как 'парк пенисов'. Живописное место на побережье.", stars: 4, price: "3 000 ₩ (~210 ₽)" }
+      ],
+      "Сокчхо": [
+        { name: "Seoraksan NP Entrance (Seorak-dong)", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: "https://naver.me/x2Y5wT9x", desc: "Главный вход в национальный парк. Начало основных маршрутов.", stars: 5, price: null },
+        { name: "Ulsanbawi Peak", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: "https://naver.me/xeFH6KDJ", desc: "Восхождение на знаменитую скалу с 800 ступенями. Потрясающие виды на горы и море.", stars: 5, price: null },
+        { name: "Seoraksan Cable Car", google: "https://maps.app.goo.gl/4Pnke77DDcjMynSq8", naver: "https://naver.me/GahLjwl8", desc: "Канатная дорога с панорамными видами. Поднимает на высоту 700 метров.", stars: 4, price: "12 500 ₩ (~875 ₽)" },
+        { name: "Sinheungsa Temple", google: "https://maps.app.goo.gl/4eUe1KpCvvLRNebB6", naver: "https://naver.me/GRDv7pxG", desc: "Древний буддийский храм с подвесным мостом. Одна из старейших обителей в парке.", stars: 4, price: null },
+        { name: "Cheonjin Beach Entrance", google: "https://maps.app.goo.gl/6KptXjrCJmS8jQYM6", naver: "https://naver.me/xllOJrmi", desc: "Пляж.", stars: 4, price: null }
+      ]
+    },
+    eats: {
+      "Чеджудо": [
+        { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: "https://naver.me/FwGwn3PL", desc: "Традиционное блюдо Чеджу. Свинину подают на деревянной доске.", dish: "Чёрная свинина, домбегоги", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.7 },
+        { name: "Yeondong Doldam Black Pork", google: "https://maps.app.goo.gl/byomKKUr2QdVomAW9", naver: "https://naver.me/xHEb2Uwx", desc: "Фирменное блюдо острова! Нежнейшая свинина, приготовленная на гриле.", dish: "Чёрная свинина Чеджу", avgCheck: "22 000 ₩ (1 540 ₽)", stars: 4.6 },
+        { name: "Hamdeok Beach Seafood Restaurants", google: "https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26", naver: "https://naver.me/F058KNB5", desc: "Рестораны у пляжа Хамдок. Свежие морепродукты от хэнё.", dish: "Уни, чонбок", avgCheck: "30 000 ₩ (2 100 ₽)", stars: 4.5 },
+        { name: "Gozip Dol Wooluck", google: "https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A", naver: "https://naver.me/GqfHBhSX", desc: "Свежие морепродукты с видом на море. Популярное место с двумя локациями.", dish: "Морепродукты в каменном горшке", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
+        { name: "Samseonghyeol Seafood Hot Pot", google: "https://maps.app.goo.gl/XbrfPUPWLo8t5RPu5", naver: "https://naver.me/xucpY1fK", desc: "Насыщенный суп со свежей рыбой, моллюсками и овощами. Местный фаворит.", dish: "Хэмультан", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.4 }
+      ],
+      "Сеул": [
+        { name: "N Grill", google: "https://maps.app.goo.gl/XXXLPP5eafu27RJN7", naver: "https://naver.me/FlBYD6Ii", desc: "Ресторан с панорамным видом 360° на вращающейся площадке. Для особых случаев.", dish: "Fine dining с корейско-европейской кухней", avgCheck: "80 000 ₩ (5 600 ₽)", stars: 4.7 },
+        { name: "Bukchon Traditional Tea House", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: "https://naver.me/G7NSz6p0", desc: "Уютное место в традиционном доме в деревне Пукчхон. Атмосфера старой Кореи.", dish: "Традиционный корейский чай, хангва", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
+        { name: "Myeongdong Kyoja", google: "https://maps.app.goo.gl/9GfXED4rtdFxmP1M8", naver: "https://naver.me/GP24T98z", desc: "Легендарный ресторан в Мёндоне с 50-летней историей. Очереди всегда, но оно того стоит.", dish: "Кальгуксу, манду", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.6 },
+        { name: "Ikseon-dong Hanok Cafes", google: "https://maps.app.goo.gl/peAhgNSNjjyw4oyj7", naver: "https://naver.me/GLhYIjTW", desc: "Модный район с сотнями кафе в традиционных ханоках. Instagrammable место.", dish: "Традиционные корейские десерты, чай", avgCheck: "10 000 ₩ (700 ₽)", stars: 4.6 },
+        { name: "Gwangjang Market Food Stalls", google: "https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9", naver: "https://naver.me/xJcnMIjA", desc: "Старейший рынок Сеула, featured in Netflix. Уличные закуски от местных бабушек.", dish: "Пхёньюк, кимбап, юкхе", avgCheck: "8 000 ₩ (560 ₽)", stars: 4.5 },
+        { name: "COEX Starfield Library Cafe", google: "https://maps.app.goo.gl/riKB21QGhFyF8bcR7", naver: "https://naver.me/FHOZS8yl", desc: "Кафе в самой красивой библиотеке Азии. Эффект 'Интерстеллар' с бесконечными полками.", dish: "Кофе, десерты", avgCheck: "7 000 ₩ (490 ₽)", stars: 4.5 },
+        { name: "Gangnam BBQ Restaurants", google: "https://maps.app.goo.gl/gVMLKfH4RarBGsXdA", naver: "https://naver.me/GlRtstV2", desc: "Стильные рестораны в Каннаме. Высокое качество мяса, модная атмосфера.", dish: "Хану, кальби", avgCheck: "40 000 ₩ (2 800 ₽)", stars: 4.5 },
+        { name: "Wangbijip Myeongdong", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: "https://naver.me/F4WiIizF", desc: "Популярная сеть для корейского барбекю. Отличное соотношение цены и качества.", dish: "Самгёпсаль, хану", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.4 },
+        { name: "Hongdae Dakgalbi", google: "https://maps.app.goo.gl/wE1f5ytm673pCKv88", naver: "https://naver.me/Ge7YaW3T", desc: "Молодёжное место в Хондэ с яркой атмосферой. Идеально для групп.", dish: "Чжончхон даккальби", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.3 },
+        { name: "Hongdae Street Food", google: "https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6", naver: "https://naver.me/GT47igkH", desc: "Уличная еда на Hongik University Street. Яркие вывески, молодёжная тусовка.", dish: "Ттокпокки, одэн, корн-доги", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.2 }
+      ],
+      "Чонджу": [
+        { name: "Hankook Jib", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: "https://naver.me/x3cOY5zy", desc: "Старейший ресторан пибимбапа (с 1952 года!). Три поколения семьи хранят рецепт.", dish: "Пибибмап в долсоте", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.7 },
+        { name: "Gogung Suragan", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: "https://naver.me/I5wj8JJ0", desc: "Один из лучших ресторанов пибимбапа! Подают в традиционном доме в деревне ханоков.", dish: "Чонджу пибимпап", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.6 },
+        { name: "Jeonju Hanok Village Food Stalls", google: "https://maps.app.goo.gl/US8YxCkGmuHN1rhH9", naver: "https://naver.me/GYDpVA19", desc: "Уличные закуски в деревне ханоков. Попробуйте традиционные корейские сладости.", dish: "Чхонгваджа, юкчон", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.4 }
+      ],
+      "Чиндо": [
+        { name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5", naver: "https://naver.me/Ge7YaFme", desc: "Уютный семейный ресторан с домашней корейской кухней. Идеален после работы на море.", dish: "Местный суп с морепродуктами, свежая рыба", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.0 },
+        { name: "용성식당", google: "https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7", naver: "https://naver.me/5t7Lrhh6", desc: "Традиционный ресторан с блюдами из морепродуктов. Рекомендуется свежая рыба на гриле.", dish: "Свежая рыба на гриле, морской салат", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.0 },
+        { name: "이화식당", google: "https://maps.app.goo.gl/5aZCPqAsvGN5DVf57", naver: "https://naver.me/Gmpa1987", desc: "Семейный ресторан с уютной атмосферой. Попробуйте местный суп с морепродуктами.", dish: "Суп с морепродуктами, рис с морской капустой", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.0 }
+      ],
+      "Пусан": [
+        { name: "Haeundae Amsogalbijip", google: "https://maps.app.goo.gl/2yogqxPPFTmLFmTc7", naver: "https://naver.me/5LHsNhM3", desc: "Одно из лучших BBQ мест в Пусане. Премиум говядина хану.", dish: "Хану кальби", avgCheck: "45 000 ₩ (3 150 ₽)", stars: 4.7 },
+        { name: "Millac Live Fish Sashimi Market", google: "https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA", naver: "https://naver.me/GQGKgYLX", desc: "Центр сырой рыбы с десятками ресторанов. Выбираете рыбу — вам её готовят.", dish: "Сашими из свежей рыбы", avgCheck: "40 000 ₩ (2 800 ₽)", stars: 4.5 },
+        { name: "Gwangalli Beach Restaurants", google: "https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9", naver: "https://naver.me/FiPWsOaf", desc: "Рестораны у пляжа Кваналли с видом на освещённый мост. Идеально для вечера.", dish: "Морепродукты, пиво с видом на мост", avgCheck: "25 000 ₩ (1 750 ₽)", stars: 4.5 },
+        { name: "총각상회 (Chong Gak Jagalchi Market)", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: "https://naver.me/5MvPQS1q", desc: "Ешьте прямо на рынке! Свежайшие морепродукты, которые выбрали сами.", dish: "Сашими, живые осьминоги", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.5 },
+        { name: "Gaemi-jip Seomyeon", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: "https://naver.me/5mveVBNc", desc: "Популярный ресторан с отличным соотношением цены и качества.", dish: "Чорихэ, морепродукты", avgCheck: "20 000 ₩ (1 400 ₽)", stars: 4.4 }
+      ],
+      "Кёнджу": [
+        { name: "Hwangnamppang Original Store", google: "https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7", naver: "https://naver.me/GZDMRspT", desc: "Легендарная выпечка Кёнджу! Печётся с 1939 года. Must-try перекус.", dish: "Хваннамппан", avgCheck: "2 000 ₩ (140 ₽)", stars: 4.8 },
+        { name: "Starbucks Hanok", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: "https://naver.me/FpwVtxMT", desc: "Старбакс в корейском здании ханока.", dish: "Кофе, десерты", avgCheck: "6 000 ₩ (420 ₽)", stars: 4.5 },
+        { name: "Gyori Gimbap", google: "https://maps.app.goo.gl/vShDCxT34ueAPT7RA", naver: "https://naver.me/5JqYDp2o", desc: "Известный ресторан с традиционным кимбапом. Работает десятилетиями.", dish: "Кимбап, традиционная корейская еда", avgCheck: "5 000 ₩ (350 ₽)", stars: 4.5 }
+      ],
+      "Андон": [
+        { name: "Andong Jjimdak Alley Restaurants", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: "https://naver.me/xtNbY4Xg", desc: "Улица с десятками ресторанов ччимтака! Курица с овощами и лапшой в соевом соусе.", dish: "Андон ччимтак", avgCheck: "18 000 ₩ (1 260 ₽)", stars: 4.5 },
+        { name: "Okya Restaurant", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: "https://naver.me/574p9Qxf", desc: "Ресторан с традиционной кухней Андона. Попробуйте местную лапшу из гороховой муки.", dish: "Андон кукси, традиционные блюда", avgCheck: "12 000 ₩ (840 ₽)", stars: 4.4 }
+      ],
+      "Самчхок": [
+        { name: "하운각 홍콩중식 (Хаункак)", google: "https://maps.app.goo.gl/dwXQxbQMdqDAKgxW8", naver: "https://naver.me/F3EIAY8f", desc: "Аутентичная гонконгская кухня в Самчхоке. Димсамы, утка, лапша вок.", dish: "Димсамы, утка по-кантонски", avgCheck: "22 000 ₩ (~1 540 ₽)", stars: 4.3 },
+        { name: "ARAKS", google: "https://maps.app.goo.gl/mmy3uktTzx8WHjBp8", naver: "https://naver.me/58qhTqYC", desc: "Современное кафе с видом на море. Кофе, десерты, лёгкие закуски. Идеально для фото.", dish: "Кофе, чизкейк, тосты", avgCheck: "12 000 ₩ (~840 ₽)", stars: 4.4 }
+      ],
+      "Сокчхо": [
+        { name: "청호동아바이마을 (Cheonghodong Abai Village)", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: "https://naver.me/FpwVtwGC", desc: "Свежие морепродукты, пойманные женщинами-ныряльщицами. Недалеко от Сораксана.", dish: "Морепродукты от хэнё, абалон", avgCheck: "35 000 ₩ (2 450 ₽)", stars: 4.9 },
+        { name: "황가네찜 (Hwanggane Jjim)", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: "https://naver.me/GJZ3O7Lb", desc: "Ресторан с традиционной корейской рыбой на пару. Нежно и полезно. Местные жители и туристы высоко оценивают.", dish: "생선찜 (рыба на пару), 매운탕 (острый рыбный суп)", avgCheck: "28 000 ₩ (1 960 ₽)", stars: 4.5 },
+        { name: "Sokcho Tourist Fish Market", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: "https://naver.me/5nhDCvdn", desc: "Рынок с фудкортом. Попробуйте всё: от жареной рыбы до морских блинчиков.", dish: "Уличная еда, жареные морепродукты", avgCheck: "10 000 ₩ (700 ₽)", stars: 4.3 },
+        { name: "Cheongchosu Mulheo", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: "https://naver.me/GGGuEETi", desc: "Легендарный ресторан с фирменным холодным супом из свежей рыбы. Освежающе!", dish: "Мульхо", avgCheck: "15 000 ₩ (1 050 ₽)", stars: 4.2 }
+      ]
+    },
+    flights: [
+      { name: "Москва → Чеджудо (через Пекин)", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" },
+      { name: "Чеджудо → Сеул", date: "01.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Jeju-Seul.pdf" },
+      { name: "Сеул → Москва (через Шанхай)", date: "17.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Seul-Moskwa.pdf" }
+    ]
+  },
+  en: {
+    ui: {
+      header_title: "🇰🇷 South Korea — Our Honeymoon",
+      header_subtitle: "July–August 2026",
+      progress_loading: "Loading...",
+      tab_documents: "📄 Documents",
+      tab_calendar: "📅 Event Calendar",
+      tab_map: "🗺️ Route Map",
+      tab_cities: "🏙️ Cities",
+      reset_button: "🔄 Reset Progress",
+      reset_confirm: "Are you sure you want to reset all progress?",
+      city_jeju: "Jeju", city_seoul: "Seoul", city_jeonju: "Jeonju",
+      city_jindo: "Jindo", city_busan: "Busan", city_gyeongju: "Gyeongju",
+      city_andong: "Andong", city_samcheok: "Samcheok", city_sokcho: "Sokcho",
+      subtab_places: "Places", subtab_eats: "Food", subtab_spas: "Spas",
+      accommodation_title: "🏠 Accommodation", booking_link: "📄 Booking",
+      google_maps: "🗺️ Google", naver_maps: "🚗 Naver",
+      progress_visited: "✅ Visited: {visited} of {total} ({percent}%)",
+      progress_full: "✅ Visited: {placesVisited}/{placesTotal} places | {eatsVisited}/{eatsTotal} restaurants | {spasVisited}/{spasTotal} spas ({percent}%)",
+      btn_mark: "☑️ Mark", btn_visited: "✅ Visited", btn_tried: "✅ Tried",
+      entry_fee: "Entry: ", avg_check: "💰 Avg. check: ", price_label: "💰 ",
+      not_added: "Nothing added yet",
+      cities_intro_title: "🏙️ Select a City",
+      cities_intro_text: "Click on a city to see places and restaurants",
+      docs_title: "📋 Required Documents",
+      docs_flights: "✈️ Flight Tickets",
+      docs_entry: "🛂 Entry Permits (K-ETA)",
+      docs_insurance: "🏥 Insurance",
+      docs_entry_desc: "Entry permit",
+      docs_insurance_desc: "Travel insurance",
+      docs_important_title: "💡 Important:",
+      docs_important_text: "Print or save these documents. K-ETA and tickets may be required at check-in and passport control.",
+      calendar_date: "Date", calendar_events: "Events"
+    },
+    calendar: [
+      { date: "28.07", events: [
+        { type: "flight", time: "18:50–07:25+1", desc: "✈️ Moscow (SVO) → Beijing (PEK)" },
+        { type: "flight", time: "07:25–14:30", desc: "✈️ Beijing (PEK) → Jeju (CJU)" }
+      ]},
+      { date: "29.07", events: [
+        { type: "hotel", time: "17:55", desc: "🏨 Check-in: Seogwipo-si, Jeju" },
+        { type: "city", time: "evening", desc: "🏙️ Exploring Jeju, rest after flight" }
+      ]},
+      { date: "30.07", events: [
+        { type: "city", time: "all day", desc: "🏙️ Jeju: beaches, Hallasan" }
+      ]},
+      { date: "31.07", events: [
+        { type: "city", time: "all day", desc: "🏙️ Jeju: Seongsan, Olle Trail" }
+      ]},
+      { date: "01.08", events: [
+        { type: "flight", time: "16:15–17:30", desc: "✈️ Jeju (CJU) → Seoul (GMP)" },
+        { type: "hotel", time: "18:00", desc: "🏨 Check-in: Toegye-ro Stay, Seoul" },
+        { type: "city", time: "evening", desc: "🏙️ Evening walk in Seoul" }
+      ]},
+      { date: "02.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Seoul: Gyeongbokgung, Bukchon" }
+      ]},
+      { date: "03.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Seoul: shopping, preparation" }
+      ]},
+      { date: "04.08", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Seoul → Jeonju (~2.5h)" },
+        { type: "city", time: "11:30–14:00", desc: "🏙️ Jeonju: Hanok Village, kimchi" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Jeonju → Jindo (~1.5h)" },
+        { type: "hotel", time: "16:00", desc: "🏨 Check-in: Imhoe-myeon Guesthouse, Jindo" }
+      ]},
+      { date: "05.08", events: [
+        { type: "city", time: "morning", desc: "🏙️ Jindo: Miracle Sea Road" },
+        { type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Jindo → Busan (~3h)" },
+        { type: "hotel", time: "13:00", desc: "🏨 Check-in: O'guest in Haeundae, Busan" },
+        { type: "city", time: "evening", desc: "🏙️ Evening walk by the sea" }
+      ]},
+      { date: "06.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Busan: Haeundae, Jagalchi Market" }
+      ]},
+      { date: "07.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Busan: Gamcheon, Gwangalli Beach" }
+      ]},
+      { date: "08.08", events: [
+        { type: "car", time: "09:00–10:00", desc: "🚗 Transfer: Busan → Gyeongju (~1h)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ Gyeongju: ancient Silla capital" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Gyeongju → Andong (~1.5h)" },
+        { type: "hotel", time: "16:00", desc: "🏨 Check-in: Haru The Guesthouse, Andong" }
+      ]},
+      { date: "09.08", events: [
+        { type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Andong → Sokcho (~3h)" },
+        { type: "hotel", time: "12:30", desc: "🏨 Check-in: Sokcho Summitbay, Sokcho" },
+        { type: "city", time: "evening", desc: "🏙️ Evening walk in Sokcho" }
+      ]},
+      { date: "10.08", events: [
+        { type: "car", time: "morning", desc: "🚗 Transfer: Sokcho → Samcheok (~30min)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ Samcheok: ocean rail bike, park" },
+        { type: "car", time: "14:00–14:30", desc: "🚗 Return: Samcheok → Sokcho" },
+        { type: "city", time: "evening", desc: "🏙️ Beach, rest" }
+      ]},
+      { date: "11.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Seoraksan: National Park, trekking" }
+      ]},
+      { date: "12.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Sokcho: beach, rest, souvenirs" }
+      ]},
+      { date: "13.08", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Sokcho → Seoul (~2.5h)" },
+        { type: "hotel", time: "12:00", desc: "🏨 Check-in: Seoul DDJ STAY, Seoul" },
+        { type: "city", time: "evening", desc: "🏙️ Final walks in Seoul" }
+      ]},
+      { date: "14.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Seoul: final shopping" }
+      ]},
+      { date: "15.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Seoul: final shopping" }
+      ]},
+      { date: "16.08", events: [
+        { type: "city", time: "all day", desc: "🏙️ Seoul: packing" }
+      ]},
+      { date: "17.08", events: [
+        { type: "hotel", time: "morning", desc: "🏨 Hotel check-out" },
+        { type: "flight", time: "08:55–19:30", desc: "✈️ Seoul (ICN) → Shanghai (PVG) → Moscow (SVO)" }
+      ]}
+    ],
+    places: {
+      "Jeju": [
+        { name: "Hallasan", google: "https://maps.app.goo.gl/2g4Z3SQXXxvkGqpt6", naver: "https://naver.me/x1VEjedN", desc: "Dormant volcano with highest peak in South Korea. Daytime walks only.", stars: 5, price: null },
+        { name: "Manjanggul Lava Tube", google: "https://maps.app.goo.gl/o2rre6nCiMuu9bta6", naver: "https://naver.me/5hoZPHcQ", desc: "Long lava tube: unique stalactites and stalagmites, bats", stars: 5, price: "2,000 ₩" },
+        { name: "Cheonjeyeon Waterfall", google: "https://maps.app.goo.gl/SYALg4ejWNE7kyyg7", naver: "https://naver.me/GlRYEkz9", desc: "Waterfall.", stars: 4, price: "2,000 ₩" },
+        { name: "Hamdeok Beach", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: "https://naver.me/xoGtMsWM", desc: "Beach.", stars: 4, price: null }
+      ],
+      "Seoul": [
+        { name: "Everland", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: "https://naver.me/xll3weKa", desc: "Popular amusement park with rides and zoo.", stars: 5, price: "64,000 ₩" },
+        { name: "Lotte World", google: "https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6", naver: "https://naver.me/xsZ4dzKC", desc: "Family amusement park with water slides.", stars: 5, price: "59,000 ₩" },
+        { name: "N Seoul Tower", google: "https://maps.app.goo.gl/GtR1ecNoH3p4yyou5", naver: "https://naver.me/xJcvx9hE", desc: "1980 tower with panoramic city views.", stars: 5, price: "12,500 ₩" },
+        { name: "Bukchon Hanok Village", google: "https://maps.app.goo.gl/uRax1hojgvW4fZMk9", naver: "https://naver.me/xUZo27qo", desc: "Village with traditional Korean houses from 14th century.", stars: 5, price: null },
+        { name: "COEX Starfield Library", google: "https://maps.app.goo.gl/hjVu7uvYHjMue8z96", naver: "https://naver.me/FgEz3XAz", desc: "Most beautiful library in Asia with 60,000 books.", stars: 5, price: null },
+        { name: "Gwangjang Market", google: "https://maps.app.goo.gl/RWtgP9ievju5Y2w66", naver: "https://naver.me/GvWrQ6Y3", desc: "Bustling market with traditional food and clothes.", stars: 4, price: null },
+        { name: "Myeongdong Shopping District", google: "https://maps.app.goo.gl/wHsZoFKPSbwLhS1K6", naver: "https://naver.me/5AuFlzLZ", desc: "Central shopping street. Cosmetics and fashion.", stars: 4, price: null },
+        { name: "Cheonggyecheon Stream", google: "https://maps.app.goo.gl/Kw4HkgcjmcDXCw9R9", naver: "https://naver.me/GArNt9nn", desc: "Stream running through the city center.", stars: 4, price: null },
+        { name: "Myeongdong Cathedral", google: "https://maps.app.goo.gl/x8ML1EEn6abLbs1r5", naver: "https://naver.me/5p0OX1vZ", desc: "19th century Gothic cathedral.", stars: 4, price: null },
+        { name: "Hongdae Street", google: "https://maps.app.goo.gl/71yXZLrTD7XWW3fM7", naver: "https://naver.me/GdTbGq8i", desc: "Bright signs, street food, Wall of Love.", stars: 4, price: null },
+        { name: "Ikseon-dong Hanok Village", google: "https://maps.app.goo.gl/K88C9Y7tbjpGkh6a8", naver: "https://naver.me/F6Q4uabg", desc: "Traditional houses in Jongno-gu.", stars: 4, price: null },
+        { name: "Dongdaemun Design Plaza (DDP)", google: "https://maps.app.goo.gl/2Nmqfgk5k6stmNh48", naver: "https://naver.me/GahQJuwF", desc: "Futuristic architectural complex.", stars: 4, price: null },
+        { name: "Banpo Bridge Moonlight Rainbow Fountain", google: "https://maps.app.goo.gl/c2hBBuqvvoUy1m42A", naver: "https://naver.me/xpjDITcq", desc: "Bridge with evening light show.", stars: 4, price: null },
+        { name: "Gangnam Station Area", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: "https://naver.me/xqbGFAkK", desc: "Gangnam Style location. Stylish bars.", stars: 4, price: null },
+        { name: "Gangnam-gu", google: "https://maps.app.goo.gl/FaedjLeqr14VVUdh9", naver: "https://naver.me/Ge78tAeG", desc: "Modern district with skyscrapers and clubs.", stars: 4, price: null },
+        { name: "Ewha Womans University", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: "https://naver.me/FM9hSiAo", desc: "Private women's university.", stars: 3, price: null }
+      ],
+      "Jeonju": [
+        { name: "Jeonju Hanok Village", google: "https://maps.app.goo.gl/povG1N1i8TUQuYsy5", naver: "https://naver.me/GfrZEa2e", desc: "Largest hanok village in Korea (800+ houses).", stars: 5, price: null },
+        { name: "Jeonju Kimchi Museum", google: "https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A", naver: "https://naver.me/GmpaAFlf", desc: "Kimchi museum with tasting.", stars: 4, price: "3,000 ₩" },
+        { name: "Jeonju-si", google: "https://maps.app.goo.gl/k6GTZwhr2y89W8E9A", naver: "https://naver.me/Fns6FnNi", desc: "Gastronomic capital of Korea.", stars: 4, price: null }
+      ],
+      "Jindo": [
+        { name: "Nostalgia 1", google: "https://maps.app.goo.gl/vY8APxRjHjM1cLu86", naver: "https://naver.me/5mveAhuB", desc: "Village where I lived and worked in 2019.", stars: 5, price: null },
+        { name: "Nostalgia 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: "https://naver.me/GrgAEjCJ", desc: "Pier where I went out to sea.", stars: 5, price: null },
+        { name: "Nostalgia 3", google: "https://maps.app.goo.gl/8FnignXcCoL7sZD9A", naver: "https://naver.me/FvTeBHmH", desc: "Place where I went swimming.", stars: 5, price: null }
+      ],
+      "Busan": [
+        { name: "Haedong Yonggungsa Temple", google: "https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7", naver: "https://naver.me/Gi0UPzKo", desc: "Temple on the coast among cliffs.", stars: 5, price: null },
+        { name: "Jagalchi Market", google: "https://maps.app.goo.gl/hzqzbADXyNq1w54U9", naver: "https://naver.me/xaTswx6K", desc: "Largest fish market in Asia.", stars: 5, price: null },
+        { name: "Gamcheon Culture Village", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: "https://naver.me/FwGwzrmu", desc: "Picturesque village with colorful houses.", stars: 4, price: "5,000 ₩" },
+        { name: "Haeundae Beach", google: "https://maps.app.goo.gl/oHpFrAyibsCshKCr8", naver: "https://naver.me/xy72cIw2", desc: "Main beach of Busan.", stars: 4, price: null },
+        { name: "Gwangalli Beach", google: "https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9", naver: "https://naver.me/xwo2SViv", desc: "Curved beach with view on Gwangan Bridge.", stars: 4, price: null },
+        { name: "Haeundae Blueline Park", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: "https://naver.me/xG0nM60D", desc: "4.8km park along coast with Sky Capsules.", stars: 4, price: "15,000 ₩" },
+        { name: "Ahopsan Forest", google: "https://maps.app.goo.gl/GcdrV3QAfdac3GJ88", naver: "https://naver.me/GRDv75wV", desc: "Royal bamboo forest.", stars: 4, price: null },
+        { name: "Dadaepo Beach", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: "https://naver.me/xEXgzP4q", desc: "Sea beach. Shallow.", stars: 3, price: null }
+      ],
+      "Gyeongju": [
+        { name: "Bulguksa Temple", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: "https://naver.me/IFEwRXi9", desc: "8th century Buddhist architecture, UNESCO.", stars: 5, price: "6,000 ₩" },
+        { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: "https://naver.me/xhPsNLNy", desc: "Oldest observatory in East Asia.", stars: 5, price: null },
+        { name: "Grand Tumuli Park", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: "https://naver.me/xTy7kMTD", desc: "Park with royal tombs of Silla.", stars: 4, price: "2,000 ₩" },
+        { name: "Woljeongsa Park", google: "https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7", naver: "https://naver.me/GKImFaY4", desc: "Park with tombs and pond.", stars: 4, price: null },
+        { name: "Gyeongju-si", google: "https://maps.app.goo.gl/nd5b6durVxFGzUVD8", naver: "https://naver.me/FFqw0uRe", desc: "Ancient capital of Silla.", stars: 4, price: null }
+      ],
+      "Andong": [
+        { name: "Hahoe Folk Village", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: "https://naver.me/58qh7AY3", desc: "Traditional hanok village, UNESCO.", stars: 5, price: "5,000 ₩" },
+        { name: "Andong-si", google: "https://maps.app.goo.gl/9ZziEa6FFSQTNmqT7", naver: "https://naver.me/xF4QJRQ9", desc: "Center of Confucianism.", stars: 4, price: null }
+      ],
+      "Samcheok": [
+        { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: "https://naver.me/FJOBtxc0", desc: "Bike route along the coast 5.4km.", stars: 4, price: "15,000 ₩" },
+        { name: "Haesindang Park", google: "https://maps.app.goo.gl/27gyJFhHv6CiuDSz6", naver: "https://naver.me/5YoneVdm", desc: "Park with fertility sculptures.", stars: 4, price: "3,000 ₩" }
+      ],
+      "Sokcho": [
+        { name: "Seoraksan NP", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: "https://naver.me/x2Y5wT9x", desc: "Main entrance to National Park.", stars: 5, price: null },
+        { name: "Ulsanbawi Peak", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: "https://naver.me/xeFH6KDJ", desc: "Rock with 800 steps, stunning views.", stars: 5, price: null },
+        { name: "Seoraksan Cable Car", google: "https://maps.app.goo.gl/4Pnke77DDcjMynSq8", naver: "https://naver.me/GahLjwl8", desc: "Cable car with panoramic views.", stars: 4, price: "12,500 ₩" },
+        { name: "Sinheungsa Temple", google: "https://maps.app.goo.gl/4eUe1KpCvvLRNebB6", naver: "https://naver.me/GRDv7pxG", desc: "Ancient Buddhist temple.", stars: 4, price: null },
+        { name: "Cheonjin Beach", google: "https://maps.app.goo.gl/6KptXjrCJmS8jQYM6", naver: "https://naver.me/xllOJrmi", desc: "Beach.", stars: 4, price: null }
+      ]
+    },
+    eats: {
+      "Jeju": [
+        { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: "https://naver.me/FwGwn3PL", desc: "Traditional Jeju dish. Pork on wooden board.", dish: "Black pork", avgCheck: "25,000 ₩", stars: 4.7 },
+        { name: "Yeondong Doldam Black Pork", google: "https://maps.app.goo.gl/byomKKUr2QdVomAW9", naver: "https://naver.me/xHEb2Uwx", desc: "Signature dish! Tender grilled pork.", dish: "Jeju Black Pork", avgCheck: "22,000 ₩", stars: 4.6 },
+        { name: "Hamdeok Beach Seafood", google: "https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26", naver: "https://naver.me/F058KNB5", desc: "Restaurants near Hamdeok beach. Fresh seafood from Haenyeo.", dish: "Sea Urchin, Abalone", avgCheck: "30,000 ₩", stars: 4.5 },
+        { name: "Gozip Dol Wooluck", google: "https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A", naver: "https://naver.me/GqfHBhSX", desc: "Seafood with ocean view.", dish: "Stone pot seafood", avgCheck: "28,000 ₩", stars: 4.5 },
+        { name: "Samseonghyeol Seafood Hot Pot", google: "https://maps.app.goo.gl/XbrfPUPWLo8t5RPu5", naver: "https://naver.me/xucpY1fK", desc: "Rich soup with fresh fish and clams.", dish: "Haemultang", avgCheck: "20,000 ₩", stars: 4.4 }
+      ],
+      "Seoul": [
+        { name: "N Grill", google: "https://maps.app.goo.gl/XXXLPP5eafu27RJN7", naver: "https://naver.me/FlBYD6Ii", desc: "Restaurant with 360° view. For special occasions.", dish: "Fine dining", avgCheck: "80,000 ₩", stars: 4.7 },
+        { name: "Bukchon Traditional Tea House", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: "https://naver.me/G7NSz6p0", desc: "Cozy place in traditional house.", dish: "Korean tea, Hangwa", avgCheck: "12,000 ₩", stars: 4.7 },
+        { name: "Myeongdong Kyoja", google: "https://maps.app.goo.gl/9GfXED4rtdFxmP1M8", naver: "https://naver.me/GP24T98z", desc: "Legendary restaurant in Myeongdong with 50-year history.", dish: "Kalguksu, Mandu", avgCheck: "12,000 ₩", stars: 4.6 },
+        { name: "Ikseon-dong Hanok Cafes", google: "https://maps.app.goo.gl/peAhgNSNjjyw4oyj7", naver: "https://naver.me/GLhYIjTW", desc: "Trendy area with hundreds of cafes in hanoks.", dish: "Korean desserts, Tea", avgCheck: "10,000 ₩", stars: 4.6 },
+        { name: "Gwangjang Market", google: "https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9", naver: "https://naver.me/xJcnMIjA", desc: "Oldest market. Street food from local grandmas.", dish: "Bindaetteok, Kimbap", avgCheck: "8,000 ₩", stars: 4.5 },
+        { name: "COEX Starfield Library Cafe", google: "https://maps.app.goo.gl/riKB21QGhFyF8bcR7", naver: "https://naver.me/FHOZS8yl", desc: "Cafe in the most beautiful library in Asia.", dish: "Coffee, Desserts", avgCheck: "7,000 ₩", stars: 4.5 },
+        { name: "Gangnam BBQ", google: "https://maps.app.goo.gl/gVMLKfH4RarBGsXdA", naver: "https://naver.me/GlRtstV2", desc: "Stylish restaurants in Gangnam. High quality meat.", dish: "Hanwoo, Galbi", avgCheck: "40,000 ₩", stars: 4.5 },
+        { name: "Wangbijip Myeongdong", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: "https://naver.me/F4WiIizF", desc: "Popular Korean BBQ chain.", dish: "Samgyeopsal", avgCheck: "25,000 ₩", stars: 4.4 },
+        { name: "Hongdae Dakgalbi", google: "https://maps.app.goo.gl/wE1f5ytm673pCKv88", naver: "https://naver.me/Ge7YaW3T", desc: "Youthful place in Hongdae.", dish: "Dakgalbi", avgCheck: "18,000 ₩", stars: 4.3 },
+        { name: "Hongdae Street Food", google: "https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6", naver: "https://naver.me/GT47igkH", desc: "Street food on Hongik University Street.", dish: "Tteokbokki, Odeng, Corn Dogs", avgCheck: "5,000 ₩", stars: 4.2 }
+      ],
+      "Jeonju": [
+        { name: "Hankook Jib", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: "https://naver.me/x3cOY5zy", desc: "Oldest Bibimbap restaurant (since 1952!).", dish: "Dolsot Bibimbap", avgCheck: "12,000 ₩", stars: 4.7 },
+        { name: "Gogung Suragan", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: "https://naver.me/I5wj8JJ0", desc: "One of the best Bibimbap restaurants!", dish: "Jeonju Bibimbap", avgCheck: "15,000 ₩", stars: 4.6 },
+        { name: "Jeonju Food Stalls", google: "https://maps.app.goo.gl/US8YxCkGmuHN1rhH9", naver: "https://naver.me/GYDpVA19", desc: "Street snacks in Hanok village.", dish: "Korean sweets", avgCheck: "5,000 ₩", stars: 4.4 }
+      ],
+      "Jindo": [
+        { name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5", naver: "https://naver.me/Ge7YaFme", desc: "Cozy family restaurant with homemade Korean cuisine.", dish: "Local seafood soup", avgCheck: "20,000 ₩", stars: 4.0 },
+        { name: "Yongseong Sikdang", google: "https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7", naver: "https://naver.me/5t7Lrhh6", desc: "Traditional seafood restaurant.", dish: "Grilled fish", avgCheck: "18,000 ₩", stars: 4.0 },
+        { name: "Ihwa Sikdang", google: "https://maps.app.goo.gl/5aZCPqAsvGN5DVf57", naver: "https://naver.me/Gmpa1987", desc: "Family restaurant with cozy atmosphere.", dish: "Seafood soup", avgCheck: "15,000 ₩", stars: 4.0 }
+      ],
+      "Busan": [
+        { name: "Haeundae Amsogalbijip", google: "https://maps.app.goo.gl/2yogqxPPFTmLFmTc7", naver: "https://naver.me/5LHsNhM3", desc: "One of the best BBQ places in Busan. Premium Hanwoo beef.", dish: "Hanwoo Galbi", avgCheck: "45,000 ₩", stars: 4.7 },
+        { name: "Millac Live Fish Sashimi Market", google: "https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA", naver: "https://naver.me/GQGKgYLX", desc: "Raw fish center with dozens of restaurants.", dish: "Fresh fish Sashimi", avgCheck: "40,000 ₩", stars: 4.5 },
+        { name: "Gwangalli Beach Restaurants", google: "https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9", naver: "https://naver.me/FiPWsOaf", desc: "Restaurants by Gwangalli beach with view on illuminated bridge.", dish: "Seafood, Beer", avgCheck: "25,000 ₩", stars: 4.5 },
+        { name: "Chong Gak Jagalchi Market", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: "https://naver.me/5MvPQS1q", desc: "Eat right at the market! Freshest seafood.", dish: "Sashimi, Live octopus", avgCheck: "35,000 ₩", stars: 4.5 },
+        { name: "Gaemi-jip Seomyeon", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: "https://naver.me/5mveVBNc", desc: "Popular restaurant with great price/quality ratio.", dish: "Chorigae, Seafood", avgCheck: "20,000 ₩", stars: 4.4 }
+      ],
+      "Gyeongju": [
+        { name: "Hwangnamppang Original Store", google: "https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7", naver: "https://naver.me/GZDMRspT", desc: "Legendary pastry of Gyeongju! Baked since 1939.", dish: "Hwangnamppang", avgCheck: "2,000 ₩", stars: 4.8 },
+        { name: "Starbucks Hanok", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: "https://naver.me/FpwVtxMT", desc: "Starbucks in a Korean Hanok building.", dish: "Coffee, Desserts", avgCheck: "6,000 ₩", stars: 4.5 },
+        { name: "Gyori Gimbap", google: "https://maps.app.goo.gl/vShDCxT34ueAPT7RA", naver: "https://naver.me/5JqYDp2o", desc: "Famous restaurant with traditional gimbap.", dish: "Gimbap", avgCheck: "5,000 ₩", stars: 4.5 }
+      ],
+      "Andong": [
+        { name: "Andong Jjimdak Alley", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: "https://naver.me/xtNbY4Xg", desc: "Street with dozens of Jjimdak restaurants!", dish: "Andong Jjimdak", avgCheck: "18,000 ₩", stars: 4.5 },
+        { name: "Okya Restaurant", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: "https://naver.me/574p9Qxf", desc: "Restaurant with traditional Andong cuisine.", dish: "Andong Guksu", avgCheck: "12,000 ₩", stars: 4.4 }
+      ],
+      "Samcheok": [
+        { name: "Hawunghak", google: "https://maps.app.goo.gl/dwXQxbQMdqDAKgxW8", naver: "https://naver.me/F3EIAY8f", desc: "Authentic Hong Kong cuisine in Samcheok.", dish: "Dim sum, Duck", avgCheck: "22,000 ₩", stars: 4.3 },
+        { name: "ARAKS", google: "https://maps.app.goo.gl/mmy3uktTzx8WHjBp8", naver: "https://naver.me/58qhTqYC", desc: "Modern cafe with sea view. Perfect for photos.", dish: "Coffee, Cheesecake", avgCheck: "12,000 ₩", stars: 4.4 }
+      ],
+      "Sokcho": [
+        { name: "Cheonghodong Abai Village", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: "https://naver.me/FpwVtwGC", desc: "Fresh seafood caught by female divers.", dish: "Abalone", avgCheck: "35,000 ₩", stars: 4.9 },
+        { name: "Hwanggane Jjim", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: "https://naver.me/GJZ3O7Lb", desc: "Restaurant with traditional steamed fish.", dish: "Steamed fish", avgCheck: "28,000 ₩", stars: 4.5 },
+        { name: "Sokcho Fish Market", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: "https://naver.me/5nhDCvdn", desc: "Market with food court.", dish: "Street food", avgCheck: "10,000 ₩", stars: 4.3 },
+        { name: "Cheongchosu Mulheo", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: "https://naver.me/GGGuEETi", desc: "Legendary restaurant with cold raw fish soup.", dish: "Mulhoe", avgCheck: "15,000 ₩", stars: 4.2 }
+      ]
+    },
+    flights: [
+      { name: "Moscow → Jeju (via Beijing)", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" },
+      { name: "Jeju → Seoul", date: "01.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Jeju-Seul.pdf" },
+      { name: "Seoul → Moscow (via Shanghai)", date: "17.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Seul-Moskwa.pdf" }
+    ]
+  },
+  de: {
+    ui: {
+      header_title: "🇰🇷 Südkorea — Unsere Hochzeitsreise",
+      header_subtitle: "Juli–August 2026",
+      progress_loading: "Wird geladen...",
+      tab_documents: "📄 Dokumente",
+      tab_calendar: "📅 Ereigniskalender",
+      tab_map: "🗺️ Routenkarte",
+      tab_cities: "🏙️ Städte",
+      reset_button: "🔄 Fortschritt zurücksetzen",
+      reset_confirm: "Sind Sie sicher, dass Sie den Fortschritt zurücksetzen möchten?",
+      city_jeju: "Jeju", city_seoul: "Seoul", city_jeonju: "Jeonju",
+      city_jindo: "Jindo", city_busan: "Busan", city_gyeongju: "Gyeongju",
+      city_andong: "Andong", city_samcheok: "Samcheok", city_sokcho: "Sokcho",
+      subtab_places: "Orte", subtab_eats: "Essen", subtab_spas: "Bäder",
+      accommodation_title: "🏠 Unterkunft", booking_link: "📄 Buchung",
+      google_maps: "🗺️ Google", naver_maps: "🚗 Naver",
+      progress_visited: "✅ Besucht: {visited} von {total} ({percent}%)",
+      progress_full: "✅ Besucht: {placesVisited}/{placesTotal} Orte | {eatsVisited}/{eatsTotal} Restaurants | {spasVisited}/{spasTotal} Bäder ({percent}%)",
+      btn_mark: "☑️ Markieren", btn_visited: "✅ Besucht", btn_tried: "✅ Probiert",
+      entry_fee: "Eintritt: ", avg_check: "💰 Ø Rechnung: ", price_label: "💰 ",
+      not_added: "Noch nichts hinzugefügt",
+      cities_intro_title: "🏙️ Stadt auswählen",
+      cities_intro_text: "Klicken Sie auf eine Stadt, um Orte und Restaurants zu sehen",
+      docs_title: "📋 Erforderliche Dokumente",
+      docs_flights: "✈️ Flugtickets",
+      docs_entry: "🛂 Einreisegenehmigungen (K-ETA)",
+      docs_insurance: "🏥 Versicherung",
+      docs_entry_desc: "Einreisegenehmigung",
+      docs_insurance_desc: "Reiseversicherung",
+      docs_important_title: "💡 Wichtig:",
+      docs_important_text: "Drucken oder speichern Sie diese Dokumente. K-ETA und Tickets können beim Check-in erforderlich sein.",
+      calendar_date: "Datum", calendar_events: "Ereignisse"
+    },
+    calendar: [
+      { date: "28.07", events: [
+        { type: "flight", time: "18:50–07:25+1", desc: "✈️ Moskau (SVO) → Peking (PEK)" },
+        { type: "flight", time: "07:25–14:30", desc: "✈️ Peking (PEK) → Jeju (CJU)" }
+      ]},
+      { date: "29.07", events: [
+        { type: "hotel", time: "17:55", desc: "🏨 Check-in: Seogwipo-si, Jeju" },
+        { type: "city", time: "Abend", desc: "🏙️ Jeju erkunden, Erholung" }
+      ]},
+      { date: "30.07", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Jeju: Strände, Hallasan" }
+      ]},
+      { date: "31.07", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Jeju: Seongsan, Olle Weg" }
+      ]},
+      { date: "01.08", events: [
+        { type: "flight", time: "16:15–17:30", desc: "✈️ Jeju (CJU) → Seoul (GMP)" },
+        { type: "hotel", time: "18:00", desc: "🏨 Check-in: Toegye-ro Stay, Seoul" },
+        { type: "city", time: "Abend", desc: "🏙️ Abendspaziergang in Seoul" }
+      ]},
+      { date: "02.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: Gyeongbokgung, Bukchon" }
+      ]},
+      { date: "03.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: Shopping" }
+      ]},
+      { date: "04.08", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Seoul → Jeonju (~2.5h)" },
+        { type: "city", time: "11:30–14:00", desc: "🏙️ Jeonju: Hanok Dorf, Kimchi" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Jeonju → Jindo (~1.5h)" },
+        { type: "hotel", time: "16:00", desc: "🏨 Check-in: Imhoe-myeon Guesthouse, Jindo" }
+      ]},
+      { date: "05.08", events: [
+        { type: "city", time: "Morgen", desc: "🏙️ Jindo: Wunder-Meer-Straße" },
+        { type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Jindo → Busan (~3h)" },
+        { type: "hotel", time: "13:00", desc: "🏨 Check-in: O'guest in Haeundae, Busan" },
+        { type: "city", time: "Abend", desc: "🏙️ Abendspaziergang am Meer" }
+      ]},
+      { date: "06.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Busan: Haeundae, Jagalchi Markt" }
+      ]},
+      { date: "07.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Busan: Gamcheon, Gwangalli Strand" }
+      ]},
+      { date: "08.08", events: [
+        { type: "car", time: "09:00–10:00", desc: "🚗 Transfer: Busan → Gyeongju (~1h)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ Gyeongju: alte Silla Hauptstadt" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 Transfer: Gyeongju → Andong (~1.5h)" },
+        { type: "hotel", time: "16:00", desc: "🏨 Check-in: Haru The Guesthouse, Andong" }
+      ]},
+      { date: "09.08", events: [
+        { type: "car", time: "09:00–12:00", desc: "🚗 Transfer: Andong → Sokcho (~3h)" },
+        { type: "hotel", time: "12:30", desc: "🏨 Check-in: Sokcho Summitbay, Sokcho" },
+        { type: "city", time: "Abend", desc: "🏙️ Abendspaziergang in Sokcho" }
+      ]},
+      { date: "10.08", events: [
+        { type: "car", time: "Morgen", desc: "🚗 Transfer: Sokcho → Samcheok (~30min)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ Samcheok: Ocean Rail Bike" },
+        { type: "car", time: "14:00–14:30", desc: "🚗 Rückkehr: Samcheok → Sokcho" },
+        { type: "city", time: "Abend", desc: "🏙️ Strand, Erholung" }
+      ]},
+      { date: "11.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Seoraksan: Nationalpark, Trekking" }
+      ]},
+      { date: "12.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Sokcho: Strand, Erholung" }
+      ]},
+      { date: "13.08", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 Transfer: Sokcho → Seoul (~2.5h)" },
+        { type: "hotel", time: "12:00", desc: "🏨 Check-in: Seoul DDJ STAY, Seoul" },
+        { type: "city", time: "Abend", desc: "🏙️ Letzte Spaziergänge in Seoul" }
+      ]},
+      { date: "14.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: letztes Shopping" }
+      ]},
+      { date: "15.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: letztes Shopping" }
+      ]},
+      { date: "16.08", events: [
+        { type: "city", time: "ganzer Tag", desc: "🏙️ Seoul: Packen" }
+      ]},
+      { date: "17.08", events: [
+        { type: "hotel", time: "Morgen", desc: "🏨 Hotel Check-out" },
+        { type: "flight", time: "08:55–19:30", desc: "✈️ Seoul (ICN) → Shanghai (PVG) → Moskau (SVO)" }
+      ]}
+    ],
+    places: {
+      "Jeju": [
+        { name: "Hallasan", google: "https://maps.app.goo.gl/2g4Z3SQXXxvkGqpt6", naver: "https://naver.me/x1VEjedN", desc: "Erlischener Vulkan mit höchstem Gipfel Südkoreas. Nur tagsüber Wanderungen.", stars: 5, price: null },
+        { name: "Manjanggul Lava Tube", google: "https://maps.app.goo.gl/o2rre6nCiMuu9bta6", naver: "https://naver.me/5hoZPHcQ", desc: "Lange Lavaröhre: einzigartige Stalaktiten und Stalagmiten, Fledermäuse", stars: 5, price: "2.000 ₩" },
+        { name: "Cheonjeyeon Wasserfall", google: "https://maps.app.goo.gl/SYALg4ejWNE7kyyg7", naver: "https://naver.me/GlRYEkz9", desc: "Wasserfall.", stars: 4, price: "2.000 ₩" },
+        { name: "Hamdeok Beach", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: "https://naver.me/xoGtMsWM", desc: "Strand.", stars: 4, price: null }
+      ],
+      "Seoul": [
+        { name: "Everland", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: "https://naver.me/xll3weKa", desc: "Beliebter Freizeitpark mit Fahrgeschäften und Zoo.", stars: 5, price: "64.000 ₩" },
+        { name: "Lotte World", google: "https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6", naver: "https://naver.me/xsZ4dzKC", desc: "Familien-Freizeitpark mit Wasserrutschen.", stars: 5, price: "59.000 ₩" },
+        { name: "N Seoul Tower", google: "https://maps.app.goo.gl/GtR1ecNoH3p4yyou5", naver: "https://naver.me/xJcvx9hE", desc: "Turm von 1980 mit Panoramablick auf die Stadt.", stars: 5, price: "12.500 ₩" },
+        { name: "Bukchon Hanok Village", google: "https://maps.app.goo.gl/uRax1hojgvW4fZMk9", naver: "https://naver.me/xUZo27qo", desc: "Dorf mit traditionellen koreanischen Häusern aus dem 14. Jahrhundert.", stars: 5, price: null },
+        { name: "COEX Starfield Library", google: "https://maps.app.goo.gl/hjVu7uvYHjMue8z96", naver: "https://naver.me/FgEz3XAz", desc: "Schönste Bibliothek Asiens mit 60.000 Büchern.", stars: 5, price: null },
+        { name: "Gwangjang Market", google: "https://maps.app.goo.gl/RWtgP9ievju5Y2w66", naver: "https://naver.me/GvWrQ6Y3", desc: "Geschäftiger Markt mit traditionellem Essen und Kleidung.", stars: 4, price: null },
+        { name: "Myeongdong Einkaufsviertel", google: "https://maps.app.goo.gl/wHsZoFKPSbwLhS1K6", naver: "https://naver.me/5AuFlzLZ", desc: "Zentrale Einkaufsstraße. Kosmetik und Mode.", stars: 4, price: null },
+        { name: "Cheonggyecheon Stream", google: "https://maps.app.goo.gl/Kw4HkgcjmcDXCw9R9", naver: "https://naver.me/GArNt9nn", desc: "Bach mitten in der Stadt.", stars: 4, price: null },
+        { name: "Myeongdong Kathedrale", google: "https://maps.app.goo.gl/x8ML1EEn6abLbs1r5", naver: "https://naver.me/5p0OX1vZ", desc: "Katholische Kathedrale im gotischen Stil.", stars: 4, price: null },
+        { name: "Hongdae Straße", google: "https://maps.app.goo.gl/71yXZLrTD7XWW3fM7", naver: "https://naver.me/GdTbGq8i", desc: "Bunte Schilder, Street Food, Wall of Love.", stars: 4, price: null },
+        { name: "Ikseon-dong Hanok Village", google: "https://maps.app.goo.gl/K88C9Y7tbjpGkh6a8", naver: "https://naver.me/F6Q4uabg", desc: "Traditionelle Häuser im Bezirk Jongno-gu.", stars: 4, price: null },
+        { name: "Dongdaemun Design Plaza (DDP)", google: "https://maps.app.goo.gl/2Nmqfgk5k6stmNh48", naver: "https://naver.me/GahQJuwF", desc: "Futuristischer Architekturkomplex.", stars: 4, price: null },
+        { name: "Banpo Brücke", google: "https://maps.app.goo.gl/c2hBBuqvvoUy1m42A", naver: "https://naver.me/xpjDITcq", desc: "Brücke mit abendlicher Lichtshow.", stars: 4, price: null },
+        { name: "Gangnam Bahnhof", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: "https://naver.me/xqbGFAkK", desc: "Gangnam Style Location. Stylische Bars.", stars: 4, price: null },
+        { name: "Gangnam-gu", google: "https://maps.app.goo.gl/FaedjLeqr14VVUdh9", naver: "https://naver.me/Ge78tAeG", desc: "Moderner Bezirk mit Wolkenkratzern und Clubs.", stars: 4, price: null },
+        { name: "Ewha Womans University", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: "https://naver.me/FM9hSiAo", desc: "Private Frauenuniversität.", stars: 3, price: null }
+      ],
+      "Jeonju": [
+        { name: "Jeonju Hanok Village", google: "https://maps.app.goo.gl/povG1N1i8TUQuYsy5", naver: "https://naver.me/GfrZEa2e", desc: "Größtes Hanok-Dorf Koreas (800+ Häuser).", stars: 5, price: null },
+        { name: "Jeonju Kimchi Museum", google: "https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A", naver: "https://naver.me/GmpaAFlf", desc: "Kimchi Museum mit Verkostung.", stars: 4, price: "3.000 ₩" },
+        { name: "Jeonju-si", google: "https://maps.app.goo.gl/k6GTZwhr2y89W8E9A", naver: "https://naver.me/Fns6FnNi", desc: "Gastronomische Hauptstadt Koreas.", stars: 4, price: null }
+      ],
+      "Jindo": [
+        { name: "Nostalgie 1", google: "https://maps.app.goo.gl/vY8APxRjHjM1cLu86", naver: "https://naver.me/5mveAhuB", desc: "Dorf, wo 2019 gelebt und gearbeitet.", stars: 5, price: null },
+        { name: "Nostalgie 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: "https://naver.me/GrgAEjCJ", desc: "Pier, von hier aufs Meer hinaus.", stars: 5, price: null },
+        { name: "Nostalgie 3", google: "https://maps.app.goo.gl/8FnignXcCoL7sZD9A", naver: "https://naver.me/FvTeBHmH", desc: "Ort, wo ich schwimmen ging.", stars: 5, price: null }
+      ],
+      "Busan": [
+        { name: "Haedong Yonggungsa Tempel", google: "https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7", naver: "https://naver.me/Gi0UPzKo", desc: "Tempel an der Küste zwischen Klippen.", stars: 5, price: null },
+        { name: "Jagalchi Markt", google: "https://maps.app.goo.gl/hzqzbADXyNq1w54U9", naver: "https://naver.me/xaTswx6K", desc: "Größter Fischmarkt Asiens.", stars: 5, price: null },
+        { name: "Gamcheon Culture Village", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: "https://naver.me/FwGwzrmu", desc: "Malerisches Dorf mit bunten Häusern.", stars: 4, price: "5.000 ₩" },
+        { name: "Haeundae Beach", google: "https://maps.app.goo.gl/oHpFrAyibsCshKCr8", naver: "https://naver.me/xy72cIw2", desc: "Hauptstrand von Busan.", stars: 4, price: null },
+        { name: "Gwangalli Beach", google: "https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9", naver: "https://naver.me/xwo2SViv", desc: "Gebogener Strand mit Blick auf Gwangan Brücke.", stars: 4, price: null },
+        { name: "Haeundae Blueline Park", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: "https://naver.me/xG0nM60D", desc: "4,8km Park an der Küste mit Sky Kapseln.", stars: 4, price: "15.000 ₩" },
+        { name: "Ahopsan Forest", google: "https://maps.app.goo.gl/GcdrV3QAfdac3GJ88", naver: "https://naver.me/GRDv75wV", desc: "Königlicher Bambuswald.", stars: 4, price: null },
+        { name: "Dadaepo Beach", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: "https://naver.me/xEXgzP4q", desc: "Meeresstrand. Flach.", stars: 3, price: null }
+      ],
+      "Gyeongju": [
+        { name: "Bulguksa Tempel", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: "https://naver.me/IFEwRXi9", desc: "Meisterwerk buddhistischer Architektur des 8. Jahrhunderts, UNESCO.", stars: 5, price: "6.000 ₩" },
+        { name: "Cheomseongdae", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: "https://naver.me/xhPsNLNy", desc: "Ältestes Observatorium Ostasiens.", stars: 5, price: null },
+        { name: "Grand Tumuli Park", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: "https://naver.me/xTy7kMTD", desc: "Park mit königlichen Gräbern der Silla.", stars: 4, price: "2.000 ₩" },
+        { name: "Woljeongsa Park", google: "https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7", naver: "https://naver.me/GKImFaY4", desc: "Park mit Gräbern und Teich.", stars: 4, price: null },
+        { name: "Gyeongju-si", google: "https://maps.app.goo.gl/nd5b6durVxFGzUVD8", naver: "https://naver.me/FFqw0uRe", desc: "Alte Hauptstadt von Silla.", stars: 4, price: null }
+      ],
+      "Andong": [
+        { name: "Hahoe Folk Village", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: "https://naver.me/58qh7AY3", desc: "Traditionelles Hanok-Dorf, UNESCO.", stars: 5, price: "5.000 ₩" },
+        { name: "Andong-si", google: "https://maps.app.goo.gl/9ZziEa6FFSQTNmqT7", naver: "https://naver.me/xF4QJRQ9", desc: "Zentrum des Konfuzianismus.", stars: 4, price: null }
+      ],
+      "Samcheok": [
+        { name: "Samcheok Ocean Rail Bike", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: "https://naver.me/FJOBtxc0", desc: "Fahrradroute entlang der Küste 5.4km.", stars: 4, price: "15.000 ₩" },
+        { name: "Haesindang Park", google: "https://maps.app.goo.gl/27gyJFhHv6CiuDSz6", naver: "https://naver.me/5YoneVdm", desc: "Park mit Fruchtbarkeitsskulpturen.", stars: 4, price: "3.000 ₩" }
+      ],
+      "Sokcho": [
+        { name: "Seoraksan NP", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: "https://naver.me/x2Y5wT9x", desc: "Haupteingang zum Nationalpark.", stars: 5, price: null },
+        { name: "Ulsanbawi Peak", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: "https://naver.me/xeFH6KDJ", desc: "Fels mit 800 Stufen, atemberaubende Ausblicke.", stars: 5, price: null },
+        { name: "Seoraksan Cable Car", google: "https://maps.app.goo.gl/4Pnke77DDcjMynSq8", naver: "https://naver.me/GahLjwl8", desc: "Seilbahn mit Panoramablick.", stars: 4, price: "12.500 ₩" },
+        { name: "Sinheungsa Tempel", google: "https://maps.app.goo.gl/4eUe1KpCvvLRNebB6", naver: "https://naver.me/GRDv7pxG", desc: "Alter buddhistischer Tempel.", stars: 4, price: null },
+        { name: "Cheonjin Beach", google: "https://maps.app.goo.gl/6KptXjrCJmS8jQYM6", naver: "https://naver.me/xllOJrmi", desc: "Strand.", stars: 4, price: null }
+      ]
+    },
+    eats: {
+      "Jeju": [
+        { name: "Jeju Podo Won Black Pig", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: "https://naver.me/FwGwn3PL", desc: "Traditionelles Jeju Gericht. Schweinefleisch auf Holzbrett.", dish: "Schwarzes Schweinefleisch", avgCheck: "25.000 ₩", stars: 4.7 },
+        { name: "Yeondong Doldam Black Pork", google: "https://maps.app.goo.gl/byomKKUr2QdVomAW9", naver: "https://naver.me/xHEb2Uwx", desc: "Signature Gericht! Zartes gegrilltes Schweinefleisch.", dish: "Jeju Black Pork", avgCheck: "22.000 ₩", stars: 4.6 },
+        { name: "Hamdeok Beach Seafood", google: "https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26", naver: "https://naver.me/F058KNB5", desc: "Restaurants am Hamdeok Strand. Frische Meeresfrüchte.", dish: "Seeigel, Abalone", avgCheck: "30.000 ₩", stars: 4.5 },
+        { name: "Gozip Dol Wooluck", google: "https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A", naver: "https://naver.me/GqfHBhSX", desc: "Meeresfrüchte mit Meerblick.", dish: "Steintopf Meeresfrüchte", avgCheck: "28.000 ₩", stars: 4.5 },
+        { name: "Samseonghyeol Seafood Hot Pot", google: "https://maps.app.goo.gl/XbrfPUPWLo8t5RPu5", naver: "https://naver.me/xucpY1fK", desc: "Reiche Suppe mit frischem Fisch und Muscheln.", dish: "Haemultang", avgCheck: "20.000 ₩", stars: 4.4 }
+      ],
+      "Seoul": [
+        { name: "N Grill", google: "https://maps.app.goo.gl/XXXLPP5eafu27RJN7", naver: "https://naver.me/FlBYD6Ii", desc: "Restaurant mit 360° Aussicht. Für besondere Anlässe.", dish: "Fine Dining", avgCheck: "80.000 ₩", stars: 4.7 },
+        { name: "Bukchon Traditional Tea House", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: "https://naver.me/G7NSz6p0", desc: "Gemütlicher Ort im traditionellen Haus.", dish: "Koreanischer Tee, Hangwa", avgCheck: "12.000 ₩", stars: 4.7 },
+        { name: "Myeongdong Kyoja", google: "https://maps.app.goo.gl/9GfXED4rtdFxmP1M8", naver: "https://naver.me/GP24T98z", desc: "Legendäres Restaurant in Myeongdong mit 50-jähriger Geschichte.", dish: "Kalguksu, Mandu", avgCheck: "12.000 ₩", stars: 4.6 },
+        { name: "Ikseon-dong Hanok Cafes", google: "https://maps.app.goo.gl/peAhgNSNjjyw4oyj7", naver: "https://naver.me/GLhYIjTW", desc: "Trendiges Viertel mit hunderten Cafés in Hanoks.", dish: "Koreanische Desserts", avgCheck: "10.000 ₩", stars: 4.6 },
+        { name: "Gwangjang Market", google: "https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9", naver: "https://naver.me/xJcnMIjA", desc: "Ältester Markt. Street Food von lokalen Großmüttern.", dish: "Bindaetteok, Kimbap", avgCheck: "8.000 ₩", stars: 4.5 },
+        { name: "COEX Starfield Library Cafe", google: "https://maps.app.goo.gl/riKB21QGhFyF8bcR7", naver: "https://naver.me/FHOZS8yl", desc: "Café in der schönsten Bibliothek Asiens.", dish: "Kaffee, Desserts", avgCheck: "7.000 ₩", stars: 4.5 },
+        { name: "Gangnam BBQ", google: "https://maps.app.goo.gl/gVMLKfH4RarBGsXdA", naver: "https://naver.me/GlRtstV2", desc: "Stylische Restaurants in Gangnam. Hohe Fleischqualität.", dish: "Hanwoo, Galbi", avgCheck: "40.000 ₩", stars: 4.5 },
+        { name: "Wangbijip Myeongdong", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: "https://naver.me/F4WiIizF", desc: "Beliebte koreanische BBQ Kette.", dish: "Samgyeopsal", avgCheck: "25.000 ₩", stars: 4.4 },
+        { name: "Hongdae Dakgalbi", google: "https://maps.app.goo.gl/wE1f5ytm673pCKv88", naver: "https://naver.me/Ge7YaW3T", desc: "Jugendlich Ort in Hongdae.", dish: "Dakgalbi", avgCheck: "18.000 ₩", stars: 4.3 },
+        { name: "Hongdae Street Food", google: "https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6", naver: "https://naver.me/GT47igkH", desc: "Street Food an der Hongik University Street.", dish: "Tteokbokki, Odeng, Corn Dogs", avgCheck: "5.000 ₩", stars: 4.2 }
+      ],
+      "Jeonju": [
+        { name: "Hankook Jib", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: "https://naver.me/x3cOY5zy", desc: "Ältestes Bibimbap Restaurant (seit 1952!).", dish: "Dolsot Bibimbap", avgCheck: "12.000 ₩", stars: 4.7 },
+        { name: "Gogung Suragan", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: "https://naver.me/I5wj8JJ0", desc: "Eines der besten Bibimbap Restaurants!", dish: "Jeonju Bibimbap", avgCheck: "15.000 ₩", stars: 4.6 },
+        { name: "Jeonju Food Stalls", google: "https://maps.app.goo.gl/US8YxCkGmuHN1rhH9", naver: "https://naver.me/GYDpVA19", desc: "Straßensnacks im Hanok Dorf.", dish: "Koreanische Süßigkeiten", avgCheck: "5.000 ₩", stars: 4.4 }
+      ],
+      "Jindo": [
+        { name: "Sodam", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5", naver: "https://naver.me/Ge7YaFme", desc: "Gemütliches Familienrestaurant mit hausgemachter koreanischer Küche.", dish: "Lokale Meeresfrüchtesuppe", avgCheck: "20.000 ₩", stars: 4.0 },
+        { name: "Yongseong Sikdang", google: "https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7", naver: "https://naver.me/5t7Lrhh6", desc: "Traditionelles Meeresfrüchterestaurant.", dish: "Gegrillter Fisch", avgCheck: "18.000 ₩", stars: 4.0 },
+        { name: "Ihwa Sikdang", google: "https://maps.app.goo.gl/5aZCPqAsvGN5DVf57", naver: "https://naver.me/Gmpa1987", desc: "Familienrestaurant mit gemütlicher Atmosphäre.", dish: "Meeresfrüchtesuppe", avgCheck: "15.000 ₩", stars: 4.0 }
+      ],
+      "Busan": [
+        { name: "Haeundae Amsogalbijip", google: "https://maps.app.goo.gl/2yogqxPPFTmLFmTc7", naver: "https://naver.me/5LHsNhM3", desc: "Einer der besten BBQ Orte in Busan. Premium Hanwoo Rind.", dish: "Hanwoo Galbi", avgCheck: "45.000 ₩", stars: 4.7 },
+        { name: "Millac Live Fish Sashimi Market", google: "https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA", naver: "https://naver.me/GQGKgYLX", desc: "Rohfischzentrum mit Dutzenden Restaurants.", dish: "Frisches Fisch Sashimi", avgCheck: "40.000 ₩", stars: 4.5 },
+        { name: "Gwangalli Beach Restaurants", google: "https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9", naver: "https://naver.me/FiPWsOaf", desc: "Restaurants am Gwangalli Strand mit Blick auf beleuchtete Brücke.", dish: "Meeresfrüchte, Bier", avgCheck: "25.000 ₩", stars: 4.5 },
+        { name: "Chong Gak Jagalchi Market", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: "https://naver.me/5MvPQS1q", desc: "Essen direkt am Markt! Frischeste Meeresfrüchte.", dish: "Sashimi, Lebender Oktopus", avgCheck: "35.000 ₩", stars: 4.5 },
+        { name: "Gaemi-jip Seomyeon", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: "https://naver.me/5mveVBNc", desc: "Beliebtes Restaurant mit gutem Preis-Leistungs-Verhältnis.", dish: "Chorigae, Meeresfrüchte", avgCheck: "20.000 ₩", stars: 4.4 }
+      ],
+      "Gyeongju": [
+        { name: "Hwangnamppang Original Store", google: "https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7", naver: "https://naver.me/GZDMRspT", desc: "Legendäres Gebäck von Gyeongju! Gebacken seit 1939.", dish: "Hwangnamppang", avgCheck: "2.000 ₩", stars: 4.8 },
+        { name: "Starbucks Hanok", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: "https://naver.me/FpwVtxMT", desc: "Starbucks in einem koreanischen Hanok Gebäude.", dish: "Kaffee, Desserts", avgCheck: "6.000 ₩", stars: 4.5 },
+        { name: "Gyori Gimbap", google: "https://maps.app.goo.gl/vShDCxT34ueAPT7RA", naver: "https://naver.me/5JqYDp2o", desc: "Berühmtes Restaurant mit traditionellem Gimbap.", dish: "Gimbap", avgCheck: "5.000 ₩", stars: 4.5 }
+      ],
+      "Andong": [
+        { name: "Andong Jjimdak Alley", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: "https://naver.me/xtNbY4Xg", desc: "Straße mit Dutzenden Jjimdak Restaurants!", dish: "Andong Jjimdak", avgCheck: "18.000 ₩", stars: 4.5 },
+        { name: "Okya Restaurant", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: "https://naver.me/574p9Qxf", desc: "Restaurant mit traditioneller Andong Küche.", dish: "Andong Guksu", avgCheck: "12.000 ₩", stars: 4.4 }
+      ],
+      "Samcheok": [
+        { name: "Hawunghak", google: "https://maps.app.goo.gl/dwXQxbQMdqDAKgxW8", naver: "https://naver.me/F3EIAY8f", desc: "Authentische Hong Kong Küche in Samcheok.", dish: "Dim Sum, Ente", avgCheck: "22.000 ₩", stars: 4.3 },
+        { name: "ARAKS", google: "https://maps.app.goo.gl/mmy3uktTzx8WHjBp8", naver: "https://naver.me/58qhTqYC", desc: "Modernes Café mit Meerblick. Perfekt für Fotos.", dish: "Kaffee, Cheesecake", avgCheck: "12.000 ₩", stars: 4.4 }
+      ],
+      "Sokcho": [
+        { name: "Cheonghodong Abai Village", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: "https://naver.me/FpwVtwGC", desc: "Frische Meeresfrüchte von Taucherinnen.", dish: "Abalone", avgCheck: "35.000 ₩", stars: 4.9 },
+        { name: "Hwanggane Jjim", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: "https://naver.me/GJZ3O7Lb", desc: "Restaurant mit traditionellem gedünstetem Fisch.", dish: "Gedünsteter Fisch", avgCheck: "28.000 ₩", stars: 4.5 },
+        { name: "Sokcho Fish Market", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: "https://naver.me/5nhDCvdn", desc: "Markt mit Food Court.", dish: "Street Food", avgCheck: "10.000 ₩", stars: 4.3 },
+        { name: "Cheongchosu Mulheo", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: "https://naver.me/GGGuEETi", desc: "Legendäres Restaurant mit kalter roher Fischsuppe.", dish: "Mulhoe", avgCheck: "15.000 ₩", stars: 4.2 }
+      ]
+    },
+    flights: [
+      { name: "Moskau → Jeju (über Peking)", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" },
+      { name: "Jeju → Seoul", date: "01.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Jeju-Seul.pdf" },
+      { name: "Seoul → Moskau (über Shanghai)", date: "17.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Seul-Moskwa.pdf" }
+    ]
+  },
+  ko: {
+    ui: {
+      header_title: "🇰🇷 대한민국 — 우리의 신혼여행",
+      header_subtitle: "2026 년 7 월–8 월",
+      progress_loading: "로딩 중...",
+      tab_documents: "📄 서류",
+      tab_calendar: "📅 일정 캘린더",
+      tab_map: "🗺️ 여행 경로",
+      tab_cities: "🏙️ 도시",
+      reset_button: "🔄 초기화",
+      reset_confirm: "정말 초기화하시겠습니까?",
+      city_jeju: "제주도", city_seoul: "서울", city_jeonju: "전주",
+      city_jindo: "진도", city_busan: "부산", city_gyeongju: "경주",
+      city_andong: "안동", city_samcheok: "삼척", city_sokcho: "속초",
+      subtab_places: "명소", subtab_eats: "음식점", subtab_spas: "찜질방",
+      accommodation_title: "🏠 숙소", booking_link: "📄 예약서",
+      google_maps: "🗺️ 구글맵", naver_maps: "🚗 네이버맵",
+      progress_visited: "✅ 방문: {total} 중 {visited} ({percent}%)",
+      progress_full: "✅ 방문: 명소 {placesTotal} 중 {placesVisited} | 식당 {eatsTotal} 중 {eatsVisited} | 찜질방 {spasTotal} 중 {spasVisited} ({percent}%)",
+      btn_mark: "☑️ 체크", btn_visited: "✅ 방문함", btn_tried: "✅ 맛봄",
+      entry_fee: "입장료: ", avg_check: "💰 평균금액: ", price_label: "💰 ",
+      not_added: "아직 없음",
+      cities_intro_title: "🏙️ 도시 택",
+      cities_intro_text: "도시를 클릭하여 명소와 음식점을 확인하세요",
+      docs_title: "📋 필수 서류",
+      docs_flights: "✈️ 항공권",
+      docs_entry: "🛂 입국허가서 (K-ETA)",
+      docs_insurance: "🏥 보험",
+      docs_entry_desc: "입국 허가서",
+      docs_insurance_desc: "여행자 보험",
+      docs_important_title: "💡 중요:",
+      docs_important_text: "서류를 인쇄하거나 저장하세요. K-ETA 와 항공권은 체크인과 입국심사 시 필요할 수 있습니다.",
+      calendar_date: "날짜", calendar_events: "일정"
+    },
+    calendar: [
+      { date: "7 월 28 일", events: [
+        { type: "flight", time: "18:50–07:25+1", desc: "✈️ 모스크바 (SVO) → 베이징 (PEK)" },
+        { type: "flight", time: "07:25–14:30", desc: "✈️ 베이징 (PEK) → 제주도 (CJU)" }
+      ]},
+      { date: "7 월 29 일", events: [
+        { type: "hotel", time: "17:55", desc: "🏨 체크인: 서귀포시, 제주도" },
+        { type: "city", time: "저녁", desc: "🏙️ 제주도 탐방, 비행 후 휴식" }
+      ]},
+      { date: "7 월 30 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 제주도: 해변, 한라산" }
+      ]},
+      { date: "7 월 31 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 제주도: 성산, 올레길" }
+      ]},
+      { date: "8 월 1 일", events: [
+        { type: "flight", time: "16:15–17:30", desc: "✈️ 제주도 (CJU) → 서울 (GMP)" },
+        { type: "hotel", time: "18:00", desc: "🏨 체크인: 퇴계로 스테이, 서울" },
+        { type: "city", time: "저녁", desc: "🏙️ 서울 저녁 산책" }
+      ]},
+      { date: "8 월 2 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 서울: 경복궁, 북촌" }
+      ]},
+      { date: "8 월 3 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 서울: 쇼핑, 준비" }
+      ]},
+      { date: "8 월 4 일", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 이동: 서울 → 전주 (~2.5 시간)" },
+        { type: "city", time: "11:30–14:00", desc: "🏙️ 전주: 한옥마을, 김치" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 이동: 전주 → 진도 (~1.5 시간)" },
+        { type: "hotel", time: "16:00", desc: "🏨 체크인: 임회면 게스트하우스, 진도" }
+      ]},
+      { date: "8 월 5 일", events: [
+        { type: "city", time: "오전", desc: "🏙️ 진도: 신비의 바닷길" },
+        { type: "car", time: "09:00–12:00", desc: "🚗 이동: 진도 → 부산 (~3 시간)" },
+        { type: "hotel", time: "13:00", desc: "🏨 체크인: 해운대 O'guest, 부산" },
+        { type: "city", time: "저녁", desc: "🏙️ 바닷가 저녁 산책" }
+      ]},
+      { date: "8 월 6 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 부산: 해운대, 자갈치시장" }
+      ]},
+      { date: "8 월 7 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 부산: 감천문화마을, 광안리" }
+      ]},
+      { date: "8 월 8 일", events: [
+        { type: "car", time: "09:00–10:00", desc: "🚗 이동: 부산 → 경주 (~1 시간)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ 경주: 신라 고도" },
+        { type: "car", time: "14:00–15:30", desc: "🚗 이동: 경주 → 안동 (~1.5 시간)" },
+        { type: "hotel", time: "16:00", desc: "🏨 체크인: 하루 게스트하우스, 안동" }
+      ]},
+      { date: "8 월 9 일", events: [
+        { type: "car", time: "09:00–12:00", desc: "🚗 이동: 안동 → 속초 (~3 시간)" },
+        { type: "hotel", time: "12:30", desc: "🏨 체크인: 속초 섬밋베이, 속초" },
+        { type: "city", time: "저녁", desc: "🏙️ 속초 저녁 산책" }
+      ]},
+      { date: "8 월 10 일", events: [
+        { type: "car", time: "오전", desc: "🚗 이동: 속초 → 삼척 (~30 분)" },
+        { type: "city", time: "10:00–14:00", desc: "🏙️ 삼척: 해양레일바이크, 공원" },
+        { type: "car", time: "14:00–14:30", desc: "🚗 복귀: 삼척 → 속초" },
+        { type: "city", time: "저녁", desc: "🏙️ 해변, 휴식" }
+      ]},
+      { date: "8 월 11 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 설악산: 국립공원, 트레킹" }
+      ]},
+      { date: "8 월 12 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 속초: 해변, 휴식, 기념품" }
+      ]},
+      { date: "8 월 13 일", events: [
+        { type: "car", time: "09:00–11:30", desc: "🚗 이동: 속초 → 서울 (~2.5 시간)" },
+        { type: "hotel", time: "12:00", desc: "🏨 체크인: 서울 DDJ 스테이, 서울" },
+        { type: "city", time: "저녁", desc: "🏙️ 서울 마지막 산책" }
+      ]},
+      { date: "8 월 14 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 서울: 마지막 쇼핑" }
+      ]},
+      { date: "8 월 15 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 서울: 마지막 쇼핑" }
+      ]},
+      { date: "8 월 16 일", events: [
+        { type: "city", time: "종일", desc: "🏙️ 서울: 짐싸기" }
+      ]},
+      { date: "8 월 17 일", events: [
+        { type: "hotel", time: "오전", desc: "🏨 호텔 체크아웃" },
+        { type: "flight", time: "08:55–19:30", desc: "✈️ 서울 (ICN) → 상하이 (PVG) → 모스크바 (SVO)" }
+      ]}
+    ],
+    places: {
+      "제주도": [
+        { name: "한라산", google: "https://maps.app.goo.gl/2g4Z3SQXXxvkGqpt6", naver: "https://naver.me/x1VEjedN", desc: "한국 최고봉 (1950m) 의 휴화산. 낮에만 등반 가능", stars: 5, price: null },
+        { name: "만장굴", google: "https://maps.app.goo.gl/o2rre6nCiMuu9bta6", naver: "https://naver.me/5hoZPHcQ", desc: "긴 용암동굴: 독특한 종유석과 석순, 박쥐", stars: 5, price: "2,000 원" },
+        { name: "천제연 폭포", google: "https://maps.app.goo.gl/SYALg4ejWNE7kyyg7", naver: "https://naver.me/GlRYEkz9", desc: "폭포.", stars: 4, price: "2,000 원" },
+        { name: "함덕해수욕장", google: "https://maps.app.goo.gl/ZuUqWgjP4NxVHVbf7", naver: "https://naver.me/xoGtMsWM", desc: "해변.", stars: 4, price: null }
+      ],
+      "서울": [
+        { name: "에버랜드", google: "https://maps.app.goo.gl/MFSPBRxuYLR51QgY8", naver: "https://naver.me/xll3weKa", desc: "놀이기구와 동물원이 있는 인기 놀이공원", stars: 5, price: "64,000 원" },
+        { name: "롯데월드", google: "https://maps.app.goo.gl/FLVeuyR6iWGmAQAZ6", naver: "https://naver.me/xsZ4dzKC", desc: "워터슬라이드가 있는 패밀리 놀이공원", stars: 5, price: "59,000 원" },
+        { name: "N 서울타워", google: "https://maps.app.goo.gl/GtR1ecNoH3p4yyou5", naver: "https://naver.me/xJcvx9hE", desc: "파노라마 시티뷰의 1980 년 타워", stars: 5, price: "12,500 원" },
+        { name: "북촌한옥마을", google: "https://maps.app.goo.gl/uRax1hojgvW4fZMk9", naver: "https://naver.me/xUZo27qo", desc: "14 세기 전통 한옥이 있는 마을", stars: 5, price: null },
+        { name: "코엑스 스타필드도서관", google: "https://maps.app.goo.gl/hjVu7uvYHjMue8z96", naver: "https://naver.me/FgEz3XAz", desc: "6 만권의 책이 있는 아시아에서 가장 아름다운 도서관", stars: 5, price: null },
+        { name: "광장시장", google: "https://maps.app.goo.gl/RWtgP9ievju5Y2w66", naver: "https://naver.me/GvWrQ6Y3", desc: "전통 음식과 옷이 있는 활기찬 시장", stars: 4, price: null },
+        { name: "명동 쇼핑거리", google: "https://maps.app.goo.gl/wHsZoFKPSbwLhS1K6", naver: "https://naver.me/5AuFlzLZ", desc: "중앙 쇼핑 거리. 화장품과 패션", stars: 4, price: null },
+        { name: "청계천", google: "https://maps.app.goo.gl/Kw4HkgcjmcDXCw9R9", naver: "https://naver.me/GArNt9nn", desc: "도시 중심을 흐르는 개천", stars: 4, price: null },
+        { name: "명동성당", google: "https://maps.app.goo.gl/x8ML1EEn6abLbs1r5", naver: "https://naver.me/5p0OX1vZ", desc: "19 세기 고딕 성당", stars: 4, price: null },
+        { name: "홍대 거리", google: "https://maps.app.goo.gl/71yXZLrTD7XWW3fM7", naver: "https://naver.me/GdTbGq8i", desc: "형형색색 간판, 길거리 음식, 월 오브 러브", stars: 4, price: null },
+        { name: "익선동 한옥마을", google: "https://maps.app.goo.gl/K88C9Y7tbjpGkh6a8", naver: "https://naver.me/F6Q4uabg", desc: "종로구의 전통 한옥", stars: 4, price: null },
+        { name: "동대문디자인플라자 (DDP)", google: "https://maps.app.goo.gl/2Nmqfgk5k6stmNh48", naver: "https://naver.me/GahQJuwF", desc: "미래적인 건축 단지", stars: 4, price: null },
+        { name: "반포대교", google: "https://maps.app.goo.gl/c2hBBuqvvoUy1m42A", naver: "https://naver.me/xpjDITcq", desc: "야간 조명 쇼가 있는 다리", stars: 4, price: null },
+        { name: "강남역", google: "https://maps.app.goo.gl/JSy7dn9XjVLQqLSE8", naver: "https://naver.me/xqbGFAkK", desc: "강남스타일 장소. 스타일리시한 바", stars: 4, price: null },
+        { name: "강남구", google: "https://maps.app.goo.gl/FaedjLeqr14VVUdh9", naver: "https://naver.me/Ge78tAeG", desc: "마천루와 클럽이 있는 현대적인 지역", stars: 4, price: null },
+        { name: "이화여자대학교", google: "https://maps.app.goo.gl/6aP5YLshpF1RBFez6", naver: "https://naver.me/FM9hSiAo", desc: "사립 여자대학교", stars: 3, price: null }
+      ],
+      "전주": [
+        { name: "전주한옥마을", google: "https://maps.app.goo.gl/povG1N1i8TUQuYsy5", naver: "https://naver.me/GfrZEa2e", desc: "한국에서 가장 큰 한옥마을 (800+ 채)", stars: 5, price: null },
+        { name: "전주김치박물관", google: "https://maps.app.goo.gl/V9NHvDaSCcXdgqg6A", naver: "https://naver.me/GmpaAFlf", desc: "시식이 있는 김치박물관", stars: 4, price: "3,000 원" },
+        { name: "전주시", google: "https://maps.app.goo.gl/k6GTZwhr2y89W8E9A", naver: "https://naver.me/Fns6FnNi", desc: "한국의 미식 수도", stars: 4, price: null }
+      ],
+      "진도": [
+        { name: "추억 1", google: "https://maps.app.goo.gl/vY8APxRjHjM1cLu86", naver: "https://naver.me/5mveAhuB", desc: "2019 년에 살고 일했던 마을", stars: 5, price: null },
+        { name: "추억 2", google: "https://maps.app.goo.gl/oWkExLckP84Aoec57", naver: "https://naver.me/GrgAEjCJ", desc: "부두, 여기서 바다로 나갔음", stars: 5, price: null },
+        { name: "추억 3", google: "https://maps.app.goo.gl/8FnignXcCoL7sZD9A", naver: "https://naver.me/FvTeBHmH", desc: "수영하러 가던 곳", stars: 5, price: null }
+      ],
+      "부산": [
+        { name: "해동용궁사", google: "https://maps.app.goo.gl/EN5HP12hDU3t9v6Q7", naver: "https://naver.me/Gi0UPzKo", desc: "절벽 사이의 해변 사찰", stars: 5, price: null },
+        { name: "자갈치시장", google: "https://maps.app.goo.gl/hzqzbADXyNq1w54U9", naver: "https://naver.me/xaTswx6K", desc: "아시아 최대 수산물시장", stars: 5, price: null },
+        { name: "감천문화마을", google: "https://maps.app.goo.gl/th2ccHaMFK3GyTHA9", naver: "https://naver.me/FwGwzrmu", desc: "알록달록한 집들이 있는 그림같은 마을", stars: 4, price: "5,000 원" },
+        { name: "해운대해수욕장", google: "https://maps.app.goo.gl/oHpFrAyibsCshKCr8", naver: "https://naver.me/xy72cIw2", desc: "부산의 대표 해변", stars: 4, price: null },
+        { name: "광안리해수욕장", google: "https://maps.app.goo.gl/gGVMEhn4ikaAYYTm9", naver: "https://naver.me/xwo2SViv", desc: "광안대교가 보이는 곡선형 해변", stars: 4, price: null },
+        { name: "해운대 블루라인파크", google: "https://maps.app.goo.gl/nqqFpzfLmDCg22N39", naver: "https://naver.me/xG0nM60D", desc: "해안가 4.8km 공원, 스카이캡슐", stars: 4, price: "15,000 원" },
+        { name: "아홉산숲", google: "https://maps.app.goo.gl/GcdrV3QAfdac3GJ88", naver: "https://naver.me/GRDv75wV", desc: "왕대나무숲", stars: 4, price: null },
+        { name: "다대포해수욕장", google: "https://maps.app.goo.gl/tLteQedVF2u6487XA", naver: "https://naver.me/xEXgzP4q", desc: "바다 해변. 얕음", stars: 3, price: null }
+      ],
+      "경주": [
+        { name: "불국사", google: "https://maps.app.goo.gl/TqjFrJ9Qv1XNUjHr6", naver: "https://naver.me/IFEwRXi9", desc: "8 세기 불교건축의 걸작, 유네스코", stars: 5, price: "6,000 원" },
+        { name: "첨성대", google: "https://maps.app.goo.gl/ioybbGuoWnpKxVDU6", naver: "https://naver.me/xhPsNLNy", desc: "동아시아에서 가장 오래된 천문대", stars: 5, price: null },
+        { name: "대릉원", google: "https://maps.app.goo.gl/yqiDSL2VajFBNrTf7", naver: "https://naver.me/xTy7kMTD", desc: "신라 왕릉 공원", stars: 4, price: "2,000 원" },
+        { name: "월정사", google: "https://maps.app.goo.gl/5zaoUtPtXhHuHvwN7", naver: "https://naver.me/GKImFaY4", desc: "고분과 연못이 있는 공원", stars: 4, price: null },
+        { name: "경주시", google: "https://maps.app.goo.gl/nd5b6durVxFGzUVD8", naver: "https://naver.me/FFqw0uRe", desc: "신라 고도", stars: 4, price: null }
+      ],
+      "안동": [
+        { name: "하회마을", google: "https://maps.app.goo.gl/F751rGBbkpVj7MhP6", naver: "https://naver.me/58qh7AY3", desc: "전통 한옥마을, 유네스코", stars: 5, price: "5,000 원" },
+        { name: "안동시", google: "https://maps.app.goo.gl/9ZziEa6FFSQTNmqT7", naver: "https://naver.me/xF4QJRQ9", desc: "유교의 중심", stars: 4, price: null }
+      ],
+      "삼척": [
+        { name: "삼척해양레일바이크", google: "https://maps.app.goo.gl/98DJqVfivdeHAmWt9", naver: "https://naver.me/FJOBtxc0", desc: "해안가 자전거코스 5.4km", stars: 4, price: "15,000 원" },
+        { name: "해신당공원", google: "https://maps.app.goo.gl/27gyJFhHv6CiuDSz6", naver: "https://naver.me/5YoneVdm", desc: "풍요를 기원하는 조각 공원", stars: 4, price: "3,000 원" }
+      ],
+      "속초": [
+        { name: "설악산국립공원", google: "https://maps.app.goo.gl/SL7yfUmvvSqQceR8A", naver: "https://naver.me/x2Y5wT9x", desc: "국립공원 정문", stars: 5, price: null },
+        { name: "울산바위", google: "https://maps.app.goo.gl/AD5BEQwCuLJu7ivB6", naver: "https://naver.me/xeFH6KDJ", desc: "800 개 계단이 있는 바위, 멋진 전망", stars: 5, price: null },
+        { name: "설악산케이블카", google: "https://maps.app.goo.gl/4Pnke77DDcjMynSq8", naver: "https://naver.me/GahLjwl8", desc: "파노라마뷰 케이블카", stars: 4, price: "12,500 원" },
+        { name: "신흥사", google: "https://maps.app.goo.gl/4eUe1KpCvvLRNebB6", naver: "https://naver.me/GRDv7pxG", desc: "고찰", stars: 4, price: null },
+        { name: "천진해수욕장", google: "https://maps.app.goo.gl/6KptXjrCJmS8jQYM6", naver: "https://naver.me/xllOJrmi", desc: "해변", stars: 4, price: null }
+      ]
+    },
+    eats: {
+      "제주도": [
+        { name: "제주포도원흑돼지", google: "https://maps.app.goo.gl/kkvni1HTpTYmhJ9J9", naver: "https://naver.me/FwGwn3PL", desc: "전통 제주 흑돼지 요리", dish: "흑돼지", avgCheck: "25,000 원", stars: 4.7 },
+        { name: "연동돌담흑돼지", google: "https://maps.app.goo.gl/byomKKUr2QdVomAW9", naver: "https://naver.me/xHEb2Uwx", desc: "시그니처 요리! 부드러운 구이 흑돼지", dish: "제주흑돼지", avgCheck: "22,000 원", stars: 4.6 },
+        { name: "함덕해변해산물", google: "https://maps.app.goo.gl/Zz8hCmGtQ4kK2vU26", naver: "https://naver.me/F058KNB5", desc: "함덕해변 근처 식당. 해녀가 잡은 신선한 해산물", dish: "성게, 전복", avgCheck: "30,000 원", stars: 4.5 },
+        { name: "고집돌우럭", google: "https://maps.app.goo.gl/M5miMHzTKT6tTPQ4A", naver: "https://naver.me/GqfHBhSX", desc: "바다뷰 해산물", dish: "돌솥 해산물", avgCheck: "28,000 원", stars: 4.5 },
+        { name: "삼성혈해물탕", google: "https://maps.app.goo.gl/XbrfPUPWLo8t5RPu5", naver: "https://naver.me/xucpY1fK", desc: "신선한 생선과 조개가 든 진한 해물탕", dish: "해물탕", avgCheck: "20,000 원", stars: 4.4 }
+      ],
+      "서울": [
+        { name: "엔그릴", google: "https://maps.app.goo.gl/XXXLPP5eafu27RJN7", naver: "https://naver.me/FlBYD6Ii", desc: "360 도 전망의 레스토랑. 특별한 날", dish: "파인다이닝", avgCheck: "80,000 원", stars: 4.7 },
+        { name: "북촌전통다원", google: "https://maps.app.goo.gl/eypKWbH6RA5QVhzA6", naver: "https://naver.me/G7NSz6p0", desc: "전통가옥의 아늑한 곳", dish: "한국차, 한과", avgCheck: "12,000 원", stars: 4.7 },
+        { name: "명동교자", google: "https://maps.app.goo.gl/9GfXED4rtdFxmP1M8", naver: "https://naver.me/GP24T98z", desc: "50 년 전통의 명동 전설의 맛집", dish: "칼국수, 만두", avgCheck: "12,000 원", stars: 4.6 },
+        { name: "익선동한옥카페", google: "https://maps.app.goo.gl/peAhgNSNjjyw4oyj7", naver: "https://naver.me/GLhYIjTW", desc: "한옥에 있는 수백 개의 카페가 있는 트렌디한 지역", dish: "한국 디저트", avgCheck: "10,000 원", stars: 4.6 },
+        { name: "광장시장", google: "https://maps.app.goo.gl/S6Cje8u5ZuctcHKy9", naver: "https://naver.me/xJcnMIjA", desc: "가장 오래된 시장. 할머니들의 길거리음식", dish: "빈대떡, 김밥", avgCheck: "8,000 원", stars: 4.5 },
+        { name: "코엑스스타필드도서관카페", google: "https://maps.app.goo.gl/riKB21QGhFyF8bcR7", naver: "https://naver.me/FHOZS8yl", desc: "아시아에서 가장 아름다운 도서관의 카페", dish: "커피, 디저트", avgCheck: "7,000 원", stars: 4.5 },
+        { name: "강남숯불갈비", google: "https://maps.app.goo.gl/gVMLKfH4RarBGsXdA", naver: "https://naver.me/GlRtstV2", desc: "스타일리시한 강남 레스토랑. 높은 고기 품질", dish: "한우, 갈비", avgCheck: "40,000 원", stars: 4.5 },
+        { name: "왕비집명동", google: "https://maps.app.goo.gl/wJFriTrE4Kvj8DVE9", naver: "https://naver.me/F4WiIizF", desc: "인기 한국 숯불갈비 체인점", dish: "삼겹살", avgCheck: "25,000 원", stars: 4.4 },
+        { name: "홍대닭갈비", google: "https://maps.app.goo.gl/wE1f5ytm673pCKv88", naver: "https://naver.me/Ge7YaW3T", desc: "홍대의 젊은 곳", dish: "닭갈비", avgCheck: "18,000 원", stars: 4.3 },
+        { name: "홍대길거리음식", google: "https://maps.app.goo.gl/KoitiQ63Jrpxtrqx6", naver: "https://naver.me/GT47igkH", desc: "홍익대학교거리 길거리음식", dish: "떡볶이, 어묵, 핫도그", avgCheck: "5,000 원", stars: 4.2 }
+      ],
+      "전주": [
+        { name: "한국집", google: "https://maps.app.goo.gl/Z3xwtPVif4R5w4hi6", naver: "https://naver.me/x3cOY5zy", desc: "가장 오래된 비빔밥집 (1952 년부터!)", dish: "돌솥비빔밥", avgCheck: "12,000 원", stars: 4.7 },
+        { name: "고궁수라간", google: "https://maps.app.goo.gl/drdaeYG6DioZEne7A", naver: "https://naver.me/I5wj8JJ0", desc: "최고의 비빔밥집 중 하나!", dish: "전주비빔밥", avgCheck: "15,000 원", stars: 4.6 },
+        { name: "전주한옥마을길거리음식", google: "https://maps.app.goo.gl/US8YxCkGmuHN1rhH9", naver: "https://naver.me/GYDpVA19", desc: "한옥마을 간식", dish: "전통 과자", avgCheck: "5,000 원", stars: 4.4 }
+      ],
+      "진도": [
+        { name: "소담", google: "https://maps.app.goo.gl/uREFpsm6b4dGT8qu5", naver: "https://naver.me/Ge7YaFme", desc: "아늑한 가정식 한식 레스토랑", dish: "해물탕", avgCheck: "20,000 원", stars: 4.0 },
+        { name: "용성식당", google: "https://maps.app.goo.gl/jxAiUs6YHHKjDr3w7", naver: "https://naver.me/5t7Lrhh6", desc: "전통 해산물 레스토랑", dish: "구운 생선", avgCheck: "18,000 원", stars: 4.0 },
+        { name: "이화식당", google: "https://maps.app.goo.gl/5aZCPqAsvGN5DVf57", naver: "https://naver.me/Gmpa1987", desc: "아늑한 분위기의 가정식 레스토랑", dish: "해물탕", avgCheck: "15,000 원", stars: 4.0 }
+      ],
+      "부산": [
+        { name: "해운대암소갈비집", google: "https://maps.app.goo.gl/2yogqxPPFTmLFmTc7", naver: "https://naver.me/5LHsNhM3", desc: "부산 최고의 숯불갈비 맛집. 프리미엄 한우", dish: "한우갈비", avgCheck: "45,000 원", stars: 4.7 },
+        { name: "밀락회센터", google: "https://maps.app.goo.gl/n9zXr4Qy4J7QjvzGA", naver: "https://naver.me/GQGKgYLX", desc: "수십 개의 식당이 있는 회센터", dish: "활어회", avgCheck: "40,000 원", stars: 4.5 },
+        { name: "광안리해변식당", google: "https://maps.app.goo.gl/HTLEjf5n7A5GwuVa9", naver: "https://naver.me/FiPWsOaf", desc: "불빛이 보이는 광안리 해변 식당", dish: "해산물, 맥주", avgCheck: "25,000 원", stars: 4.5 },
+        { name: "총각상회자갈치시장", google: "https://maps.app.goo.gl/3jDzgSmUaCsXaYg47", naver: "https://naver.me/5MvPQS1q", desc: "시장에서 바로 먹기! 가장 신선한 해산물", dish: "회, 산낙지", avgCheck: "35,000 원", stars: 4.5 },
+        { name: "개미집서면", google: "https://maps.app.goo.gl/VDTJrTDK7gQ5N7Sd7", naver: "https://naver.me/5mveVBNc", desc: "가성비 좋은 인기 레스토랑", dish: "조리개해물탕", avgCheck: "20,000 원", stars: 4.4 }
+      ],
+      "경주": [
+        { name: "황남빵본점", google: "https://maps.app.goo.gl/3Y49zeHmZUzAWaEv7", naver: "https://naver.me/GZDMRspT", desc: "경주의 전설적인 빵! 1939 년부터 구워짐", dish: "황남빵", avgCheck: "2,000 원", stars: 4.8 },
+        { name: "스타벅스한옥", google: "https://maps.app.goo.gl/h3NGUnbd2rxir1A49", naver: "https://naver.me/FpwVtxMT", desc: "한옥에 있는 스타벅스", dish: "커피, 디저트", avgCheck: "6,000 원", stars: 4.5 },
+        { name: "교리김밥", google: "https://maps.app.goo.gl/vShDCxT34ueAPT7RA", naver: "https://naver.me/5JqYDp2o", desc: "전통 김밥 맛집", dish: "김밥", avgCheck: "5,000 원", stars: 4.5 }
+      ],
+      "안동": [
+        { name: "안동찜닭골목", google: "https://maps.app.goo.gl/NsMA9HFNURKJeVtk6", naver: "https://naver.me/xtNbY4Xg", desc: "수십 개의 찜닭집이 있는 골목!", dish: "안동찜닭", avgCheck: "18,000 원", stars: 4.5 },
+        { name: "옥야", google: "https://maps.app.goo.gl/CDx49fwiHDUNHobB9", naver: "https://naver.me/574p9Qxf", desc: "안동 전통 요리 레스토랑", dish: "안동국시", avgCheck: "12,000 원", stars: 4.4 }
+      ],
+      "삼척": [
+        { name: "하운각홍콩중식", google: "https://maps.app.goo.gl/dwXQxbQMdqDAKgxW8", naver: "https://naver.me/F3EIAY8f", desc: "삼척의 정통 홍콩 요리", dish: "딤섬, 오리", avgCheck: "22,000 원", stars: 4.3 },
+        { name: "아락스", google: "https://maps.app.goo.gl/mmy3uktTzx8WHjBp8", naver: "https://naver.me/58qhTqYC", desc: "바다뷰 모던 카페. 사진 찍기 좋음", dish: "커피, 치즈케이크", avgCheck: "12,000 원", stars: 4.4 }
+      ],
+      "속초": [
+        { name: "청호동아바이마을", google: "https://maps.app.goo.gl/74maPUUkfnqdR5hb9", naver: "https://naver.me/FpwVtwGC", desc: "해녀가 잡은 신선한 해산물", dish: "전복", avgCheck: "35,000 원", stars: 4.9 },
+        { name: "황가네찜", google: "https://maps.app.goo.gl/k6fScSGt8j5HoEaL8", naver: "https://naver.me/GJZ3O7Lb", desc: "전통 생선찜 맛집", dish: "생선찜", avgCheck: "28,000 원", stars: 4.5 },
+        { name: "속초관광수산시장", google: "https://maps.app.goo.gl/BvnGzoeeSCZVLRV76", naver: "https://naver.me/5nhDCvdn", desc: "먹거리가 있는 시장", dish: "길거리음식", avgCheck: "10,000 원", stars: 4.3 },
+        { name: "청초수물회", google: "https://maps.app.goo.gl/6JSvSoz41R6qxZbT7", naver: "https://naver.me/GGGuEETi", desc: "시원한 생선물회 맛집", dish: "물회", avgCheck: "15,000 원", stars: 4.2 }
+      ]
+    },
+    flights: [
+      { name: "모스크바 → 제주도 (베이징 경유)", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" },
+      { name: "제주도 → 서울", date: "01.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Jeju-Seul.pdf" },
+      { name: "서울 → 모스크바 (상하이 경유)", date: "17.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Seul-Moskwa.pdf" }
+    ]
+  }
 };
 
 let currentLang = 'ru';
-let ui = uiTranslations['ru'];
-let content = contentTranslations['ru'];
+let ui = DB.ru.ui;
+let content = DB.ru;
 
 function t(key, params = {}) {
 let text = ui[key] || key;
@@ -1013,8 +1276,8 @@ return text;
 
 function setLanguage(lang) {
 currentLang = lang;
-ui = uiTranslations[lang] || uiTranslations['ru'];
-content = contentTranslations[lang] || contentTranslations['ru'];
+ui = DB[lang].ui;
+content = DB[lang];
 
 document.querySelectorAll('[data-i18n]').forEach(el => {
 el.textContent = t(el.getAttribute('data-i18n'));
@@ -1046,10 +1309,6 @@ const full = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
 return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
-
-const flightTickets = [
-{ name: currentLang === 'ru' ? "Москва → Чеджудо" : currentLang === 'en' ? "Moscow → Jeju" : currentLang === 'de' ? "Moskau → Jeju" : "모스크바 → 제주도", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" }
-];
 
 const accommodations = {
 jeju: [{ name: "Seogwipo-si", address: "271 Taesinhaean-ro, Seogwipo-si", google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77", naver: "https://naver.me/5OQ7cmRT", booking: "bookings/jeju-seogwipo.pdf", dates: "29–31.07" }],
@@ -1091,7 +1350,7 @@ function renderDocuments() {
 return `<div class="documents-container">
 <h2 data-i18n="docs_title">${t('docs_title')}</h2>
 <div style="margin-bottom:24px"><h3 data-i18n="docs_flights">${t('docs_flights')}</h3>
-<div class="documents-grid">${flightTickets.map(ticket => `
+<div class="documents-grid">${content.flights.map(ticket => `
 <a href="${ticket.file}" target="_blank" class="document-link">
 <span style="font-size:1.5em">✈️</span><div style="flex:1">
 <div style="font-weight:600;margin-bottom:4px">${ticket.name}</div>
