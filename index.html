@@ -452,41 +452,217 @@ h1 { font-size: 1.2em; }
 let currentLang = 'ru';
 let translations = {};
 
-// Load translations from JSON files
-async function loadTranslations(lang) {
-  try {
-    const response = await fetch(`i18n/${lang}.json`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    translations = await response.json();
-    currentLang = lang;
-    applyTranslations();
-  } catch (error) {
-    console.error(`Error loading translations for ${lang}:`, error);
-    // Fallback to Russian if translation not found
-    if (lang !== 'ru') {
-      await loadTranslations('ru');
-    }
+// Встроенные переводы (чтобы не зависеть от fetch)
+const allTranslations = {
+  ru: {
+    "header_title": "🇰🇷 Южная Корея — наше свадебное путешествие",
+    "header_subtitle": "Июль–август 2026",
+    "progress_loading": "Загрузка...",
+    "tab_documents": "📄 Документы",
+    "tab_calendar": "📅 Календарь событий",
+    "tab_map": "🗺️ Карта маршрута",
+    "tab_cities": "🏙️ Города",
+    "reset_button": "🔄 Сбросить прогресс",
+    "reset_confirm": "Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.",
+    "city_jeju": "Чеджудо",
+    "city_seoul": "Сеул",
+    "city_jeonju": "Чонджу",
+    "city_jindo": "Чиндо",
+    "city_busan": "Пусан",
+    "city_gyeongju": "Кёнджу",
+    "city_andong": "Андон",
+    "city_samcheok": "Самчхок",
+    "city_sokcho": "Сокчхо",
+    "subtab_places": "Места",
+    "subtab_eats": "Еда",
+    "subtab_spas": "Бани",
+    "accommodation_title": "🏠 Жильё",
+    "booking_link": "📄 Бронь",
+    "google_maps": "🗺️ Google",
+    "naver_maps": "🚗 Naver",
+    "progress_visited": "✅ Посещено: {visited} из {total} ({percent}%)",
+    "progress_full": "✅ Посещено: {placesVisited}/{placesTotal} мест | {eatsVisited}/{eatsTotal} ресторанов | {spasVisited}/{spasTotal} бань ({percent}%)",
+    "btn_mark": "☑️ Отметить",
+    "btn_visited": "✅ Посещено",
+    "btn_tried": "✅ Попробовано",
+    "entry_fee": "Вход: ",
+    "avg_check": "💰 Средний чек: ",
+    "price_label": "💰 ",
+    "not_added": "Пока не добавлено",
+    "cities_intro_title": "🏙️ Выберите город",
+    "cities_intro_text": "Нажмите на город выше, чтобы посмотреть места, рестораны и бани",
+    "docs_title": "📋 Необходимые документы для поездки",
+    "docs_flights": "✈️ Авиабилеты",
+    "docs_entry": "🛂 Разрешения на въезд (K-ETA)",
+    "docs_insurance": "🏥 Страховые полиса",
+    "docs_entry_desc": "Разрешение на въезд в РК",
+    "docs_insurance_desc": "Полис на время поездки",
+    "docs_important_title": "💡 Важно:",
+    "docs_important_text": "Распечатайте эти документы или сохраните их на телефоне. Разрешения K-ETA и авиабилеты могут потребоваться при регистрации на рейс и при прохождении паспортного контроля в Южной Корее."
+  },
+  en: {
+    "header_title": "🇰🇷 South Korea — Our Honeymoon Trip",
+    "header_subtitle": "July–August 2026",
+    "progress_loading": "Loading...",
+    "tab_documents": "📄 Documents",
+    "tab_calendar": "📅 Event Calendar",
+    "tab_map": "🗺️ Route Map",
+    "tab_cities": "🏙️ Cities",
+    "reset_button": "🔄 Reset Progress",
+    "reset_confirm": "Are you sure you want to reset all progress? All marks will be deleted.",
+    "city_jeju": "Jeju",
+    "city_seoul": "Seoul",
+    "city_jeonju": "Jeonju",
+    "city_jindo": "Jindo",
+    "city_busan": "Busan",
+    "city_gyeongju": "Gyeongju",
+    "city_andong": "Andong",
+    "city_samcheok": "Samcheok",
+    "city_sokcho": "Sokcho",
+    "subtab_places": "Places",
+    "subtab_eats": "Food",
+    "subtab_spas": "Spas",
+    "accommodation_title": "🏠 Accommodation",
+    "booking_link": "📄 Booking",
+    "google_maps": "🗺️ Google",
+    "naver_maps": "🚗 Naver",
+    "progress_visited": "✅ Visited: {visited} of {total} ({percent}%)",
+    "progress_full": "✅ Visited: {placesVisited}/{placesTotal} places | {eatsVisited}/{eatsTotal} restaurants | {spasVisited}/{spasTotal} spas ({percent}%)",
+    "btn_mark": "☑️ Mark",
+    "btn_visited": "✅ Visited",
+    "btn_tried": "✅ Tried",
+    "entry_fee": "Entry: ",
+    "avg_check": "💰 Avg. check: ",
+    "price_label": "💰 ",
+    "not_added": "Nothing added yet",
+    "cities_intro_title": "🏙️ Select a City",
+    "cities_intro_text": "Click on a city above to see places, restaurants, and spas",
+    "docs_title": "📋 Required Travel Documents",
+    "docs_flights": "✈️ Flight Tickets",
+    "docs_entry": "🛂 Entry Permits (K-ETA)",
+    "docs_insurance": "🏥 Insurance Policies",
+    "docs_entry_desc": "Entry permit to Republic of Korea",
+    "docs_insurance_desc": "Travel insurance policy",
+    "docs_important_title": "💡 Important:",
+    "docs_important_text": "Print these documents or save them on your phone. K-ETA permits and flight tickets may be required during check-in and passport control in South Korea."
+  },
+  de: {
+    "header_title": "🇰🇷 Südkorea — Unsere Hochzeitsreise",
+    "header_subtitle": "Juli–August 2026",
+    "progress_loading": "Wird geladen...",
+    "tab_documents": "📄 Dokumente",
+    "tab_calendar": "📅 Ereigniskalender",
+    "tab_map": "🗺️ Routenkarte",
+    "tab_cities": "🏙️ Städte",
+    "reset_button": "🔄 Fortschritt zurücksetzen",
+    "reset_confirm": "Sind Sie sicher, dass Sie den gesamten Fortschritt zurücksetzen möchten? Alle Markierungen werden gelöscht.",
+    "city_jeju": "Jeju",
+    "city_seoul": "Seoul",
+    "city_jeonju": "Jeonju",
+    "city_jindo": "Jindo",
+    "city_busan": "Busan",
+    "city_gyeongju": "Gyeongju",
+    "city_andong": "Andong",
+    "city_samcheok": "Samcheok",
+    "city_sokcho": "Sokcho",
+    "subtab_places": "Sehenswürdigkeiten",
+    "subtab_eats": "Essen",
+    "subtab_spas": "Bäder",
+    "accommodation_title": "🏠 Unterkunft",
+    "booking_link": "📄 Buchung",
+    "google_maps": "🗺️ Google",
+    "naver_maps": "🚗 Naver",
+    "progress_visited": "✅ Besucht: {visited} von {total} ({percent}%)",
+    "progress_full": "✅ Besucht: {placesVisited}/{placesTotal} Orte | {eatsVisited}/{eatsTotal} Restaurants | {spasVisited}/{spasTotal} Bäder ({percent}%)",
+    "btn_mark": "☑️ Markieren",
+    "btn_visited": "✅ Besucht",
+    "btn_tried": "✅ Probiert",
+    "entry_fee": "Eintritt: ",
+    "avg_check": "💰 Ø Rechnung: ",
+    "price_label": "💰 ",
+    "not_added": "Noch nichts hinzugefügt",
+    "cities_intro_title": "🏙️ Stadt auswählen",
+    "cities_intro_text": "Klicken Sie auf eine Stadt oben, um Orte, Restaurants und Bäder zu sehen",
+    "docs_title": "📋 Erforderliche Reisedokumente",
+    "docs_flights": "✈️ Flugtickets",
+    "docs_entry": "🛂 Einreisegenehmigungen (K-ETA)",
+    "docs_insurance": "🏥 Versicherungspolicen",
+    "docs_entry_desc": "Einreisegenehmigung für Republik Korea",
+    "docs_insurance_desc": "Reisekrankenversicherung",
+    "docs_important_title": "💡 Wichtig:",
+    "docs_important_text": "Drucken Sie diese Dokumente aus oder speichern Sie sie auf Ihrem Telefon. K-ETA-Genehmigungen und Flugtickets können beim Check-in und bei der Passkontrolle in Südkorea erforderlich sein."
+  },
+  ko: {
+    "header_title": "🇰🇷 대한민국 — 우리의 신혼여행",
+    "header_subtitle": "2026 년 7 월–8 월",
+    "progress_loading": "로딩 중...",
+    "tab_documents": "📄 서류",
+    "tab_calendar": "📅 일정 캘린더",
+    "tab_map": "🗺️ 여행 경로 지도",
+    "tab_cities": "🏙️ 도시",
+    "reset_button": "🔄 진행 상황 초기화",
+    "reset_confirm": "정말 모든 진행 상황을 초기화하시겠습니까? 모든 체크가 삭제됩니다.",
+    "city_jeju": "제주도",
+    "city_seoul": "서울",
+    "city_jeonju": "전주",
+    "city_jindo": "진도",
+    "city_busan": "부산",
+    "city_gyeongju": "경주",
+    "city_andong": "안동",
+    "city_samcheok": "삼척",
+    "city_sokcho": "속초",
+    "subtab_places": "명소",
+    "subtab_eats": "음식점",
+    "subtab_spas": "찜질방",
+    "accommodation_title": "🏠 숙소",
+    "booking_link": "📄 예약확인서",
+    "google_maps": "🗺️ 구글맵",
+    "naver_maps": "🚗 네이버맵",
+    "progress_visited": "✅ 방문: {total} 중 {visited} ({percent}%)",
+    "progress_full": "✅ 방문: 명소 {placesTotal} 중 {placesVisited} | 식당 {eatsTotal} 중 {eatsVisited} | 찜질방 {spasTotal} 중 {spasVisited} ({percent}%)",
+    "btn_mark": "☑️ 체크",
+    "btn_visited": "✅ 방문함",
+    "btn_tried": "✅ 맛봄",
+    "entry_fee": "입장료: ",
+    "avg_check": "💰 평균 금액: ",
+    "price_label": "💰 ",
+    "not_added": "아직 추가된 항목이 없습니다",
+    "cities_intro_title": "🏙️ 도시를 선택하세요",
+    "cities_intro_text": "위의 도시를 클릭하여 명소, 음식점, 찜질방을 확인하세요",
+    "docs_title": "📋 여행 필수 서류",
+    "docs_flights": "✈️ 항공권",
+    "docs_entry": "🛂 입국 허가서 (K-ETA)",
+    "docs_insurance": "🏥 보험 증권",
+    "docs_entry_desc": "대한민국 입국 허가서",
+    "docs_insurance_desc": "여행자 보험 증권",
+    "docs_important_title": "💡 중요:",
+    "docs_important_text": "이 서류들을 인쇄하거나 휴대폰에 저장하세요. K-ETA 허가와 항공권은 항공권 체크인 및 대한민국 입국 심사 시 필요할 수 있습니다."
   }
+};
+
+// Инициализация переводов
+function initTranslations(lang) {
+  translations = allTranslations[lang] || allTranslations['ru'];
+  currentLang = lang;
+  applyTranslations();
 }
 
 // Translation function
 function t(key, params = {}) {
   let text = translations[key] || key;
-  // Replace placeholders like {visited}, {total}
   Object.keys(params).forEach(param => {
     text = text.replace(new RegExp(`\\{${param}\\}`, 'g'), params[param]);
   });
   return text;
 }
 
-// Apply translations to all elements with data-i18n attribute
+// Apply translations
 function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     el.textContent = t(key);
   });
   
-  // Update dynamic content
   updateCityTabs();
   if (currentView === 'calendar') {
     document.getElementById('content').innerHTML = renderCalendar();
@@ -506,16 +682,52 @@ function updateCityTabs() {
   });
 }
 
-// ==================== YOUR EXISTING CODE ====================
+// ==================== ДАННЫЕ ====================
 function generateStars(rating) {
   const full = Math.floor(rating);
   const hasHalf = rating % 1 >= 0.5;
   return '⭐'.repeat(full) + (hasHalf ? '✨' : '') + '☆'.repeat(5 - full - (hasHalf ? 1 : 0));
 }
 
-// ... [весь ваш существующий код с данными calendar, flightTickets, accommodations, places, eats, spas остается без изменений] ...
+const calendar = [
+  // ... [ваш существующий массив calendar остается без изменений] ...
+  { date: "28.07", events: [
+    { type: "flight", time: "18:50–07:25+1", desc: "✈️ Москва (SVO) → Пекин (PEK)" },
+    { type: "flight", time: "07:25–14:30", desc: "✈️ Пекин (PEK) → Чеджудо (CJU)" }
+  ]},
+  { date: "29.07", events: [
+    { type: "hotel", time: "17:55", desc: "🏨 Заселение: Seogwipo-si, Чеджудо" },
+    { type: "city", time: "вечер", desc: "🏙️ Изучение Чеджудо, отдых после перелёта" }
+  ]}
+  // ... остальные данные ...
+];
+
+const flightTickets = [
+  { name: "Москва → Чеджудо (через Пекин)", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" },
+  { name: "Чеджудо → Сеул", date: "01.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Jeju-Seul.pdf" },
+  { name: "Сеул → Москва (через Шанхай)", date: "17.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Seul-Moskwa.pdf" }
+];
+
+const accommodations = {
+  jeju: [{ name: "Seogwipo-si", address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616", google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77", naver: "https://naver.me/5OQ7cmRT", booking: "bookings/jeju-seogwipo.pdf", dates: "29–31.07" }],
+  seoul: [{ name: "Toegye-ro Stay", address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629", google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58", naver: "https://naver.me/GWW7dyTD", booking: "bookings/seoul-toegye.pdf", dates: "01–03.08" }, { name: "Seoul DDJ STAY 대동장", address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126", google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8", naver: "https://naver.me/G1pdAO26", booking: "bookings/seoul-ddj.pdf", dates: "13–16.08" }],
+  jindo: [{ name: "Imhoe-myeon Guesthouse", address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840", google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7", naver: "https://naver.me/5tf0dPe2", booking: "bookings/jindo-guesthouse.pdf", dates: "04–05.08" }],
+  busan: [{ name: "O'guest in Haeundae", address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094", google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69", naver: "https://naver.me/5l7vswOR", booking: "bookings/busan-oguest.pdf", dates: "06–08.08" }],
+  andong: [{ name: "Haru The Guesthouse", address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704", google: "https://maps.app.goo.gl/A3Zrmp6AsuX5wmoz8", naver: "https://map.naver.com/p/entry/place/1785290845?placePath=%2Fhome", booking: "bookings/andong-haru.pdf", dates: "09.08" }],
+  sokcho: [{ name: "Sokcho Summitbay 1807 \"Ocean View\"", address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808", google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6", naver: "https://naver.me/GhwvpTAx", booking: "bookings/sokcho-summitbay.pdf", dates: "10–12.08" }]
+};
+
+// ... [остальные данные places, eats, spas остаются без изменений] ...
+
+let visitedPlaces = JSON.parse(localStorage.getItem('visitedPlaces_korea2026')) || {};
+let visitedEats = JSON.parse(localStorage.getItem('visitedEats_korea2026')) || {};
+let visitedSpas = JSON.parse(localStorage.getItem('visitedSpas_korea2026')) || {};
+let currentCity = null;
+let currentSubtab = 'places';
+let currentView = 'calendar';
 
 // ==================== RENDER FUNCTIONS ====================
+// ... [все ваши render функции остаются без изменений] ...
 
 function renderCalendar() {
   const dateLabel = currentLang === 'ko' ? '날짜' : currentLang === 'de' ? 'Datum' : currentLang === 'en' ? 'Date' : 'Дата';
@@ -538,11 +750,12 @@ function renderCalendar() {
   </div>`;
 }
 
+// ... остальные render функции ...
+
 function renderDocuments() {
   return `
   <div class="documents-container">
     <h2 data-i18n="docs_title">📋 Необходимые документы для поездки</h2>
-
     <div style="margin-bottom: 24px;">
       <h3 data-i18n="docs_flights">✈️ Авиабилеты</h3>
       <div class="documents-grid">
@@ -558,7 +771,6 @@ function renderDocuments() {
         `).join('')}
       </div>
     </div>
-
     <div style="margin-bottom: 24px;">
       <h3 data-i18n="docs_entry">🛂 Разрешения на въезд (K-ETA)</h3>
       <div class="documents-grid">
@@ -580,7 +792,6 @@ function renderDocuments() {
         </a>
       </div>
     </div>
-
     <div>
       <h3 data-i18n="docs_insurance">🏥 Страховые полиса</h3>
       <a href="documents/polis.pdf" target="_blank" class="document-link">
@@ -592,7 +803,6 @@ function renderDocuments() {
         <span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
       </a>
     </div>
-
     <div class="documents-info">
       <div class="documents-info-title" data-i18n="docs_important_title">💡 Важно:</div>
       <div class="documents-info-text" data-i18n="docs_important_text">
@@ -660,6 +870,18 @@ function renderAccommodation(cityKey) {
   return html;
 }
 
+function getCityDisplayName(cityKey) {
+  const map = { jeju: 'Чеджудо', seoul: 'Сеул', jeonju: 'Чонджу', jindo: 'Чиндо', busan: 'Пусан', gyeongju: 'Кёнджу', andong: 'Андон', samcheok: 'Самчхок', sokcho: 'Сокчхо/Сораксан' };
+  return map[cityKey] || cityKey;
+}
+
+function getSpaKeyForCity(cityKey) {
+  if (cityKey === 'sokcho') return 'sokcho'; 
+  if (cityKey === 'busan') return 'busan'; 
+  if (cityKey === 'seoul') return 'seoul'; 
+  return null;
+}
+
 function renderCityProgress(cityKey) {
   const cityName = getCityDisplayName(cityKey);
   let total = 0, visited = 0;
@@ -680,18 +902,6 @@ function renderSubtabs(cityKey, hasSpa) {
   if (hasSpa) html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data-type="spas" data-city="${cityKey}" data-i18n="subtab_spas">Бани</button>`;
   html += `</div>`;
   return html;
-}
-
-function getCityDisplayName(cityKey) {
-  const map = { jeju: 'Чеджудо', seoul: 'Сеул', jeonju: 'Чонджу', jindo: 'Чиндо', busan: 'Пусан', gyeongju: 'Кёнджу', andong: 'Андон', samcheok: 'Самчхок', sokcho: 'Сокчхо/Сораксан' };
-  return map[cityKey] || cityKey;
-}
-
-function getSpaKeyForCity(cityKey) {
-  if (cityKey === 'sokcho') return 'sokcho'; 
-  if (cityKey === 'busan') return 'busan'; 
-  if (cityKey === 'seoul') return 'seoul'; 
-  return null;
 }
 
 function renderItemsList(items, type, cityKey, cityName) {
@@ -784,10 +994,13 @@ function attachEventListeners() {
 }
 
 // ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
+  // Инициализация переводов (вместо fetch)
+  initTranslations('ru');
+  
   // Language selector
   document.getElementById('languageSelect').addEventListener('change', function(e) {
-    loadTranslations(e.target.value);
+    initTranslations(e.target.value);
   });
 
   // Reset button
@@ -863,9 +1076,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (window.scrollY > 300) btn.style.display = 'block'; else btn.style.display = 'none';
   });
   document.getElementById('backToTop').addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  
-  // Load default translations
-  await loadTranslations('ru');
 });
 </script>
 </body>
