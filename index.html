@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>🇰🇷 Южная Корея — Наше свадебное путешествие</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
 --primary: #2a9d8f;
@@ -27,7 +27,7 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+font-family: 'Noto Sans', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 background-color: #fafbfb;
 background-image: radial-gradient(#e0f2f1 1.5px, transparent 1.5px);
 background-size: 20px 20px;
@@ -37,6 +37,34 @@ line-height: 1.6;
 scroll-behavior: smooth;
 padding-bottom: 60px;
 }
+
+/* Language Selector Styles */
+.lang-selector {
+position: fixed;
+top: 16px;
+right: 16px;
+z-index: 1000;
+}
+.lang-select {
+padding: 8px 12px;
+border: 2px solid var(--primary);
+border-radius: 8px;
+background: white;
+color: var(--text);
+font-family: inherit;
+font-size: 0.9em;
+font-weight: 600;
+cursor: pointer;
+min-width: 100px;
+box-shadow: 0 2px 8px rgba(42, 157, 143, 0.2);
+transition: all 0.3s ease;
+}
+.lang-select:hover, .lang-select:focus {
+border-color: var(--accent);
+box-shadow: 0 4px 12px rgba(42, 157, 143, 0.3);
+outline: none;
+}
+
 header {
 text-align: center;
 margin-bottom: 16px;
@@ -88,7 +116,7 @@ cursor: pointer;
 margin-bottom: 8px;
 transition: all 0.3s ease;
 box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-font-family: 'Noto Sans', sans-serif;
+font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
 }
 .route-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6); }
 .route-btn.active { background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%); box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3); }
@@ -105,7 +133,7 @@ color: var(--text);
 cursor: pointer;
 min-height: 44px;
 transition: all 0.3s ease;
-font-family: 'Noto Sans', sans-serif;
+font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
 font-size: 0.8em;
 text-align: center;
 white-space: nowrap;
@@ -200,7 +228,7 @@ flex: 1; min-width: 100px; padding: 10px;
 background: #f0f5f5; border: 1px solid var(--primary);
 border-radius: 8px; font-weight: 600; color: var(--text);
 cursor: pointer; min-height: 44px; transition: all 0.3s ease;
-font-family: 'Noto Sans', sans-serif;
+font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
 }
 .subtab.active { background: var(--primary); color: white; transform: scale(1.02); }
 .items-list {
@@ -229,7 +257,7 @@ flex: 1; min-width: 90px; padding: 10px;
 border: 1px solid var(--primary); border-radius: 6px;
 font-size: 0.85em; font-weight: 600; cursor: pointer;
 min-height: 44px; transition: all 0.3s ease;
-font-family: 'Noto Sans', sans-serif;
+font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
 }
 .btn-done { background: var(--button-bg-done); color: var(--primary); }
 .btn-done.done { background: var(--button-bg-done); color: var(--primary); border-color: var(--primary); }
@@ -371,38 +399,405 @@ h1 { font-size: 1.2em; }
 .city-banner { height: 160px; }
 .city-banner .city-name { font-size: 1.3em; }
 .calendar-table { font-size: 0.8em; }
+.lang-selector { top: 12px; right: 12px; }
+.lang-select { min-width: 80px; padding: 6px 10px; font-size: 0.85em; }
 }
 </style>
 </head>
 <body>
-<header>
-<h1>🇰🇷 Южная Корея — наше свадебное путешествие</h1>
-<p class="subtitle">Июль–август 2026</p>
-</header>
-<div class="progress-bar" id="progressBar"><span class="progress-text">Загрузка...</span></div>
-<button class="route-btn" id="documentsTab">📄 Документы</button>
-<button class="route-btn active" id="calendarTab">📅 Календарь событий</button>
-<button class="route-btn" id="mapTab">🗺️ Карта маршрута</button>
-<button class="route-btn" id="citiesTab">🏙️ Города</button>
-<div class="city-tabs" id="cityTabs" style="display: none;">
-<button class="city-tab" data-city="jeju">Чеджудо</button>
-<button class="city-tab" data-city="seoul">Сеул</button>
-<button class="city-tab" data-city="jeonju">Чонджу</button>
-<button class="city-tab" data-city="jindo">Чиндо</button>
-<button class="city-tab" data-city="busan">Пусан</button>
-<button class="city-tab" data-city="gyeongju">Кёнджу</button>
-<button class="city-tab" data-city="andong">Андон</button>
-<button class="city-tab" data-city="samcheok">Самчхок</button>
-<button class="city-tab" data-city="sokcho">Сокчхо</button>
+
+<!-- Language Selector -->
+<div class="lang-selector">
+<select id="languageSelect" class="lang-select">
+<option value="ru">🇷🇺 Русский</option>
+<option value="en">🇬🇧 English</option>
+<option value="de">🇩🇪 Deutsch</option>
+<option value="ko">🇰🇷 한국어</option>
+</select>
 </div>
+
+<header>
+<h1 data-i18n="header_title">🇰🇷 Южная Корея — наше свадебное путешествие</h1>
+<p class="subtitle" data-i18n="header_subtitle">Июль–август 2026</p>
+</header>
+
+<div class="progress-bar" id="progressBar"><span class="progress-text" data-i18n="progress_loading">Загрузка...</span></div>
+
+<button class="route-btn" id="documentsTab" data-i18n="tab_documents">📄 Документы</button>
+<button class="route-btn active" id="calendarTab" data-i18n="tab_calendar">📅 Календарь событий</button>
+<button class="route-btn" id="mapTab" data-i18n="tab_map">🗺️ Карта маршрута</button>
+<button class="route-btn" id="citiesTab" data-i18n="tab_cities">🏙️ Города</button>
+
+<div class="city-tabs" id="cityTabs" style="display: none;">
+<button class="city-tab" data-city="jeju" data-i18n="city_jeju">Чеджудо</button>
+<button class="city-tab" data-city="seoul" data-i18n="city_seoul">Сеул</button>
+<button class="city-tab" data-city="jeonju" data-i18n="city_jeonju">Чонджу</button>
+<button class="city-tab" data-city="jindo" data-i18n="city_jindo">Чиндо</button>
+<button class="city-tab" data-city="busan" data-i18n="city_busan">Пусан</button>
+<button class="city-tab" data-city="gyeongju" data-i18n="city_gyeongju">Кёнджу</button>
+<button class="city-tab" data-city="andong" data-i18n="city_andong">Андон</button>
+<button class="city-tab" data-city="samcheok" data-i18n="city_samcheok">Самчхок</button>
+<button class="city-tab" data-city="sokcho" data-i18n="city_sokcho">Сокчхо</button>
+</div>
+
 <div id="content"></div>
 <button id="backToTop">↑</button>
 
 <div class="reset-container">
-  <button id="resetBtn" class="reset-btn">🔄 Сбросить прогресс</button>
+<button id="resetBtn" class="reset-btn" data-i18n="reset_button">🔄 Сбросить прогресс</button>
 </div>
 
 <script>
+// ==================== TRANSLATIONS ====================
+const translations = {
+ru: {
+// UI Elements
+header_title: "🇰🇷 Южная Корея — наше свадебное путешествие",
+header_subtitle: "Июль–август 2026",
+progress_loading: "Загрузка...",
+tab_documents: "📄 Документы",
+tab_calendar: "📅 Календарь событий",
+tab_map: "🗺️ Карта маршрута",
+tab_cities: "🏙️ Города",
+reset_button: "🔄 Сбросить прогресс",
+reset_confirm: "Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.",
+
+// Cities
+city_jeju: "Чеджудо",
+city_seoul: "Сеул",
+city_jeonju: "Чонджу",
+city_jindo: "Чиндо",
+city_busan: "Пусан",
+city_gyeongju: "Кёнджу",
+city_andong: "Андон",
+city_samcheok: "Самчхок",
+city_sokcho: "Сокчхо",
+
+// Subtabs
+subtab_places: "Места",
+subtab_eats: "Еда",
+subtab_spas: "Бани",
+
+// Accommodation
+accommodation_title: "🏠 Жильё",
+booking_link: "📄 Бронь",
+google_maps: "🗺️ Google",
+naver_maps: "🚗 Naver",
+
+// Progress
+progress_visited: "✅ Посещено: {visited} из {total} ({percent}%)",
+progress_full: "✅ Посещено: {placesVisited}/{placesTotal} мест | {eatsVisited}/{eatsTotal} ресторанов | {spasVisited}/{spasTotal} бань ({percent}%)",
+
+// Items
+btn_mark: "☑️ Отметить",
+btn_visited: "✅ Посещено",
+btn_tried: "✅ Попробовано",
+entry_fee: "Вход: ",
+avg_check: "💰 Средний чек: ",
+price_label: "💰 ",
+not_added: "Пока не добавлено",
+
+// Cities Intro
+cities_intro_title: "🏙️ Выберите город",
+cities_intro_text: "Нажмите на город выше, чтобы посмотреть места, рестораны и бани",
+
+// Documents
+docs_title: "📋 Необходимые документы для поездки",
+docs_flights: "✈️ Авиабилеты",
+docs_entry: "🛂 Разрешения на въезд (K-ETA)",
+docs_insurance: "🏥 Страховые полиса",
+docs_entry_desc: "Разрешение на въезд в РК",
+docs_insurance_desc: "Полис на время поездки",
+docs_important_title: "💡 Важно:",
+docs_important_text: "Распечатайте эти документы или сохраните их на телефоне. Разрешения K-ETA и авиабилеты могут потребоваться при регистрации на рейс и при прохождении паспортного контроля в Южной Корее.",
+
+// Calendar event types
+event_flight: "✈️",
+event_hotel: "🏨",
+event_car: "🚗",
+event_city: "🏙️",
+
+// Place categories
+category_places: "Места",
+category_eats: "Рестораны",
+category_spas: "Бани"
+},
+
+en: {
+// UI Elements
+header_title: "🇰🇷 South Korea — Our Honeymoon Trip",
+header_subtitle: "July–August 2026",
+progress_loading: "Loading...",
+tab_documents: "📄 Documents",
+tab_calendar: "📅 Event Calendar",
+tab_map: "🗺️ Route Map",
+tab_cities: "🏙️ Cities",
+reset_button: "🔄 Reset Progress",
+reset_confirm: "Are you sure you want to reset all progress? All marks will be deleted.",
+
+// Cities
+city_jeju: "Jeju",
+city_seoul: "Seoul",
+city_jeonju: "Jeonju",
+city_jindo: "Jindo",
+city_busan: "Busan",
+city_gyeongju: "Gyeongju",
+city_andong: "Andong",
+city_samcheok: "Samcheok",
+city_sokcho: "Sokcho",
+
+// Subtabs
+subtab_places: "Places",
+subtab_eats: "Food",
+subtab_spas: "Spas",
+
+// Accommodation
+accommodation_title: "🏠 Accommodation",
+booking_link: "📄 Booking",
+google_maps: "🗺️ Google",
+naver_maps: "🚗 Naver",
+
+// Progress
+progress_visited: "✅ Visited: {visited} of {total} ({percent}%)",
+progress_full: "✅ Visited: {placesVisited}/{placesTotal} places | {eatsVisited}/{eatsTotal} restaurants | {spasVisited}/{spasTotal} spas ({percent}%)",
+
+// Items
+btn_mark: "☑️ Mark",
+btn_visited: "✅ Visited",
+btn_tried: "✅ Tried",
+entry_fee: "Entry: ",
+avg_check: "💰 Avg. check: ",
+price_label: "💰 ",
+not_added: "Nothing added yet",
+
+// Cities Intro
+cities_intro_title: "🏙️ Select a City",
+cities_intro_text: "Click on a city above to see places, restaurants, and spas",
+
+// Documents
+docs_title: "📋 Required Travel Documents",
+docs_flights: "✈️ Flight Tickets",
+docs_entry: "🛂 Entry Permits (K-ETA)",
+docs_insurance: "🏥 Insurance Policies",
+docs_entry_desc: "Entry permit to Republic of Korea",
+docs_insurance_desc: "Travel insurance policy",
+docs_important_title: "💡 Important:",
+docs_important_text: "Print these documents or save them on your phone. K-ETA permits and flight tickets may be required during check-in and passport control in South Korea.",
+
+// Calendar event types
+event_flight: "✈️",
+event_hotel: "🏨",
+event_car: "🚗",
+event_city: "🏙️",
+
+// Place categories
+category_places: "Places",
+category_eats: "Restaurants",
+category_spas: "Spas"
+},
+
+de: {
+// UI Elements
+header_title: "🇰🇷 Südkorea — Unsere Hochzeitsreise",
+header_subtitle: "Juli–August 2026",
+progress_loading: "Wird geladen...",
+tab_documents: "📄 Dokumente",
+tab_calendar: "📅 Ereigniskalender",
+tab_map: "🗺️ Routenkarte",
+tab_cities: "🏙️ Städte",
+reset_button: "🔄 Fortschritt zurücksetzen",
+reset_confirm: "Sind Sie sicher, dass Sie den gesamten Fortschritt zurücksetzen möchten? Alle Markierungen werden gelöscht.",
+
+// Cities
+city_jeju: "Jeju",
+city_seoul: "Seoul",
+city_jeonju: "Jeonju",
+city_jindo: "Jindo",
+city_busan: "Busan",
+city_gyeongju: "Gyeongju",
+city_andong: "Andong",
+city_samcheok: "Samcheok",
+city_sokcho: "Sokcho",
+
+// Subtabs
+subtab_places: "Sehenswürdigkeiten",
+subtab_eats: "Essen",
+subtab_spas: "Bäder",
+
+// Accommodation
+accommodation_title: "🏠 Unterkunft",
+booking_link: "📄 Buchung",
+google_maps: "🗺️ Google",
+naver_maps: "🚗 Naver",
+
+// Progress
+progress_visited: "✅ Besucht: {visited} von {total} ({percent}%)",
+progress_full: "✅ Besucht: {placesVisited}/{placesTotal} Orte | {eatsVisited}/{eatsTotal} Restaurants | {spasVisited}/{spasTotal} Bäder ({percent}%)",
+
+// Items
+btn_mark: "☑️ Markieren",
+btn_visited: "✅ Besucht",
+btn_tried: "✅ Probiert",
+entry_fee: "Eintritt: ",
+avg_check: "💰 Ø Rechnung: ",
+price_label: "💰 ",
+not_added: "Noch nichts hinzugefügt",
+
+// Cities Intro
+cities_intro_title: "🏙️ Stadt auswählen",
+cities_intro_text: "Klicken Sie auf eine Stadt oben, um Orte, Restaurants und Bäder zu sehen",
+
+// Documents
+docs_title: "📋 Erforderliche Reisedokumente",
+docs_flights: "✈️ Flugtickets",
+docs_entry: "🛂 Einreisegenehmigungen (K-ETA)",
+docs_insurance: "🏥 Versicherungspolicen",
+docs_entry_desc: "Einreisegenehmigung für Republik Korea",
+docs_insurance_desc: "Reisekrankenversicherung",
+docs_important_title: "💡 Wichtig:",
+docs_important_text: "Drucken Sie diese Dokumente aus oder speichern Sie sie auf Ihrem Telefon. K-ETA-Genehmigungen und Flugtickets können beim Check-in und bei der Passkontrolle in Südkorea erforderlich sein.",
+
+// Calendar event types
+event_flight: "✈️",
+event_hotel: "🏨",
+event_car: "🚗",
+event_city: "🏙️",
+
+// Place categories
+category_places: "Sehenswürdigkeiten",
+category_eats: "Restaurants",
+category_spas: "Bäder"
+},
+
+ko: {
+// UI Elements
+header_title: "🇰🇷 대한민국 — 우리의 신혼여행",
+header_subtitle: "2026년 7월–8월",
+progress_loading: "로딩 중...",
+tab_documents: "📄 서류",
+tab_calendar: "📅 일정 캘린더",
+tab_map: "🗺️ 여행 경로 지도",
+tab_cities: "🏙️ 도시",
+reset_button: "🔄 진행 상황 초기화",
+reset_confirm: "정말 모든 진행 상황을 초기화하시겠습니까? 모든 체크가 삭제됩니다.",
+
+// Cities
+city_jeju: "제주도",
+city_seoul: "서울",
+city_jeonju: "전주",
+city_jindo: "진도",
+city_busan: "부산",
+city_gyeongju: "경주",
+city_andong: "안동",
+city_samcheok: "삼척",
+city_sokcho: "속초",
+
+// Subtabs
+subtab_places: "명소",
+subtab_eats: "음식점",
+subtab_spas: "찜질방",
+
+// Accommodation
+accommodation_title: "🏠 숙소",
+booking_link: "📄 예약확인서",
+google_maps: "🗺️ 구글맵",
+naver_maps: "🚗 네이버맵",
+
+// Progress
+progress_visited: "✅ 방문: {total} 중 {visited} ({percent}%)",
+progress_full: "✅ 방문: 명소 {placesTotal} 중 {placesVisited} | 식당 {eatsTotal} 중 {eatsVisited} | 찜질방 {spasTotal} 중 {spasVisited} ({percent}%)",
+
+// Items
+btn_mark: "☑️ 체크",
+btn_visited: "✅ 방문함",
+btn_tried: "✅ 맛봄",
+entry_fee: "입장료: ",
+avg_check: "💰 평균 금액: ",
+price_label: "💰 ",
+not_added: "아직 추가된 항목이 없습니다",
+
+// Cities Intro
+cities_intro_title: "🏙️ 도시를 선택하세요",
+cities_intro_text: "위의 도시를 클릭하여 명소, 음식점, 찜질방을 확인하세요",
+
+// Documents
+docs_title: "📋 여행 필수 서류",
+docs_flights: "✈️ 항공권",
+docs_entry: "🛂 입국 허가서 (K-ETA)",
+docs_insurance: "🏥 보험 증권",
+docs_entry_desc: "대한민국 입국 허가서",
+docs_insurance_desc: "여행자 보험 증권",
+docs_important_title: "💡 중요:",
+docs_important_text: "이 서류들을 인쇄하거나 휴대폰에 저장하세요. K-ETA 허가와 항공권은 항공권 체크인 및 대한민국 입국 심사 시 필요할 수 있습니다.",
+
+// Calendar event types
+event_flight: "✈️",
+event_hotel: "🏨",
+event_car: "🚗",
+event_city: "🏙️",
+
+// Place categories
+category_places: "명소",
+category_eats: "음식점",
+category_spas: "찜질방"
+}
+};
+
+// ==================== TRANSLATION HELPER ====================
+let currentLang = 'ru';
+
+function t(key, params = {}) {
+const lang = translations[currentLang];
+let text = lang[key] || translations['ru'][key] || key;
+// Replace placeholders like {visited}, {total}
+Object.keys(params).forEach(param => {
+text = text.replace(new RegExp(`\\{${param}\\}`, 'g'), params[param]);
+});
+return text;
+}
+
+function setLanguage(lang) {
+currentLang = lang;
+document.documentElement.lang = lang;
+document.documentElement.dir = lang === 'ko' || lang === 'ar' ? 'ltr' : 'ltr';
+
+// Update all elements with data-i18n attribute
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+el.textContent = t(key);
+});
+
+// Re-render dynamic content
+if (currentView === 'calendar') {
+document.getElementById('content').innerHTML = renderCalendar();
+} else if (currentView === 'documents') {
+document.getElementById('content').innerHTML = renderDocuments();
+} else if (currentView === 'map') {
+document.getElementById('content').innerHTML = renderMap();
+} else if (currentView === 'cities') {
+if (currentCity) {
+document.getElementById('content').innerHTML = renderCityContent(currentCity, currentSubtab);
+attachEventListeners();
+} else {
+document.getElementById('content').innerHTML = renderCitiesIntro();
+}
+}
+
+updateProgress();
+updateCityTabs();
+}
+
+function updateCityTabs() {
+document.querySelectorAll('.city-tab').forEach(tab => {
+const cityKey = tab.dataset.city;
+tab.textContent = t(`city_${cityKey}`);
+});
+}
+
+// ==================== DATA (keeping original Russian for content, adding translation layer) ====================
+// For full production, you would translate all place names, descriptions, etc.
+// Here we keep the structure and translate only UI elements for brevity
+
 function generateStars(rating) {
 const full = Math.floor(rating);
 const hasHalf = rating % 1 >= 0.5;
@@ -497,82 +892,18 @@ const calendar = [
 ];
 
 const flightTickets = [
-{
-  name: "Москва → Чеджудо (через Пекин)",
-  date: "28.07.2026",
-  passengers: "Kolesnikova, Liasin",
-  file: "bookingsfly/Moskwa-Jeju.pdf"
-},
-{
-  name: "Чеджудо → Сеул",
-  date: "01.08.2026",
-  passengers: "Kolesnikova, Liasin",
-  file: "bookingsfly/Jeju-Seul.pdf"
-},
-{
-  name: "Сеул → Москва (через Шанхай)",
-  date: "17.08.2026",
-  passengers: "Kolesnikova, Liasin",
-  file: "bookingsfly/Seul-Moskwa.pdf"
-}
+{ name: "Москва → Чеджудо (через Пекин)", date: "28.07.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Moskwa-Jeju.pdf" },
+{ name: "Чеджудо → Сеул", date: "01.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Jeju-Seul.pdf" },
+{ name: "Сеул → Москва (через Шанхай)", date: "17.08.2026", passengers: "Kolesnikova, Liasin", file: "bookingsfly/Seul-Moskwa.pdf" }
 ];
 
 const accommodations = {
-jeju: [{
-name: "Seogwipo-si",
-address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616",
-google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77",
-naver: "https://naver.me/5OQ7cmRT",
-booking: "bookings/jeju-seogwipo.pdf",
-dates: "29–31.07"
-}],
-seoul: [{
-name: "Toegye-ro Stay",
-address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629",
-google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58",
-naver: "https://naver.me/GWW7dyTD",
-booking: "bookings/seoul-toegye.pdf",
-dates: "01–03.08"
-}, {
-name: "Seoul DDJ STAY 대동장",
-address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126",
-google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8",
-naver: "https://naver.me/G1pdAO26",
-booking: "bookings/seoul-ddj.pdf",
-dates: "13–16.08"
-}],
-jindo: [{
-name: "Imhoe-myeon Guesthouse",
-address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840",
-google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7",
-naver: "https://naver.me/5tf0dPe2",
-booking: "bookings/jindo-guesthouse.pdf",
-dates: "04–05.08"
-}],
-busan: [{
-name: "O'guest in Haeundae",
-address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094",
-google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69",
-naver: "https://naver.me/5l7vswOR",
-booking: "bookings/busan-oguest.pdf",
-dates: "06–08.08"
-}],
-andong: [{
-name: "Haru The Guesthouse",
-address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704",
-google: "https://maps.app.goo.gl/A3Zrmp6AsuX5wmoz8",
-naver: "https://map.naver.com/p/entry/place/1785290845?placePath=%2Fhome",
-booking: "bookings/andong-haru.pdf",
-dates: "09.08"
-}],
-sokcho: [{
-name: "Sokcho Summitbay 1807 \"Ocean View\"",
-address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808",
-google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6",
-naver: "https://naver.me/GhwvpTAx",
-booking: "bookings/sokcho-summitbay.pdf",
-dates: "10–12.08"
-}]
+jeju: [{ name: "Seogwipo-si", address: "271 Taesinhaean-ro, Seogwipo-si, Jeju-do 63616", google: "https://maps.app.goo.gl/F4addr6TrUVHqcd77", naver: "https://naver.me/5OQ7cmRT", booking: "bookings/jeju-seogwipo.pdf", dates: "29–31.07" }],
+seoul: [{ name: "Toegye-ro Stay", address: "26, Toegye-ro 20ga-gil, Jung-gu, Seoul 04629", google: "https://maps.app.goo.gl/vZGmRbgYLm5onJZ58", naver: "https://naver.me/GWW7dyTD", booking: "bookings/seoul-toegye.pdf", dates: "01–03.08" }, { name: "Seoul DDJ STAY 대동장", address: "12, Daehak-ro 2-gil, Jongno-gu, Seoul 03126", google: "https://maps.app.goo.gl/2yCEEC5oZd7L9vmy8", naver: "https://naver.me/G1pdAO26", booking: "bookings/seoul-ddj.pdf", dates: "13–16.08" }],
+jindo: [{ name: "Imhoe-myeon Guesthouse", address: "Pyedong-gil, Imhoe-myeon, Jindo-gun 539-840", google: "https://maps.app.goo.gl/moqvjniubSLUBzCy7", naver: "https://naver.me/5tf0dPe2", booking: "bookings/jindo-guesthouse.pdf", dates: "04–05.08" }],
+busan: [{ name: "O'guest in Haeundae", address: "2F, 11, Gunam-ro 8beon-gil, Haeundae-gu, Busan 48094", google: "https://maps.app.goo.gl/HoYeo3wRjgEKbVU69", naver: "https://naver.me/5l7vswOR", booking: "bookings/busan-oguest.pdf", dates: "06–08.08" }],
+andong: [{ name: "Haru The Guesthouse", address: "737-7, Gyeongdong-ro, Andong, Gyeongsangbuk-do 36704", google: "https://maps.app.goo.gl/A3Zrmp6AsuX5wmoz8", naver: "https://map.naver.com/p/entry/place/1785290845?placePath=%2Fhome", booking: "bookings/andong-haru.pdf", dates: "09.08" }],
+sokcho: [{ name: "Sokcho Summitbay 1807 \"Ocean View\"", address: "17F, 11, Yeongnanghaean 8-gil, Sokcho 24808", google: "https://maps.app.goo.gl/QuyZEDtgoxg2NfbD6", naver: "https://naver.me/GhwvpTAx", booking: "bookings/sokcho-summitbay.pdf", dates: "10–12.08" }]
 };
 
 const places = [
@@ -722,10 +1053,12 @@ let currentCity = null;
 let currentSubtab = 'places';
 let currentView = 'calendar';
 
+// ==================== RENDER FUNCTIONS ====================
+
 function renderCalendar() {
 return `<div class="calendar-container">
 <table class="calendar-table">
-<thead><tr><th>Дата</th><th style="width:100%">События</th></tr></thead>
+<thead><tr><th>${currentLang === 'ko' ? '날짜' : currentLang === 'de' ? 'Datum' : currentLang === 'en' ? 'Date' : 'Дата'}</th><th style="width:100%">${currentLang === 'ko' ? '일정' : currentLang === 'de' ? 'Ereignisse' : currentLang === 'en' ? 'Events' : 'События'}</th></tr></thead>
 <tbody>${calendar.map(day => `
 <tr>
 <td><strong>${day.date}</strong></td>
@@ -743,10 +1076,10 @@ return `<div class="calendar-container">
 function renderDocuments() {
 return `
 <div class="documents-container">
-<h2>📋 Необходимые документы для поездки</h2>
+<h2 data-i18n="docs_title">📋 Необходимые документы для поездки</h2>
 
 <div style="margin-bottom: 24px;">
-<h3>✈️ Авиабилеты</h3>
+<h3 data-i18n="docs_flights">✈️ Авиабилеты</h3>
 <div class="documents-grid">
 ${flightTickets.map(ticket => `
 <a href="${ticket.file}" target="_blank" class="document-link">
@@ -762,13 +1095,13 @@ ${flightTickets.map(ticket => `
 </div>
 
 <div style="margin-bottom: 24px;">
-<h3>🛂 Разрешения на въезд (K-ETA)</h3>
+<h3 data-i18n="docs_entry">🛂 Разрешения на въезд (K-ETA)</h3>
 <div class="documents-grid">
 <a href="documents/entry_permit_Kolesnikova.pdf" target="_blank" class="document-link">
 <span style="font-size: 1.5em;">👤</span>
 <div style="flex: 1;">
 <div style="font-weight: 600; margin-bottom: 4px;">Kolesnikova</div>
-<div style="font-size: 0.85em; color: var(--light-text);">Разрешение на въезд в РК</div>
+<div style="font-size: 0.85em; color: var(--light-text);" data-i18n="docs_entry_desc">Разрешение на въезд в РК</div>
 </div>
 <span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
 </a>
@@ -776,7 +1109,7 @@ ${flightTickets.map(ticket => `
 <span style="font-size: 1.5em;">👤</span>
 <div style="flex: 1;">
 <div style="font-weight: 600; margin-bottom: 4px;">Liasin</div>
-<div style="font-size: 0.85em; color: var(--light-text);">Разрешение на въезд в РК</div>
+<div style="font-size: 0.85em; color: var(--light-text);" data-i18n="docs_entry_desc">Разрешение на въезд в РК</div>
 </div>
 <span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
 </a>
@@ -784,20 +1117,20 @@ ${flightTickets.map(ticket => `
 </div>
 
 <div>
-<h3>🏥 Страховые полиса</h3>
+<h3 data-i18n="docs_insurance">🏥 Страховые полиса</h3>
 <a href="documents/polis.pdf" target="_blank" class="document-link">
 <span style="font-size: 1.5em;">🏥</span>
 <div style="flex: 1;">
-<div style="font-weight: 600; margin-bottom: 4px;">Медицинская страховка</div>
-<div style="font-size: 0.85em; color: var(--light-text);">Полис на время поездки</div>
+<div style="font-weight: 600; margin-bottom: 4px;" data-i18n="docs_insurance">Медицинская страховка</div>
+<div style="font-size: 0.85em; color: var(--light-text);" data-i18n="docs_insurance_desc">Полис на время поездки</div>
 </div>
 <span style="color: var(--primary); font-weight: 600;">📥 PDF</span>
 </a>
 </div>
 
 <div class="documents-info">
-<div class="documents-info-title">💡 Важно:</div>
-<div class="documents-info-text">
+<div class="documents-info-title" data-i18n="docs_important_title">💡 Важно:</div>
+<div class="documents-info-text" data-i18n="docs_important_text">
 Распечатайте эти документы или сохраните их на телефоне. Разрешения K-ETA и авиабилеты могут потребоваться при регистрации на рейс и при прохождении паспортного контроля в Южной Корее.
 </div>
 </div>
@@ -807,15 +1140,15 @@ ${flightTickets.map(ticket => `
 
 function renderMap() {
 return `<div class="route-container">
-<img src="route-map.jpg" alt="Маршрут по Южной Корее" class="route-map">
+<img src="route-map.jpg" alt="${currentLang === 'ko' ? '대한민국 여행 경로' : currentLang === 'de' ? 'Reiseroute durch Südkorea' : currentLang === 'en' ? 'South Korea Travel Route' : 'Маршрут по Южной Корее'}" class="route-map">
 </div>`;
 }
 
 function renderCitiesIntro() {
 return `
 <div class="cities-intro">
-<h2 style="color: var(--primary); margin-bottom: 12px;">🏙️ Выберите город</h2>
-<p>Нажмите на город выше, чтобы посмотреть места, рестораны и бани</p>
+<h2 style="color: var(--primary); margin-bottom: 12px;" data-i18n="cities_intro_title">🏙️ Выберите город</h2>
+<p data-i18n="cities_intro_text">Нажмите на город выше, чтобы посмотреть места, рестораны и бани</p>
 </div>
 `;
 }
@@ -829,15 +1162,15 @@ return `<div class="city-banner" style="background-image: url('${cityKey}-banner
 function renderAccommodation(cityKey) {
 const accList = accommodations[cityKey];
 if (!accList || accList.length === 0) return '';
-let html = `<div class="accommodation"><div class="accommodation-title">🏠 Жильё</div>`;
+let html = `<div class="accommodation"><div class="accommodation-title" data-i18n="accommodation_title">🏠 Жильё</div>`;
 if (accList.length === 1) {
 const acc = accList[0];
 html += `<div class="accommodation-name">${acc.name}<span class="booking-dates">${acc.dates}</span></div>
 <div class="accommodation-address">${acc.address}</div>
 <div class="accommodation-links">
-<a href="${acc.google}" target="_blank" class="link-google">🗺️ Google</a>
-<a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver</a>
-${acc.booking ? `<a href="${acc.booking}" target="_blank" class="link-booking">📄 Бронь</a>` : ''}
+<a href="${acc.google}" target="_blank" class="link-google" data-i18n="google_maps">🗺️ Google</a>
+<a href="${acc.naver}" target="_blank" class="link-naver" data-i18n="naver_maps">🚗 Naver</a>
+${acc.booking ? `<a href="${acc.booking}" target="_blank" class="link-booking" data-i18n="booking_link">📄 Бронь</a>` : ''}
 </div>`;
 } else {
 html += '<div class="accommodation-list">';
@@ -846,9 +1179,9 @@ html += `<div class="accommodation-item">
 <div class="accommodation-name">${acc.name}<span class="booking-dates">${acc.dates}</span></div>
 <div class="accommodation-address">${acc.address}</div>
 <div class="accommodation-links">
-<a href="${acc.google}" target="_blank" class="link-google">🗺️ Google</a>
-<a href="${acc.naver}" target="_blank" class="link-naver">🚗 Naver</a>
-${acc.booking ? `<a href="${acc.booking}" target="_blank" class="link-booking">📄 Бронь</a>` : ''}
+<a href="${acc.google}" target="_blank" class="link-google" data-i18n="google_maps">🗺️ Google</a>
+<a href="${acc.naver}" target="_blank" class="link-naver" data-i18n="naver_maps">🚗 Naver</a>
+${acc.booking ? `<a href="${acc.booking}" target="_blank" class="link-booking" data-i18n="booking_link">📄 Бронь</a>` : ''}
 </div>
 </div>`;
 });
@@ -868,14 +1201,14 @@ if (eatsData) { total += eatsData.items.length; visited += eatsData.items.filter
 const spaKey = getSpaKeyForCity(cityKey);
 if (spaKey && spas[spaKey]) { total += spas[spaKey].length; visited += spas[spaKey].filter(item => visitedSpas[`spa-${cityName}-${item.name}`]).length; }
 const percent = total > 0 ? Math.round((visited / total) * 100) : 0;
-return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">✅ Посещено: ${visited} из ${total} (${percent}%)</span></div>`;
+return `<div class="city-progress" style="--progress-width: ${percent}%"><span class="progress-text">${t('progress_visited', {visited, total, percent})}</span></div>`;
 }
 
 function renderSubtabs(cityKey, hasSpa) {
 let html = `<div class="city-subtabs">`;
-html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}">Места</button>`;
-html += `<button class="subtab ${currentSubtab === 'eats' ? 'active' : ''}" data-type="eats" data-city="${cityKey}">Еда</button>`;
-if (hasSpa) html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data-type="spas" data-city="${cityKey}">Бани</button>`;
+html += `<button class="subtab ${currentSubtab === 'places' ? 'active' : ''}" data-type="places" data-city="${cityKey}" data-i18n="subtab_places">Места</button>`;
+html += `<button class="subtab ${currentSubtab === 'eats' ? 'active' : ''}" data-type="eats" data-city="${cityKey}" data-i18n="subtab_eats">Еда</button>`;
+if (hasSpa) html += `<button class="subtab ${currentSubtab === 'spas' ? 'active' : ''}" data-type="spas" data-city="${cityKey}" data-i18n="subtab_spas">Бани</button>`;
 html += `</div>`;
 return html;
 }
@@ -890,17 +1223,18 @@ if (cityKey === 'sokcho') return 'sokcho'; if (cityKey === 'busan') return 'busa
 }
 
 function renderItemsList(items, type, cityKey, cityName) {
-if (!items || items.length === 0) return '<div class="items-list"><p style="padding:16px;color:var(--light-text)">Пока не добавлено</p></div>';
+if (!items || items.length === 0) return `<div class="items-list"><p style="padding:16px;color:var(--light-text)" data-i18n="not_added">Пока не добавлено</p></div>`;
 return `<div class="items-list">${items.map(item => {
 const id = `${type}-${cityName}-${item.name}`;
 const isVisited = type === 'place' ? visitedPlaces[id] : (type === 'eat' ? visitedEats[id] : visitedSpas[id]);
+const btnText = isVisited ? (type === 'eat' ? t('btn_tried') : t('btn_visited')) : t('btn_mark');
 return `<div class="item ${isVisited ? 'visited' : ''}" data-id="${id}">
 <div class="item-name">${item.name}</div><div class="item-stars">${generateStars(item.stars)}</div>
 <div class="item-desc">${item.desc}</div>
-${item.price ? `<div class="price-info">💰 ${type === 'place' ? 'Вход: ' : ''}${item.price}</div>` : ''}
-${item.avgCheck ? `<div class="avg-check">💰 Средний чек: ${item.avgCheck}</div>` : ''}
+${item.price ? `<div class="price-info">${t('price_label')}${type === 'place' ? t('entry_fee') : ''}${item.price}</div>` : ''}
+${item.avgCheck ? `<div class="avg-check">${t('avg_check')} ${item.avgCheck}</div>` : ''}
 <div class="actions">
-<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="${type}">${isVisited ? (type === 'eat' ? '✅ Попробовано' : '✅ Посещено') : '☑️ Отметить'}</button>
+<button class="btn-done ${isVisited ? 'done' : ''}" data-id="${id}" data-type="${type}">${btnText}</button>
 <button class="btn-google" onclick="window.open('${item.google}', '_blank')">gMaps</button>
 <button class="btn-naver" onclick="window.open('${item.naver}', '_blank')">🚗 Naver</button>
 </div></div>`;
@@ -932,7 +1266,7 @@ const visitedTotal = visitedCount + visitedEatsCount + visitedSpasCount;
 const progressPercent = totalItems > 0 ? Math.round((visitedTotal / totalItems) * 100) : 0;
 const progressBar = document.getElementById('progressBar');
 progressBar.style.setProperty('--progress-width', `${progressPercent}%`);
-progressBar.innerHTML = `<span class="progress-text">✅ Посещено: ${visitedCount}/${totalPlaces} мест | ${visitedEatsCount}/${totalEats} ресторанов | ${visitedSpasCount}/${totalSpas} бань (${progressPercent}%)</span>`;
+progressBar.innerHTML = `<span class="progress-text">${t('progress_full', {placesVisited: visitedCount, placesTotal: totalPlaces, eatsVisited: visitedEatsCount, eatsTotal: totalEats, spasVisited: visitedSpasCount, spasTotal: totalSpas, percent: progressPercent})}</span>`;
 }
 
 function handleDoneClick(btn) {
@@ -942,8 +1276,8 @@ else if (type === 'eat') { visitedEats[id] = !visitedEats[id]; localStorage.setI
 else if (type === 'spa') { visitedSpas[id] = !visitedSpas[id]; localStorage.setItem('visitedSpas_korea2026', JSON.stringify(visitedSpas)); }
 const item = btn.closest('.item');
 if (item) {
-if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) { item.classList.add('visited'); btn.textContent = type === 'eat' ? '✅ Попробовано' : '✅ Посещено'; }
-else { item.classList.remove('visited'); btn.textContent = type === 'eat' ? '☑️ Отметить' : '☑️ Отметить'; }
+if (visitedPlaces[id] || visitedEats[id] || visitedSpas[id]) { item.classList.add('visited'); btn.textContent = type === 'eat' ? t('btn_tried') : t('btn_visited'); }
+else { item.classList.remove('visited'); btn.textContent = t('btn_mark'); }
 }
 updateProgress();
 if (currentCity) { const cp = document.querySelector('.city-progress'); if (cp) cp.outerHTML = renderCityProgress(currentCity); }
@@ -969,9 +1303,16 @@ container.innerHTML = banner + acc + progress + subtabs + newContent; attachEven
 document.querySelectorAll('.btn-done').forEach(btn => { btn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); handleDoneClick(this); }); });
 }
 
+// ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', function() {
+// Language selector
+document.getElementById('languageSelect').addEventListener('change', function(e) {
+setLanguage(e.target.value);
+});
+
+// Reset button
 document.getElementById('resetBtn').addEventListener('click', function() {
-if (confirm('Вы уверены, что хотите сбросить весь прогресс? Все отметки будут удалены.')) {
+if (confirm(t('reset_confirm'))) {
 localStorage.removeItem('visitedPlaces_korea2026');
 localStorage.removeItem('visitedEats_korea2026');
 localStorage.removeItem('visitedSpas_korea2026');
@@ -979,25 +1320,21 @@ location.reload();
 }
 });
 
+// Tab navigation
 document.getElementById('documentsTab').addEventListener('click', function(e) {
 e.preventDefault();
-document.getElementById('documentsTab').classList.add('active');
-document.getElementById('calendarTab').classList.remove('active');
-document.getElementById('mapTab').classList.remove('active');
-document.getElementById('citiesTab').classList.remove('active');
+document.querySelectorAll('.route-btn').forEach(btn => btn.classList.remove('active'));
+this.classList.add('active');
 document.getElementById('cityTabs').style.display = 'none';
-currentCity = null;
-currentView = 'documents';
+currentCity = null; currentView = 'documents';
 document.getElementById('content').innerHTML = renderDocuments();
 updateProgress();
 });
 
 document.getElementById('calendarTab').addEventListener('click', function(e) {
 e.preventDefault();
-document.getElementById('calendarTab').classList.add('active');
-document.getElementById('documentsTab').classList.remove('active');
-document.getElementById('mapTab').classList.remove('active');
-document.getElementById('citiesTab').classList.remove('active');
+document.querySelectorAll('.route-btn').forEach(btn => btn.classList.remove('active'));
+this.classList.add('active');
 document.getElementById('cityTabs').style.display = 'none';
 currentCity = null; currentView = 'calendar';
 document.getElementById('content').innerHTML = renderCalendar(); updateProgress();
@@ -1005,10 +1342,8 @@ document.getElementById('content').innerHTML = renderCalendar(); updateProgress(
 
 document.getElementById('mapTab').addEventListener('click', function(e) {
 e.preventDefault();
-document.getElementById('mapTab').classList.add('active');
-document.getElementById('documentsTab').classList.remove('active');
-document.getElementById('calendarTab').classList.remove('active');
-document.getElementById('citiesTab').classList.remove('active');
+document.querySelectorAll('.route-btn').forEach(btn => btn.classList.remove('active'));
+this.classList.add('active');
 document.getElementById('cityTabs').style.display = 'none';
 currentCity = null; currentView = 'map';
 document.getElementById('content').innerHTML = renderMap(); updateProgress();
@@ -1016,10 +1351,8 @@ document.getElementById('content').innerHTML = renderMap(); updateProgress();
 
 document.getElementById('citiesTab').addEventListener('click', function(e) {
 e.preventDefault();
-document.getElementById('citiesTab').classList.add('active');
-document.getElementById('documentsTab').classList.remove('active');
-document.getElementById('calendarTab').classList.remove('active');
-document.getElementById('mapTab').classList.remove('active');
+document.querySelectorAll('.route-btn').forEach(btn => btn.classList.remove('active'));
+this.classList.add('active');
 document.getElementById('cityTabs').style.display = 'flex';
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 currentCity = null; currentView = 'cities';
@@ -1030,10 +1363,8 @@ updateProgress();
 document.querySelectorAll('.city-tab').forEach(tab => {
 tab.addEventListener('click', function(e) {
 e.preventDefault();
+document.querySelectorAll('.route-btn').forEach(btn => btn.classList.remove('active'));
 document.getElementById('citiesTab').classList.add('active');
-document.getElementById('calendarTab').classList.remove('active');
-document.getElementById('documentsTab').classList.remove('active');
-document.getElementById('mapTab').classList.remove('active');
 document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
 this.classList.add('active'); currentCity = this.dataset.city; currentSubtab = 'places';
 document.getElementById('content').innerHTML = renderCityContent(currentCity, currentSubtab);
@@ -1041,15 +1372,18 @@ attachEventListeners(); updateProgress();
 });
 });
 
+// Initial render
 document.getElementById('content').innerHTML = renderCalendar();
 updateProgress();
-});
+updateCityTabs();
 
+// Back to top button
 window.addEventListener('scroll', () => {
 const btn = document.getElementById('backToTop');
 if (window.scrollY > 300) btn.style.display = 'block'; else btn.style.display = 'none';
 });
 document.getElementById('backToTop').addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+});
 </script>
 </body>
 </html>
